@@ -36,7 +36,7 @@ def get_hwnd_from_pid(pid):
         hwnd = window._hWnd
         _, win_pid = win32process.GetWindowThreadProcessId(hwnd)
         if win_pid == pid:
-            return window.title
+            return window._hWnd
 
     return None
 
