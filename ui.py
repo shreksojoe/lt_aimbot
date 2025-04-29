@@ -1,26 +1,43 @@
+import tempfile
+import shutil
+import atexit
+import os
 import csv
 import tkinter as tk
 from tkinter import filedialog
 
+# browse file manager
 def browse_file():
     file_path = filedialog.askopenfilename(
         filetypes=[("CSV Files", "*.csv")],
         title="Select a CSV File"
     )
-    process_csv(file_path)
+    return file_path
 
+# convert csv to 2d List
 def process_csv(csv_file):
     with open(csv_file, newline='') as file:
         reader = csv.reader(file)
-        for row in reader:
-            print(row)
+        order = list(reader)
+        return order
         
-window = tk.Tk()
-window.title("LT Aimbot")
-# window.iconbitmap("")
-window.geometry("450x150")
+# makes temporary duplicate of json file
+def file_dup(path):
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".json")
+    temp_path = temp_file.name
+    temp_file.close()
 
-browse_button = tk.Button(window, text="Browse CSV", command=browse_file)
-browse_button.pack(pady=50)
+    shutil.copy2(path, temp_path)
+    return temp_path
 
-window.mainloop()
+if __name__ == "__main__":
+    window = tk.Tk()
+    window.title("LT Aimbot")
+    # window.iconbitmap("")
+    window.geometry("450x150")
+
+    browse_button = tk.Button(window, text="Browse CSV", command=browse_file)
+    browse_button.pack(pady=50)
+
+    window.mainloop()
+   

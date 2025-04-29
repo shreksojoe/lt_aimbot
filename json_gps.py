@@ -24,6 +24,8 @@ def read_coords(instructions):
         else:
             pyautogui.write(coord)
             time.sleep(0.2)
+if __name__ == "__main__":
+    home_btn_info = read_json(r'C:\\Users\Joseph.Stadum\\lt_aimbot\\ticket.json')
+    read_coords(home_btn_info)
 
-home_btn_info = read_json(r'C:\\Users\Joseph.Stadum\\lt_aimbot\\ticket.json')
-read_coords(home_btn_info)
+
