@@ -5,6 +5,8 @@ import win32process
 import win32con
 import subprocess
 import time
+import json
+import pyautogui
 
 
 # detect if label traxx is running
@@ -69,17 +71,43 @@ def wait_for_program(pid, timeout=30):
         time.sleep(0.5)
     print("Program Timed Out")
 
+# read json and return value
+def read_json(file_name):
+    with open (file_name, 'r') as file:
+        data = json.load(file)
+        value_list = []
+        for element in data:
+            # exception "Name"
+            for key, value in element.items():
+                if key != "Name":
+                    value_list.append(value)
+        return value_list
+
+def read_coords(instructions):
+    for coord in instructions:
+        # pyautogui.click(x=coord[0], y=coord[1]) 
+        if isinstance(coord, list) and len(coord) == 2 and all(isinstance(x, (int, float)) for x in coord):
+            pyautogui.moveTo(coord[0], coord[1], duration=0.2)
+            pyautogui.click()
+            time.sleep(0.2)
+        else:
+            pyautogui.write(coord)
+            time.sleep(0.2)
+
 # variables
 lt_process_name = "Label Traxx Client.exe"
 lt_path = r"C:\\Program Files\\LT Client\\Label Traxx Client.exe"
 lt_pid = get_pid_from_process_name(lt_process_name)
 lt_hwnd = get_hwnd_or_title_from_pid(lt_pid, "handle")
 lt_title = get_hwnd_or_title_from_pid(lt_pid, "title")
+login_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\login_credentials.json')
 
 
 # logic
 if detect_process(lt_process_name):
     select_program(lt_hwnd)
+    print(login_info)
+    read_coords(login_info)
     if "Home Page" in lt_title:
         print("Our work here is done")
     #else:
@@ -87,6 +115,7 @@ if detect_process(lt_process_name):
 else:
     start_program(lt_path)
     wait_for_program(lt_pid)
+    read_coords(login_info)
     # log into program
 
 
