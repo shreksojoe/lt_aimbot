@@ -101,17 +101,20 @@ lt_pid = get_pid_from_process_name(lt_process_name)
 lt_hwnd = get_hwnd_or_title_from_pid(lt_pid, "handle")
 lt_title = get_hwnd_or_title_from_pid(lt_pid, "title")
 login_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\login_credentials.json')
+home_btn_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\home_btn.json')
 
 
 # logic
 if detect_process(lt_process_name):
     select_program(lt_hwnd)
-    print(login_info)
-    read_coords(login_info)
+
     if "Home Page" in lt_title:
         print("Our work here is done")
-    #else:
-        #navigate to the home button and click it
+    elif lt_title == '':
+        read_coords(login_info)
+    else:
+        read_coords(home_btn_info)
+        
 else:
     start_program(lt_path)
     wait_for_program(lt_pid)
