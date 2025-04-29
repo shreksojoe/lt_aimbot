@@ -1,4 +1,6 @@
 import json
+import pyautogui
+import time
 
 # read json and return list
 def read_json(file_name):
@@ -23,5 +25,5 @@ def read_coords(instructions):
             pyautogui.write(coord)
             time.sleep(0.2)
 
-home_btn_info = read_json(r'C:\\Users\Joseph.Stadum\\lt_aimbot\\home_btn.json')
+home_btn_info = read_json(r'C:\\Users\Joseph.Stadum\\lt_aimbot\\ticket.json')
 read_coords(home_btn_info)
