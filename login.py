@@ -57,8 +57,6 @@ def select_program(window_handle):
 # start a program
 def start_program(program_path): subprocess.Popen([program_path])
 
-# detect if lt window is selected
-
 # wait for program 
 def wait_for_program(pid, timeout=30):
     start_time = time.time()
