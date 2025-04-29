@@ -1,7 +1,8 @@
 import psutil
 import pygetwindow as gw
-
-label_traxx = "Label Traxx Client.exe"
+import win32gui
+import win32process
+import win32con
 
 
 # detect if label traxx is running
@@ -11,28 +12,40 @@ def detect_label_traxx(process_name):
             return True
     return False
 
+
 # get lt window from pid
-def get_window_title_from_process_name(process_name):
+def get_pid_from_process_name(process_name):
     for proc in psutil.process_iter(['name' , 'pid']):
         if proc.info['name'] and proc.info['name'].lower() == process_name.lower():
-            pid = proc.info['pid']
-
-            for window in gw.getAllWindows():
-                if window._hWnd:
-                    try:
-                        if window._getWindowPid() == pid:
-                            return window.title
-                    except Exception:
-                        continue
-                else:
-                    return "No Title"
+            return proc.info['pid']
+    return None
     
 
-# bring lt to the front
-def select_label_traxx(title):
+# get window handle for labeltraxx (so we can get the title)
+def get_hwnd_from_pid(pid):
 
-    windows = gw.getWindowsWithTitle(label_traxx)
-    lt_instance = detect_label_traxx(label_traxx)
+    # verify that the window has a handle
+    for window in gw.getAllWindows():
+        try:
+            if window._getWindowHandle() and window._hWnd:
+                pass
+        except Exception:
+            continue
+
+    for window in gw.getAllWindows():
+        hwnd = window._hWnd
+        _, win_pid = win32process.GetWindowThreadProcessId(hwnd)
+        if win_pid == pid:
+            return window.title
+
+    return None
+
+
+# bring lt to the front
+def select_label_traxx(lt_title):
+
+    windows = gw.getWindowsWithTitle(lt_title)
+    lt_instance = detect_label_traxx(lt_title)
         
     if lt_instance:
         for window in gw.getAllWindows():
@@ -40,13 +53,12 @@ def select_label_traxx(title):
                 if window.isMinimized:
                     window.restore
                 window.activate
-                
     else:
         print("Label Traxx is not open")
     
 
+label_traxx = "Label Traxx Client.exe"
+lt_pid = get_pid_from_process_name(label_traxx)
+lt_hwnd = get_hwnd_from_pid(lt_pid)
+print(lt_hwnd)
 
-select_label_traxx(" ")
-
-
-print(get_window_title_from_process_name(label_traxx))
