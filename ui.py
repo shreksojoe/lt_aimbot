@@ -19,8 +19,12 @@ def browse_file():
     tmp_file_path = file_path
 
     if tmp_file_path != '':
+        window.destroy()
+        login = "login.py"
+        subprocess.run(["python", login])
         process_csv = "process_csv.py"
         subprocess.run(["python", process_csv, tmp_file_path])
+
 
 # convert csv to 2d List
 def process_csv(csv_file):
@@ -47,6 +51,5 @@ if __name__ == "__main__":
     browse_button = tk.Button(window, text="Browse CSV", command=browse_file)
     browse_button.pack(pady=50)
     
-
     window.mainloop()
    
