@@ -1,5 +1,6 @@
 from ui import file_dup, process_csv, browse_file
 from json_gps import read_json
+from datetime import datetime, timedelta
 import csv
 import json
 import time
@@ -17,7 +18,9 @@ def csv_to_array(file_path):
 po_array = csv_to_array(browse_file())
 
 def update_ship_date():
-    return po_array[0][2]
+    date_obj = datetime.strptime(po_array[0][2], '%m/%d/%Y')
+    new_date = date_obj - timedelta(weeks=2)
+    return(new_date.strftime('%m/%d/%Y'))
 
 def sort_keys ():
     with open (tmp_path, 'r') as file:
