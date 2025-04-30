@@ -19,10 +19,8 @@ def browse_file():
     tmp_file_path = file_path
 
     if tmp_file_path != '':
-        print('start processing the csv')
         process_csv = "process_csv.py"
         subprocess.run(["python", process_csv, tmp_file_path])
-        print('end processing the csv')
 
 # convert csv to 2d List
 def process_csv(csv_file):

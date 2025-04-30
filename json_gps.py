@@ -1,6 +1,7 @@
 import json
 import pyautogui
 import time
+import sys
 
 # read json and return list
 def read_json(file_name):
@@ -24,8 +25,14 @@ def read_coords(instructions):
         else:
             pyautogui.write(coord)
             time.sleep(0.2)
-if __name__ == "__main__":
-    home_btn_info = read_json(r'C:\\Users\Joseph.Stadum\\lt_aimbot\\ticket.json')
-    read_coords(home_btn_info)
 
+#if __name__ == "__main__":
+#    home_btn_info = read_json(r'C:\\Users\Joseph.Stadum\\lt_aimbot\\ticket.json')
+#    read_coords(home_btn_info)
+
+
+if len(sys.argv) > 1:
+    arg = sys.argv[1]
+    info = read_json(arg)
+    read_coords(info)
 
