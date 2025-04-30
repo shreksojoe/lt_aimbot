@@ -4,6 +4,9 @@ from datetime import datetime, timedelta
 import csv
 import json
 import time
+import sys
+
+    
 
 tmp_path = file_dup("C:/Users/Joseph.Stadum/lt_aimbot/ticket.json")
 csv_array = []
@@ -15,7 +18,6 @@ def csv_to_array(file_path):
             csv_array.append(row)
     return csv_array
 
-po_array = csv_to_array(browse_file())
 
 def update_ship_date():
     date_obj = datetime.strptime(po_array[0][2], '%m/%d/%Y')
@@ -53,6 +55,9 @@ def print_file(file_path):
         for item in data:
             print(item)
 
+if len(sys.argv) > 1:
+    arg = sys.argv[1]
+    po_array = csv_to_array(arg)
 
 sort_keys()
                 
