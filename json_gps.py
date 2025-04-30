@@ -1,4 +1,5 @@
 import json
+import pygetwindow as gw
 import pyautogui
 import time
 import sys
@@ -21,10 +22,10 @@ def read_coords(instructions):
         if isinstance(coord, list) and len(coord) == 2 and all(isinstance(x, (int, float)) for x in coord):
             pyautogui.moveTo(coord[0], coord[1], duration=0.2)
             pyautogui.click()
-            time.sleep(0.2)
+            time.sleep(1)
         else:
             pyautogui.write(coord)
-            time.sleep(0.2)
+            time.sleep(1)
 
 #if __name__ == "__main__":
 #    home_btn_info = read_json(r'C:\\Users\Joseph.Stadum\\lt_aimbot\\ticket.json')
