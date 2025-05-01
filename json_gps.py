@@ -20,12 +20,17 @@ def read_json(file_name):
 def read_coords(instructions):
     for coord in instructions:
         if isinstance(coord, list) and len(coord) == 2 and all(isinstance(x, (int, float)) for x in coord):
-            pyautogui.moveTo(coord[0], coord[1], duration=0.2)
+            active_window = gw.getWindowWithTitle(gw.getActiveWindow().title)[0]
+            left, top = active_window.left, active_window.top
+            x = left + coord[0] 
+            y = top + coord[1]
+            pyautogui.moveTo(x, y, duration=0.2)
             pyautogui.click()
             time.sleep(1)
         else:
             pyautogui.write(coord)
             time.sleep(1)
+
 
 #if __name__ == "__main__":
 #    home_btn_info = read_json(r'C:\\Users\Joseph.Stadum\\lt_aimbot\\ticket.json')
