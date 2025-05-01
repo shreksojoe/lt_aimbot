@@ -4,6 +4,7 @@ import pyautogui
 import subprocess
 import time
 import sys
+import csv
 
 # read json and return list
 def read_json(file_name):
@@ -36,14 +37,16 @@ def read_coords(instructions):
 #    return path
 
 if len(sys.argv) > 1:
-    arg = sys.argv[1]
-
-    with open('csv.txt', 'w') as f:
-        f.write(arg)
-
-    info = read_json(arg)
+    arg_json = sys.argv[1]
+    info = read_json(arg_json)
     read_coords(info)
-    subprocess.run(['python', 'address_search.py'])
+elif len(sys.argv > 2):
+    arg_csv = sys.argv2
+    with open(arg_csv, 'r') as f:
+        with open('csv.txt', 'w') as f2:
+            f2.write(f.read())
+
+subprocess.run(['python', 'address_search.py'])
     
 
 

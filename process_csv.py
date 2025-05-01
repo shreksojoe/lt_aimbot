@@ -70,10 +70,10 @@ if len(sys.argv) > 1:
  
 sort_keys()
                 
-print_file(tmp_path)
+# print_file(tmp_path)
 
 json_gps = 'json_gps.py'
-subprocess.run(["python", json_gps, tmp_path])
+subprocess.run(["python", json_gps, tmp_path, arg2])
 
 
 
