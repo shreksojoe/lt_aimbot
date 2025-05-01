@@ -12,7 +12,7 @@
     {"Name": "Ship Text Box", "Coordinats": [834, 208]},
     {"Select All": "ctrl+a"},
     {"Ship Date": ""},
-    {"Name": "Quantity Text Box", "Coordinats": [113, 376]},
+    {"Name": "Quantity Text Box", "Coordinats": [46, 376]},
     {"Quantity": ""},
     {"Name": "Product No. Text Box", "Coordinats": [223, 372]},
     {"Product Number": ""},
@@ -23,7 +23,6 @@
     {"Order Notes": ""},
     {"Name": "Address Tab", "Coordinats": [206, 59]},
     {"Name": "Location Link", "Coordinats": [159, 283]},
-    {"Name": "First Link", "Coordinats": [252, 268]},
-    {"Input": ""}
+    {"Name": "First Link", "Coordinats": [252, 268]}
 
 ]
