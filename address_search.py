@@ -17,12 +17,14 @@ import pyautogui
 def extract_zip(address):
     match = re.search(r'\b\d{5}(?:-\d{4})?\b', address)
     if match:
+        print(match)
         return match.group()
     return None
 
 def extract_address():
     with open('csv.txt', 'r') as f:
         address = f.read()
+        print(address)
         return address
         os.remove()
 
