@@ -3,6 +3,7 @@ import pygetwindow as gw
 import pyautogui
 import time
 import sys
+import subprocess
 
 # read json and return list
 def read_json(file_name):
@@ -42,6 +43,7 @@ if len(sys.argv) > 1:
 
     info = read_json(arg)
     read_coords(info)
-    
+
+    subprocess.run(['python', 'address_search.py'])
 
 
