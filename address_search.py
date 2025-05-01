@@ -50,18 +50,21 @@ def loop():
 
         if i < 10:
             move_mouse_down()
+        else:
+            print("1-10 failed")
 
         pyautogui.click()
         keyboard.press_and_release('ctrl+c')
         current_address = pyperclip.paste()
+        print(current_address)
 
         if compare_zip(extract_zip(current_address)) == 1:
             return
         else:
             cache.append(current_address)
-            if check_dup(cache[-1], cache[-2]) == 1:
+            if len(cache) >= 2 and check_dup(cache[-1], cache[-2]) == 1:
                 return
 
-
+print("address_search launched")
 loop()
 
