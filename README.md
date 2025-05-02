@@ -24,6 +24,7 @@ This program is in it's early stages and has some notable limitations:
     3. Cannot be run in the background. You will not be able to use your computer while this is running
 
 
+Slack for questions, comments, and/or concerns
 
 
 
