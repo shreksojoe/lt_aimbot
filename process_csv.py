@@ -51,9 +51,13 @@ def sort_keys ():
             elif first_key == "Price":
                 item[first_key] = po_array[0][5]
             elif first_key == "Order Notes":
-                item[first_key] = po_array[0][7]
-            elif first_key == "Input":
-                item[first_key] = "test"
+                try:
+                    item[first_key] = po_array[0][7]
+                except IndexError:
+                    print("No notes found.")
+                    continue
+            elif first_key == "Zip":
+                item[first_key] = int(po_array[0][6])
     with open (tmp_path, 'w') as file:
         json.dump(data, file, indent=4)
 
@@ -72,8 +76,11 @@ sort_keys()
                 
 # print_file(tmp_path)
 
+print("before csv created ...")
 json_gps = 'json_gps.py'
+print(f"tmp_path: {tmp_path}, arg2: {arg2}")
 subprocess.run(["python", json_gps, tmp_path, arg2])
+print("... after csv created")
 
 
 
