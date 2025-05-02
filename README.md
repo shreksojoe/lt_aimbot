@@ -4,7 +4,7 @@ This is LT Aimbot, used for cheating at making tickets in Label Traxx.
 
 ## Download:
 
-[Version Prehistoric Available Here]()
+[Version Prehistoric Available Here](https://github.com/shreksojoe/lt_aimbot/releases/tag/Beta)
 click on the .exe file and it will download (maybe download to Desktop if your cool)
 Windows did not protect you PC: click more info and run anyway.
 if the terminal that pops up bothers you, Slack me and I'll consider removing it :/
