@@ -13,7 +13,7 @@ This is LT Aimbot, used for cheating at making tickets in Label Traxx.
 
 Using this template:
 
-```Customer Name,Order Number ,Ship Date, Quantity, price (per unit), Address, Notes(Optional)```
+```Customer Name,Order Number ,Ship Date, Quantity, product number, price (per unit), Address, Notes(Optional)```
 
 Input all necessary information into a csv.
 
