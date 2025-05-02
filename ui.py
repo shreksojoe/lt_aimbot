@@ -45,7 +45,7 @@ def file_dup(path):
 if __name__ == "__main__":
     window = tk.Tk()
     window.title("LT Aimbot")
-    # window.iconbitmap("")
+    #window.iconbitmap("coding_dino.ico")
     window.geometry("450x150")
 
     browse_button = tk.Button(window, text="Browse CSV", command=browse_file)
