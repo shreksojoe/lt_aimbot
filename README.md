@@ -14,8 +14,11 @@ This is LT Aimbot, used for cheating at making tickets in Label Traxx.
 Using this template:
 
 ```Customer Name,Order Number ,Ship Date, Quantity, price (per unit), Address, Notes(Optional)```
+
 Input all necessary information into a csv.
+
 Launch LT Aimbot.exe and click the "Browse CSV" and navigate to the csv you want to turn into a ticket.
+
 The program will take control over your mouse and keyboard.
 
 ## CAUTION
