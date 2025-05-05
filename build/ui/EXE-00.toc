@@ -1,8 +1,8 @@
 ('C:\\Users\\Joseph.Stadum\\lt_aimbot\\dist\\ui.exe',
- True,
  False,
  False,
- 'C:\\Users\\Joseph.Stadum\\lt_aimbot\\venv\\Lib\\site-packages\\PyInstaller\\bootloader\\images\\icon-console.ico',
+ False,
+ 'C:\\Users\\Joseph.Stadum\\lt_aimbot\\venv\\Lib\\site-packages\\PyInstaller\\bootloader\\images\\icon-windowed.ico',
  None,
  False,
  False,
@@ -3981,9 +3981,9 @@
  [],
  False,
  False,
- 1746454432,
- [('run.exe',
-   'C:\\Users\\Joseph.Stadum\\lt_aimbot\\venv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\run.exe',
+ 1746455100,
+ [('runw.exe',
+   'C:\\Users\\Joseph.Stadum\\lt_aimbot\\venv\\Lib\\site-packages\\PyInstaller\\bootloader\\Windows-64bit-intel\\runw.exe',
    'EXECUTABLE')],
  'C:\\Program '
  'Files\\WindowsApps\\PythonSoftwareFoundation.Python.3.13_3.13.1008.0_x64__qbz5n2kfra8p0\\python313.dll')
