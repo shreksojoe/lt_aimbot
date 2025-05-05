@@ -40,10 +40,6 @@ if len(sys.argv) > 2:
     arg_json = sys.argv[1]
     info = read_json(arg_json)
     true_zip_code = read_coords(info)
-    arg_csv = sys.argv[2]
-    with open(arg_csv, 'r') as f:
-        with open('csv.txt', 'w') as f2:
-            f2.write(f.read())
 
 subprocess.run(['pythonw.exe', 'address_search.py', str(true_zip_code)])
     

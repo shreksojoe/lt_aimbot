@@ -28,12 +28,6 @@ def extract_zip(string_address):
     else:
         return None
 
-# def extract_address():
-#     with open('csv.txt', 'r') as f:
-#         address = f.read()
-#         return address
-#         #os.remove('csv.txt')
-
 # checks if the last 2 addresses repeated
 def check_dup(prev_row, curr_row):
     if prev_row == curr_row:
@@ -45,7 +39,6 @@ def check_dup(prev_row, curr_row):
 def compare_zip(zip1, zip2):
     true_zip = str(zip1) 
     test_zip = str(zip2) 
-    # zip1 = extract_zip(extract_address())
     if true_zip in test_zip or test_zip in true_zip:
         return 1
     else: return 0
