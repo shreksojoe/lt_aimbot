@@ -20,10 +20,8 @@ def browse_file():
 
     if tmp_file_path != '':
         window.destroy()
-        login = "login.py"
-        subprocess.run(["python", login])
-        process_csv = "process_csv.py"
-        subprocess.run(["python", process_csv, tmp_file_path])
+        subprocess.run(["pythonw.exe", "login.py"])
+        subprocess.run(["pythonw.exe", "process_csv.py", tmp_file_path])
 
 
 # convert csv to 2d List

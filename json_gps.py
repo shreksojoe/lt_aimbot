@@ -45,7 +45,7 @@ if len(sys.argv) > 2:
         with open('csv.txt', 'w') as f2:
             f2.write(f.read())
 
-subprocess.run(['python', 'address_search.py', str(true_zip_code)])
+subprocess.run(['pythonw.exe', 'address_search.py', str(true_zip_code)])
     
 
 # goes from process_csv
