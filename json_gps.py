@@ -53,7 +53,7 @@ if len(sys.argv) > 1:
         pyautogui.click()
         pyautogui.moveTo(152, 284, duration=0.2)
         pyautogui.click()
-        subprocess.run(['python', 'address_search.py', str(true_zip_code)])
+        subprocess.run([sys.executable, 'address_search.py', str(true_zip_code)])
     else:
         pyautogui.moveTo(222, 280, duration=0.2)
         pyautogui.click()

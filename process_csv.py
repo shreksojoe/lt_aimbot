@@ -81,7 +81,7 @@ sort_keys()
 
 print("before csv created ...")
 print(f"tmp_path: {tmp_path}, arg2: {arg2}")
-subprocess.run(["python", "json_gps.py", tmp_path, arg2])
+subprocess.run([sys.executable, "json_gps.py", tmp_path, arg2])
 print("... after csv created")
 
 

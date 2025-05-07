@@ -4,6 +4,7 @@ import atexit
 import subprocess
 import os
 import csv
+import sys
 import tkinter as tk
 from tkinter import filedialog
 
@@ -20,8 +21,8 @@ def browse_file():
 
     if tmp_file_path != '':
         window.destroy()
-        subprocess.run(["python", "login.py"])
-        subprocess.run(["python", "process_csv.py", tmp_file_path])
+        subprocess.run([sys.executable, "login.py"])
+        subprocess.run([sys.executable, "process_csv.py", tmp_file_path])
 
 
 # convert csv to 2d List
