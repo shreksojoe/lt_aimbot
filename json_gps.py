@@ -36,7 +36,9 @@ def read_coords(instructions):
 
     return zip_code
 
-if len(sys.argv) > 2:
+true_zip_code = ""
+
+if len(sys.argv) > 1:
     arg_json = sys.argv[1]
     info = read_json(arg_json)
     true_zip_code = read_coords(info)

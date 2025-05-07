@@ -6,6 +6,7 @@ import pyperclip
 import os
 import pyautogui
 import sys
+import subprocess
 
 # mouse is already clicked on the right row
 # 1. activate down arrow
@@ -49,7 +50,6 @@ def move_mouse_down():
     x, y = pyautogui.position()
     pyautogui.moveTo(x, y + 19)
 
-
 # control loop
 def loop(zip_code):
     cache = []
@@ -85,7 +85,11 @@ def loop(zip_code):
 
 def main():
     if len(sys.argv) > 1:
-        zip_code = int(sys.argv[1])
+        try:
+            zip_code = int(sys.argv[1])
+        except ValueError:
+            subprocess.run("python", "json_gps.py" "type_location.json")
+            keyboard.write(sys.argv[1])
         print(f"zip code switched to int: {zip_code}")
     zip_code = str(zip_code)
     loop(zip_code)
