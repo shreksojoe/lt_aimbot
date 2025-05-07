@@ -20,8 +20,8 @@ def browse_file():
 
     if tmp_file_path != '':
         window.destroy()
-        subprocess.run(["pythonw.exe", "login.py"])
-        subprocess.run(["pythonw.exe", "process_csv.py", tmp_file_path])
+        subprocess.run(["python", "login.py"])
+        subprocess.run(["python", "process_csv.py", tmp_file_path])
 
 
 # convert csv to 2d List
@@ -41,6 +41,7 @@ def file_dup(path):
     return temp_path
 
 if __name__ == "__main__":
+    print("ui.py started, print works")
     window = tk.Tk()
     window.title("LT Aimbot")
     #window.iconbitmap("coding_dino.ico")

@@ -57,7 +57,10 @@ def sort_keys ():
                     print("No notes found.")
                     continue
             elif first_key == "Zip":
-                item[first_key] = int(po_array[0][6])
+                try:
+                    item[first_key] = int(po_array[0][6])
+                except ValueError:
+                    item[first_key] = po_array[0][6]
     with open (tmp_path, 'w') as file:
         json.dump(data, file, indent=4)
 
@@ -78,7 +81,7 @@ sort_keys()
 
 print("before csv created ...")
 print(f"tmp_path: {tmp_path}, arg2: {arg2}")
-subprocess.run(["pythonw.exe", "json_gps.py", tmp_path, arg2])
+subprocess.run(["python", "json_gps.py", tmp_path, arg2])
 print("... after csv created")
 
 
