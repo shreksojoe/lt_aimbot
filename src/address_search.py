@@ -88,7 +88,7 @@ def main():
         try:
             zip_code = int(sys.argv[1])
         except ValueError:
-            subprocess.run(sys.executable, "json_gps.py" "type_location.json")
+            subprocess.run(sys.executable, "json_gps.py" "instructions\\type_location.json")
             keyboard.write(sys.argv[1])
         print(f"zip code switched to int: {zip_code}")
     zip_code = str(zip_code)

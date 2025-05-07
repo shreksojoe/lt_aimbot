@@ -8,7 +8,7 @@ import sys
 import subprocess
 
     
-tmp_path = file_dup("C:/Users/Joseph.Stadum/lt_aimbot/ticket.json")
+tmp_path = file_dup("C:/Users/Joseph.Stadum/lt_aimbot/src/instructions/ticket.json")
 csv_array = []
 
 
