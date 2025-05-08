@@ -4,7 +4,7 @@ This is LT Aimbot, used for cheating at making tickets in Label Traxx.
 
 ## Download:
 
-1. [Version Prehistoric Available Here](https://github.com/shreksojoe/lt_aimbot/releases/tag/Beta)
+1. [Zip Code Update Available Here](https://github.com/shreksojoe/lt_aimbot/releases/tag/v0.1.0)
 2. Click on the .exe file and it will download (maybe download to Desktop if your cool) 
 3. Windows did not protect you PC: click more info and "run anyway".
 4. If the terminal that pops up bothers you, Slack me and I'll consider removing it :/
@@ -13,7 +13,7 @@ This is LT Aimbot, used for cheating at making tickets in Label Traxx.
 
 Using this template:
 
-```Customer Name,Order Number ,Ship Date, Quantity, product number, price (per unit), Address, Notes(Optional)```
+```Customer Name, Order Number, Ship Date, Quantity, Product Number, Price (per unit), Zip Code (address), Notes(Optional)```
 
 Input all necessary information into a csv.
 
