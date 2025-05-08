@@ -1,12 +1,13 @@
 import tempfile
 import shutil
 import atexit
-import subprocess
 import os
 import csv
 import sys
 import tkinter as tk
 from tkinter import filedialog
+import login
+import process_csv
 
 
 global tmp_file_path
@@ -21,12 +22,12 @@ def browse_file():
 
     if tmp_file_path != '':
         window.destroy()
-        subprocess.run([sys.executable, "login.py"])
-        subprocess.run([sys.executable, "process_csv.py", tmp_file_path])
+        login.to_Label_Traxx()
+        process_csv.start(tmp_file_path)
 
 
 # convert csv to 2d List
-def process_csv(csv_file):
+def csv_converter(csv_file):
     with open(csv_file, newline='') as file:
         reader = csv.reader(file)
         order = list(reader)
@@ -38,7 +39,7 @@ def file_dup(path):
     temp_path = temp_file.name
     temp_file.close()
 
-    shutil.copy2(path, temp_path)
+    shutil.copy2(str(path), str(temp_path))
     return temp_path
 
 if __name__ == "__main__":

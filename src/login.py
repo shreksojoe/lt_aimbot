@@ -97,7 +97,7 @@ def read_coords(instructions):
 def to_Label_Traxx():
     # variables
     lt_process_name = "Label Traxx Client.exe"
-    lt_path = path_finder.find_rel_path(login.py, "Label Traxx Client.exe")
+    lt_path = path_finder.find_rel_path("login.py", "LT Client\\Label Traxx Client.exe")
     # lt_path = r"C:\\Program Files\\LT Client\\Label Traxx Client.exe"
     lt_pid = get_pid_from_process_name(lt_process_name)
     lt_hwnd = get_hwnd_or_title_from_pid(lt_pid, "handle")
