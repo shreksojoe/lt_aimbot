@@ -2,10 +2,10 @@ import json
 import keyboard
 import pygetwindow as gw
 import pyautogui
-import subprocess
 import time
 import sys
 import csv
+import address_search
 
 # read json and return list
 def read_json(file_name):
@@ -43,9 +43,8 @@ def is_int(zip):
     except ValueError:
         return False
 
-if len(sys.argv) > 1:
-    arg_json = sys.argv[1]
-    info = read_json(arg_json)
+def execute(instructions):
+    info = read_json(instructions)
     true_zip_code = read_coords(info)
     print('this is repeating')
     if true_zip_code == "" or (isinstance(true_zip_code, int) and true_zip_code != 0):
@@ -53,7 +52,8 @@ if len(sys.argv) > 1:
         pyautogui.click()
         pyautogui.moveTo(152, 284, duration=0.2)
         pyautogui.click()
-        subprocess.run([sys.executable, 'address_search.py', str(true_zip_code)])
+
+        address_search.scan(str(true_zip_code))
     else:
         pyautogui.moveTo(222, 280, duration=0.2)
         pyautogui.click()

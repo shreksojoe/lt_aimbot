@@ -1,14 +1,18 @@
-from ui import file_dup, process_csv, browse_file
+#from ui import file_dup, process_csv, browse_file
 # from json_gps import read_json
+import ui
 from datetime import datetime, timedelta
 import csv
 import json
 import time
 import sys
-import subprocess
+import os
+import json_gps
+import path_finder
 
     
-tmp_path = file_dup("C:/Users/Joseph.Stadum/lt_aimbot/src/instructions/ticket.json")
+fd_path = path_finder.find_rel_path("src", "ticket.json")
+tmp_path = ui.file_dup(fd_path)
 csv_array = []
 
 
@@ -71,18 +75,12 @@ def print_file(file_path):
         for item in data:
             print(item)
 
-if len(sys.argv) > 1:
-    arg2 = sys.argv[1]
-    po_array = csv_to_array(arg2)
- 
-sort_keys()
-                
-# print_file(tmp_path)
-
-print("before csv created ...")
-print(f"tmp_path: {tmp_path}, arg2: {arg2}")
-subprocess.run([sys.executable, "json_gps.py", tmp_path, arg2])
-print("... after csv created")
+def start(csv):
+    po_array = csv_to_array(csv)
+     
+    sort_keys()
+    
+    json_gps(tmp_path)
 
 
 

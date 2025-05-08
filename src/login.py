@@ -3,10 +3,10 @@ import pygetwindow as gw
 import win32gui
 import win32process
 import win32con
-import subprocess
 import time
 import json
 import pyautogui
+import path_finder
 
 
 # detect if label traxx is running
@@ -94,42 +94,36 @@ def read_coords(instructions):
             pyautogui.write(coord)
             time.sleep(0.2)
 
-# variables
-lt_process_name = "Label Traxx Client.exe"
-lt_path = r"C:\\Program Files\\LT Client\\Label Traxx Client.exe"
-lt_pid = get_pid_from_process_name(lt_process_name)
-lt_hwnd = get_hwnd_or_title_from_pid(lt_pid, "handle")
-lt_title = get_hwnd_or_title_from_pid(lt_pid, "title")
-login_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\login_credentials.json')
-home_btn_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\home_btn.json')
-
-
-# logic
-if detect_process(lt_process_name):
-    select_program(lt_hwnd)
-
-    if "Home Page" in lt_title:
-        print("Our work here is done")
-    elif lt_title == '':
-        read_coords(login_info)
+def to_Label_Traxx():
+    # variables
+    lt_process_name = "Label Traxx Client.exe"
+    lt_path = path_finder.find_rel_path(login.py, "Label Traxx Client.exe")
+    # lt_path = r"C:\\Program Files\\LT Client\\Label Traxx Client.exe"
+    lt_pid = get_pid_from_process_name(lt_process_name)
+    lt_hwnd = get_hwnd_or_title_from_pid(lt_pid, "handle")
+    lt_title = get_hwnd_or_title_from_pid(lt_pid, "title")
+    login_info = read_json(path_finder.find_rel_path(login.py, login_credentials.json))
+    # login_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\login_credentials.json')
+    home_btn_info = read_json(path_finder.find_rel_path(login.py, home_btn.json))
+    # home_btn_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\home_btn.json')
+    
+    
+    # logic
+    if detect_process(lt_process_name):
+        select_program(lt_hwnd)
+    
+        if "Home Page" in lt_title:
+            print("Our work here is done")
+        elif lt_title == '':
+            read_coords(login_info)
+        else:
+            read_coords(home_btn_info)
+            
     else:
-        read_coords(home_btn_info)
-        
-else:
-    start_program(lt_path)
-    wait_for_program(lt_pid)
-    read_coords(login_info)
-    # log into program
-
-
-
-
-
-
-
-
-
-
+        start_program(lt_path)
+        wait_for_program(lt_pid)
+        read_coords(login_info)
+        # log into program
 
 
 
