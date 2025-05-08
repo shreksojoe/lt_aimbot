@@ -11,12 +11,9 @@ import json_gps
 import path_finder
 
     
-# Use the correct path to ticket.json in the instructions directory
-fd_path = path_finder.find_rel_path("src", "instructions/ticket.json")
-print(f"Full path to ticket.json: {os.path.abspath(fd_path)}")
+fd_path = path_finder.find_rel_path("src", "ticket.json")
 tmp_path = ui.file_dup(fd_path)
 csv_array = []
-po_array = []  # Define po_array as global
 
 
 # turn csv to an array
@@ -79,12 +76,11 @@ def print_file(file_path):
             print(item)
 
 def start(csv):
-    global po_array  # Use the global po_array
     po_array = csv_to_array(csv)
      
     sort_keys()
     
-    json_gps.json_gps(tmp_path)  # Fix the function call
+    json_gps(tmp_path)
 
 
 
