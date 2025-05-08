@@ -1,0 +1,5 @@
+To Convert to EXE:
+
+(in venv)
+
+pyinstaller --onefile --hidden-import=psutil --hidden-import=pygetwindow --hidden-import=pyautogui --hidden-import=win32gui --hidden-import=win32process --hidden-import=win32con --add-data "instructions;instructions" ui.py
