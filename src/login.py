@@ -57,7 +57,9 @@ def select_program(window_handle):
     win32gui.SetForegroundWindow(window_handle)
 
 # start a program
-def start_program(program_path): subprocess.Popen([program_path])
+def start_program(program_path):
+    import subprocess
+    subprocess.Popen([program_path])
 
 # wait for program 
 def wait_for_program(pid, timeout=30):
@@ -97,14 +99,14 @@ def read_coords(instructions):
 def to_Label_Traxx():
     # variables
     lt_process_name = "Label Traxx Client.exe"
-    lt_path = path_finder.find_rel_path("login.py", "LT Client\\Label Traxx Client.exe")
-    # lt_path = r"C:\\Program Files\\LT Client\\Label Traxx Client.exe"
+    # lt_path = path_finder.find_rel_path("login.py", "LT Client\Label Traxx Client.exe")
+    lt_path = r"C:\\Program Files\\LT Client\\Label Traxx Client.exe"
     lt_pid = get_pid_from_process_name(lt_process_name)
     lt_hwnd = get_hwnd_or_title_from_pid(lt_pid, "handle")
     lt_title = get_hwnd_or_title_from_pid(lt_pid, "title")
-    login_info = read_json(path_finder.find_rel_path(login.py, login_credentials.json))
+    login_info = read_json(path_finder.find_rel_path("src", "instructions/login_credentials.json"))
     # login_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\login_credentials.json')
-    home_btn_info = read_json(path_finder.find_rel_path(login.py, home_btn.json))
+    home_btn_info = read_json(path_finder.find_rel_path("src", "instructions/home_btn.json"))
     # home_btn_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\home_btn.json')
     
     
@@ -124,8 +126,4 @@ def to_Label_Traxx():
         wait_for_program(lt_pid)
         read_coords(login_info)
         # log into program
-
-
-
-
 

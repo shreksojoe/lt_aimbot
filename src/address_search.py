@@ -7,6 +7,7 @@ import os
 import pyautogui
 import sys
 import json_gps
+import path_finder
 
 # mouse is already clicked on the right row
 # 1. activate down arrow
@@ -84,7 +85,7 @@ def loop(zip_code):
                 return
 
 def scan(addr): 
-    type_shit = pathfinder.find_rel_path(json_gps.py, type_location.json)
+    type_shit = path_finder.find_rel_path("json_gps.py", "instructions\type_location.json")
     try:
         zip_code = int(addr)
     except ValueError:

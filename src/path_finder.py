@@ -2,15 +2,19 @@ import os
 import sys
 
 def find_rel_path(start_file, end_file):
-    # Convert to absolute paths if they aren't already
-    start_file = os.path.abspath(start_file)
-    end_file = os.path.abspath(end_file)
+    # Get the current script directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
     
-    # Get the directory of the start file
-    start_dir = os.path.dirname(start_file)
+    # If start_file is 'src', we're looking for a file within the src directory
+    if start_file == "src":
+        # Just use the current directory (which is the src directory)
+        base_dir = current_dir
+    else:
+        # Navigate up to the parent directory for other cases
+        base_dir = os.path.dirname(current_dir)
     
-    # Calculate the relative path FROM start_dir TO end_file
-    relative_path = os.path.relpath(end_file, start=start_dir)
+    # Create the absolute path to the target file
+    absolute_path = os.path.join(base_dir, end_file)
     
-    print(f"Relative Path: {relative_path}")
-    return relative_path
+    print(f"Relative Path: {end_file}")
+    return absolute_path
