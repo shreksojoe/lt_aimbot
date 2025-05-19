@@ -10,7 +10,7 @@ import login
 import process_csv
 
 
-global tmp_file_path
+tmp_file_path = None
 
 # browse file manager
 def browse_file():
@@ -24,7 +24,6 @@ def browse_file():
         window.destroy()
         login.to_Label_Traxx()
         process_csv.start(tmp_file_path)
-
 
 # convert csv to 2d List
 def csv_converter(csv_file):
@@ -42,7 +41,7 @@ def file_dup(path):
     shutil.copy2(str(path), str(temp_path))
     return temp_path
 
-if __name__ == "__main__":
+def create_window():
     print("ui.py started, print works")
     window = tk.Tk()
     window.title("LT Aimbot")
@@ -53,4 +52,6 @@ if __name__ == "__main__":
     browse_button.pack(pady=50)
     
     window.mainloop()
+    return tmp_file_path
    
+
