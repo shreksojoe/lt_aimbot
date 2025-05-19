@@ -5,23 +5,41 @@ import pyautogui
 import time
 import sys
 import csv
-import address_search
+# import address_search
+
+
+# basic functionality of json_gps:
+# coords.json => json_gps
+#                   |
+#                   v
+#     move mouse, click, and keyboard
+
 
 # read json and return list
-def read_json(file_name):
-    with open (file_name, 'r') as file:
-        data = json.load(file)
+def read_json(filepath):
+    try:
+        with open(filepath, 'r') as file:
+            data = json.load(file)
         value_list = []
         for element in data:
             #exception "Name"
-            for key, value in element. items():
+            for key, value in element.items():
                 if key != "Name":
                     value_list.append(value)
 
         return value_list
+    except json.JSONDecodeError as e:
+        print(f"Error: the file '{filepath}' is not a valid JSON file.\nDetails: {e}")
+        return None
+    except FileNotFoundError:
+        print(f"Error: the file '{filepath}' was not found.")
+        return None
 
 
 def read_coords(instructions):
+    if instructions is None:
+        print("No instructions to process.")
+        return None
     zip_code = 0
     for coord in instructions:
         if isinstance(coord, list) and len(coord) == 2 and all(isinstance(x, (int, float)) for x in coord):
@@ -45,7 +63,11 @@ def is_int(zip):
 
 def execute(instructions):
     info = read_json(instructions)
-    true_zip_code = read_coords(info)
+    if info is None:
+        print("No valid data to process. Exiting.")
+        return
+    else:
+        true_zip_code = read_coords(info)
     print('this is repeating')
     if true_zip_code == "" or (isinstance(true_zip_code, int) and true_zip_code != 0):
         pyautogui.moveTo(159, 308, duration=0.2)
@@ -53,12 +75,17 @@ def execute(instructions):
         pyautogui.moveTo(152, 284, duration=0.2)
         pyautogui.click()
 
-        address_search.scan(str(true_zip_code))
+        #address_search.scan(str(true_zip_code))
     else:
         pyautogui.moveTo(222, 280, duration=0.2)
         pyautogui.click()
         keyboard.write(info[-1])
     
+if (len(sys.argv) > 1):
+    execute(sys.argv[1])
+else:
+    print('No file was inputed')
+
 
 # goes from process_csv
 
