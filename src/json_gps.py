@@ -48,7 +48,7 @@ def read_coords(instructions):
     zip_code = 0
     for i, coord in enumerate(instructions):
         print(f"\nProcessing item {i}: {coord} (type: {type(coord)})")
-        
+
         if isinstance(coord, list) and len(coord) == 2 and all(isinstance(x, (int, float)) for x in coord):
             print(f"  - Found coordinates: {coord}")
             pyautogui.moveTo(coord[0], coord[1], duration=0.2)
@@ -57,6 +57,19 @@ def read_coords(instructions):
         elif isinstance(coord, int):
             print(f"  - Found zip code: {coord}")
             zip_code = coord
+            
+            # Handle zip code based on its type
+            if is_int(zip_code):
+                print(f"  - {zip_code} is a valid integer. Clicking Location Link...")
+                pyautogui.moveTo(166, 284, duration=0.2)  # Location Link coordinates
+                pyautogui.click()
+            else:
+                print(f"  - {zip_code} is not a valid integer. Typing in Location Text Box...")
+                pyautogui.moveTo(209, 279, duration=0.2)  # Location Text Box coordinates
+                pyautogui.click()
+                pyautogui.write(str(zip_code))
+            time.sleep(1)
+            
         else:
             print(f"  - Found string: '{coord}'. Typing...")
             pyautogui.write(str(coord))
