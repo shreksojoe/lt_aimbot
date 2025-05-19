@@ -60,9 +60,15 @@ def read_coords(instructions):
             
             # Handle zip code based on its type
             if is_int(zip_code):
-                print(f"  - {zip_code} is a valid integer. Clicking Location Link...")
+                print(f"  - {zip_code} is a valid integer. Clicking Location Link and searching address...")
                 pyautogui.moveTo(166, 284, duration=0.2)  # Location Link coordinates
                 pyautogui.click()
+                time.sleep(1)  # Wait for the location link to be clicked
+                
+                # Import and use address search
+                import address_search
+                print(f"Launching address search for zip code: {zip_code}")
+                address_search.scan(str(zip_code))
             else:
                 print(f"  - {zip_code} is not a valid integer. Typing in Location Text Box...")
                 pyautogui.moveTo(209, 279, duration=0.2)  # Location Text Box coordinates
