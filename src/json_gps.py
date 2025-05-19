@@ -40,18 +40,29 @@ def read_coords(instructions):
     if instructions is None:
         print("No instructions to process.")
         return None
+    
+    print("\n=== Debug: Processing Instructions ===")
+    print(f"Type of instructions: {type(instructions)}")
+    print(f"Instructions content: {instructions}")
+    
     zip_code = 0
-    for coord in instructions:
+    for i, coord in enumerate(instructions):
+        print(f"\nProcessing item {i}: {coord} (type: {type(coord)})")
+        
         if isinstance(coord, list) and len(coord) == 2 and all(isinstance(x, (int, float)) for x in coord):
+            print(f"  - Found coordinates: {coord}")
             pyautogui.moveTo(coord[0], coord[1], duration=0.2)
             pyautogui.click()
             time.sleep(1)
         elif isinstance(coord, int):
+            print(f"  - Found zip code: {coord}")
             zip_code = coord
         else:
-            pyautogui.write(coord)
+            print(f"  - Found string: '{coord}'. Typing...")
+            pyautogui.write(str(coord))
             time.sleep(1)
-
+    
+    print(f"\n=== Debug: Final zip code: {zip_code} ===")
     return zip_code
 
 def is_int(zip):
