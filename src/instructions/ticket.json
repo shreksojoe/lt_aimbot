@@ -22,6 +22,7 @@
     {"Name": "Order Notes Text Box", "Coordinats": [569, 308]},
     {"Order Notes": ""},
     {"Name": "Address Tab", "Coordinats": [206, 59]},
+    {"Name": "Address Text Box", "Coordinats": [209, 279]},
     {"Zip": ""}
 
 ]

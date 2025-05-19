@@ -26,6 +26,7 @@ def read_json(filepath):
             for key, value in element.items():
                 if key != "Name":
                     value_list.append(value)
+    
 
         return value_list
     except json.JSONDecodeError as e:
@@ -93,6 +94,7 @@ def is_int(zip):
 
 def execute(instructions):
     info = read_json(instructions)
+    print(info)
     if info is None:
         print("No valid data to process. Exiting.")
         return
