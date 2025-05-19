@@ -11,6 +11,7 @@ import json_gps
 import path_finder
 import shutil
 import tempfile
+import date
 
     
 fd_path = path_finder.find_rel_path("src", "instructions/ticket.json")
@@ -37,16 +38,7 @@ def csv_to_array(file_path):
 
 # set ship date to 2 weeks prior
 def update_ship_date(input_date):
-    try: 
-        input_date = datetime.strptime(input_date, "%m/%d/%Y")
-        new_date = input_date - timedelta(weeks=2)
-        return new_date.strftime("%m/%d/%Y")
-
-    except ValueError:
-        date_obj = datetime.strptime(po_array[0][2], '%m/%d/%y')
-        new_date = date_obj - timedelta(weeks=2)
-        return(new_date.strftime('%m/%d/%y'))
-
+    date.get_date_two_weeks_prior(input_date)
 # add csv values to json
 def sort_keys ():
     with open (tmp_path, 'r') as file:
