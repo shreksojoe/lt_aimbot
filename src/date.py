@@ -2,13 +2,16 @@ from datetime import datetime, timedelta
 
 def get_date_two_weeks_prior(input_date):
     """
-    Takes a date string in various formats and returns the date two weeks prior in MM/DD/YYYY format.
+    Takes a date string in various formats and returns 
+    the date two weeks prior in MM/DD/YYYY format.
     
     Args:
-        input_date (str): Date string in various formats (e.g., 'MM/DD/YYYY', 'MM-DD-YY', 'MM/DD/YY', 'YYYY-MM-DD')
+        input_date (str): Date string in various formats
+        (e.g., 'MM/DD/YYYY', 'MM-DD-YY', 'MM/DD/YY', 'YYYY-MM-DD')
         
     Returns:
-        str: Date two weeks prior in MM/DD/YYYY format, or None if parsing fails
+        str: Date two weeks prior in MM/DD/YYYY format,
+        or None if parsing fails
     """
     # List of possible date formats to try
     date_formats = [
@@ -29,7 +32,8 @@ def get_date_two_weeks_prior(input_date):
             # For formats without year, use current year
             if fmt in ['%m/%d', '%m-%d']:
                 current_year = datetime.now().year
-                parsed_date = datetime.strptime(f"{input_date}/{current_year}", '%m/%d/%Y')
+                parsed_date = datetime.strptime(f"{input_date}/{current_year}",
+                                                '%m/%d/%Y')
             else:
                 parsed_date = datetime.strptime(input_date, fmt)
             

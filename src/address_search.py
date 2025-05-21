@@ -85,7 +85,8 @@ def loop(zip_code):
                 return
 
 def scan(addr): 
-    type_shit = path_finder.find_rel_path("json_gps.py", "instructions\type_location.json")
+    type_shit = path_finder.find_rel_path("json_gps.py",
+                                          "instructions\type_location.json")
     try:
         zip_code = int(addr)
     except ValueError:

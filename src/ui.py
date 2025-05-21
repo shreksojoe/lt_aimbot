@@ -66,7 +66,8 @@ def create_window():
         window.after_idle(window.attributes, '-topmost', False)
         
         print("Creating Browse CSV button...")
-        browse_button = tk.Button(window, text="Browse CSV", command=lambda: browse_file(window))
+        browse_button = tk.Button(window, text="Browse CSV",
+                                  command=lambda: browse_file(window))
         browse_button.pack(pady=50)
         
         print("Starting mainloop...")

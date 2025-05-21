@@ -51,7 +51,7 @@ def sort_keys ():
             elif first_key == "PO Number":
                 item[first_key] = po_array[0][1]
             elif first_key == "Ship Date":
-                item[first_key] = update_ship_date(po_array[0][2])
+                item[first_key] = first_key, update_ship_date(po_array[0][2])
             elif first_key == "Quantity":
                 item[first_key] = po_array[0][3]
             elif first_key == "Product Number":

@@ -12,7 +12,8 @@ import path_finder
 # detect if label traxx is running
 def detect_process(process_name):
     for proc in psutil.process_iter(['name']):
-        if proc.info['name'] and proc.info['name'].lower() == process_name.lower():
+        if (proc.info['name'] and
+                proc.info['name'].lower() == process_name.lower()):
             return True
     return False
 
@@ -20,7 +21,8 @@ def detect_process(process_name):
 # get lt window from pid
 def get_pid_from_process_name(process_name):
     for proc in psutil.process_iter(['name' , 'pid']):
-        if proc.info['name'] and proc.info['name'].lower() == process_name.lower():
+        if (proc.info['name'] and
+                proc.info['name'].lower() == process_name.lower()):
             return proc.info['pid']
     return None
     
@@ -88,7 +90,9 @@ def read_json(file_name):
 def read_coords(instructions):
     for coord in instructions:
         # pyautogui.click(x=coord[0], y=coord[1]) 
-        if isinstance(coord, list) and len(coord) == 2 and all(isinstance(x, (int, float)) for x in coord):
+        if (isinstance(coord, list) and
+                len(coord) == 2 and
+                all(isinstance(x, (int, float)) for x in coord)):
             pyautogui.moveTo(coord[0], coord[1], duration=0.2)
             pyautogui.click()
             time.sleep(0.2)
@@ -104,7 +108,7 @@ def to_Label_Traxx():
     lt_pid = get_pid_from_process_name(lt_process_name)
     lt_hwnd = get_hwnd_or_title_from_pid(lt_pid, "handle")
     lt_title = get_hwnd_or_title_from_pid(lt_pid, "title")
-    login_info = read_json(path_finder.find_rel_path("src", "instructions/login_credentials.json"))
+    login_info = read_json(path_finder.find_rel_path("src","instructions/login_credentials.json"))
     # login_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\login_credentials.json')
     home_btn_info = read_json(path_finder.find_rel_path("src", "instructions/home_btn.json"))
     # home_btn_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\home_btn.json')
