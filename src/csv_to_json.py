@@ -22,10 +22,11 @@ def move_mouse(coords):
     time.sleep(0.2)
 
 def type_keyboard(text):
-    print("keyboard text")
+    pyautogui.typewrite(text)
 
 def csv_into_json(user_csv, user_json):
     csv_rows = csv_rows_to_array(user_csv)
+    product_amount = len(csv_rows)
     # Cycle through the JSON file
     # Check the values of the key
     # Add csv elements based on the value of the key
@@ -38,16 +39,25 @@ def csv_into_json(user_csv, user_json):
     
         for object in json_step:
             for key, value in object.items():
-                # if key == "Name": continue
+                for order in csv_rows:
+                    # if key == "Name": continue
+                        
+                    # Start the loop for repeat orders
+                    if value == "Quantity Text Box":
+                        for product in range(product_amount):
+                            type
 
-                if not key == "Name":
-                    if key == "Coordinates":
-                        move_mouse(value)
 
-                # Start the loop for repeat orders
-                if value == "Quantity Text Box":
-                    for order in csv_rows:
-                        print("simulating an order")
+                    # move mouse and type for the rest
+                    elif not key == "Name":
+                        if key == "Coordinates": # works
+                            move_mouse(value)
+                        elif key == "Select All":
+                            for _ in range(9):
+                                pyautogui.press('backspace')
+                        elif not value:
+                            type_keyboard(order)
+
 
 
 
