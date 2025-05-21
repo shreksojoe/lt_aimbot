@@ -4,7 +4,7 @@
     {"Name": "Customer No. Link", "Coordinates": [112, 164]},
     {"Name": "Name Text Box", "Coordinates": [242, 158]},
     {"Customer Name": ""},
-    {"Name": "Select", "Coordinates": [854, 577]},
+    {"Name": "Select", "Coordinates": [881, 571]},
     {"Name": "Customer PO Text Box", "Coordinates": [618, 163]},
     {"PO Number": ""},
     {"Name": "Ship Text Box", "Coordinates": [834, 208]},
