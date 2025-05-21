@@ -1,18 +1,53 @@
+import pyautogui
+import keyboard
+import time
 import json
 import csv
 import sys
 import os
 
-csv_rows = []
 
-def csv_into_json(user_csv, user_json):
-
-    with open(user_csv, newline = '') as opened_csv:
+# Opens the csv, and stores rows in array 
+def csv_rows_to_array(input_csv):
+    row_array = []
+    with open(input_csv, newline = '') as opened_csv:
         reader = csv.reader(opened_csv)
         for row in reader:
-            csv_rows.append(row)
-        
-    print(f'CSV as an array: {csv_rows}')
+            row_array.append(row)
+    return row_array
+
+def move_mouse(coords):
+    pyautogui.moveTo(coords[0], coords[1])
+    pyautogui.click()
+    time.sleep(0.2)
+
+def type_keyboard(text):
+    print("keyboard text")
+
+def csv_into_json(user_csv, user_json):
+    csv_rows = csv_rows_to_array(user_csv)
+    # Cycle through the JSON file
+    # Check the values of the key
+    # Add csv elements based on the value of the key
+    # Repeat from Quantity Text Box to Price
+    # Add objects
+    
+    # load json file into memory with read permissions
+    with open (user_json, 'r') as json_instructions:
+        json_step = json.load(json_instructions)
+    
+        for object in json_step:
+            for key, value in object.items():
+                # if key == "Name": continue
+
+                if not key == "Name":
+                    if key == "Coordinates":
+                        move_mouse(value)
+
+                # Start the loop for repeat orders
+                if value == "Quantity Text Box":
+                    for order in csv_rows:
+                        print("simulating an order")
 
 
 
@@ -22,7 +57,7 @@ if (len(sys.argv) <= 2):
     print('Did not input enough files. Exiting ...')
     sys.exit()
 
-if (not sys.argv[1].endswith('.csv')):
+if (not sys.argv[1].strip('"').endswith('.csv')):
     print('First file is not a csv. Exiting ...')
     sys.exit()
 
