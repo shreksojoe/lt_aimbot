@@ -52,9 +52,9 @@ def read_coords(instructions):
     for i, coord in enumerate(instructions):
         print(f"\nProcessing item {i}: {coord} (type: {type(coord)})")
 
-        if isinstance(coord, list) and
+        if (isinstance(coord, list) and
                 len(coord) == 2 and
-                all(isinstance(x, (int, float)) for x in coord):
+                all(isinstance(x, (int, float)) for x in coord)):
 
             print(f"  - Found coordinates: {coord}")
             #pyautogui.moveTo(coord[0], coord[1], duration=0.2)
@@ -113,8 +113,8 @@ def execute(instructions):
     else:
         true_zip_code = read_coords(info)
     print('this is repeating')
-    if true_zip_code == "" or
-            (isinstance(true_zip_code, int) and true_zip_code != 0):
+    if (true_zip_code == "" or
+            (isinstance(true_zip_code, int) and true_zip_code != 0)):
         pyautogui.moveTo(159, 308, duration=0.2)
         pyautogui.click()
         pyautogui.moveTo(152, 284, duration=0.2)

@@ -5,6 +5,9 @@ import login
 import process_csv
 import json_gps
 import address_search
+import csv_to_json
+
+test_json_file = "instructions\\ticket.json"
 
 # Launch Label Traxx and navigate to starting point
 login.to_Label_Traxx()
@@ -13,15 +16,16 @@ login.to_Label_Traxx()
 temp_file = ui.create_window()
 
 # Process the CSV file and get the JSON file path
-json_file = process_csv.start(temp_file)
+csv_to_json.csv_into_json(temp_file, test_json_file)
+# json_file = process_csv.start(temp_file)
 
 # Read the JSON file and process the data
-if json_file:
-    data = json_gps.read_json(json_file)
-    if data is not None:
-        print("Successfully read JSON data:", data)
-        # If you need to process coordinates, uncomment the following:
-        zip_code = json_gps.read_coords(data)
-        print(f"Processed zip code: {zip_code}")
-else:
-    print("No JSON file was processed.")
+# if json_file:
+#     data = json_gps.read_json(json_file)
+#     if data is not None:
+#         print("Successfully read JSON data:", data)
+#         # If you need to process coordinates, uncomment the following:
+#         zip_code = json_gps.read_coords(data)
+#         print(f"Processed zip code: {zip_code}")
+# else:
+#     print("No JSON file was processed.")

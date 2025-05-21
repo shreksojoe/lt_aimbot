@@ -22,11 +22,14 @@ def move_mouse(coords):
     time.sleep(0.2)
 
 def type_keyboard(text):
-    pyautogui.typewrite(text)
+    keyboard.write(text)
+    time.sleep(0.2)
 
 def csv_into_json(user_csv, user_json):
+    action_is_done = False
     csv_rows = csv_rows_to_array(user_csv)
     product_amount = len(csv_rows)
+    json_objects = []
     # Cycle through the JSON file
     # Check the values of the key
     # Add csv elements based on the value of the key
@@ -37,45 +40,62 @@ def csv_into_json(user_csv, user_json):
     with open (user_json, 'r') as json_instructions:
         json_step = json.load(json_instructions)
     
-        for object in json_step:
-            for key, value in object.items():
-                for order in csv_rows:
-                    # if key == "Name": continue
-                        
-                    # Start the loop for repeat orders
-                    if value == "Quantity Text Box":
-                        for product in range(product_amount):
-                            type
+        for order in csv_rows: # first loops through the order (x2)
+            print(f"order: {order}")
+            for object in json_step: # repeats for every single step in the .json file
+                action_is_done = False
+                for key, value in object.items(): # this repeats for every element in each line
+                    print(f"key: {key}, value:{value}")
+                    # json_objects.append(f'{key}:{value}')
+                    for element in order:
+                        print(f"element: {element}")
+                        # Start the loop for repeat orders
+                        if value == "Quantity Text Box":
+                            for product in range(product_amount):
+                                type
+                                action_is_done = True
 
 
-                    # move mouse and type for the rest
-                    elif not key == "Name":
-                        if key == "Coordinates": # works
-                            move_mouse(value)
-                        elif key == "Select All":
-                            for _ in range(9):
-                                pyautogui.press('backspace')
-                        elif not value:
-                            type_keyboard(order)
+                        # move mouse and type for the rest
+                        elif not key == "Name":
+                            if key == "Coordinates": # works
+                                move_mouse(value)
+                                time.sleep(0.2)
+                                break
+                            elif key == "Select All":
+                                for _ in range(9):
+                                    pyautogui.press('backspace')
+                                time.sleep(0.2)
+                                action_is_done = True
+                            elif not value:
+                                print(f"just about to print: {element}")
+                                type_keyboard(element)
+                                action_is_done = True
+                        else:
+                            break
+                if action_is_done:
+                    break
+                    
+            print(f"json_objects: {order}")
 
 
 
 
 # Take csv and json as input
+def cli_aimbot(cvs_file, json_file):
 
-if (len(sys.argv) <= 2):
-    print('Did not input enough files. Exiting ...')
-    sys.exit()
+    if (not sys.argv[1].strip('"').endswith('.csv')):
+        print('First file is not a csv. Exiting ...')
+        sys.exit()
 
-if (not sys.argv[1].strip('"').endswith('.csv')):
-    print('First file is not a csv. Exiting ...')
-    sys.exit()
+    if (not sys.argv[2].endswith('.json')):
+        print('Second file is not a json. Exiting ...')
+        sys.exit()
 
-if (not sys.argv[2].endswith('.json')):
-    print('Second file is not a json. Exiting ...')
-    sys.exit()
+    csv_into_json(sys.argv[1],sys.argv[2])
 
-csv_into_json(sys.argv[1],sys.argv[2])
+if __name__ == "__main__":
+    cli_aimbot(sys.argv[1], sys.argv[2])
 
 # We have now determined that we have a csv and json file
 # We need to add the csv elements to the json file
