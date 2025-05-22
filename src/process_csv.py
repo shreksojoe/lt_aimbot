@@ -8,13 +8,13 @@ import time
 import sys
 import os
 import json_gps
-import path_finder
+import login
 import shutil
 import tempfile
 import date
 
     
-fd_path = path_finder.find_rel_path("src", "instructions/ticket.json")
+fd_path = login.find_rel_path("src", "instructions/ticket.json")
 csv_array = []
 
 # duplicates file

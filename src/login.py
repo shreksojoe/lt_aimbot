@@ -6,8 +6,26 @@ import win32con
 import time
 import json
 import pyautogui
-import path_finder
+import os
+import sys
 
+def find_rel_path(start_file, end_file):
+    # Get the current script directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    
+    # If start_file is 'src', we're looking for a file within the src directory
+    if start_file == "src":
+        # Just use the current directory (which is the src directory)
+        base_dir = current_dir
+    else:
+        # Navigate up to the parent directory for other cases
+        base_dir = os.path.dirname(current_dir)
+    
+    # Create the absolute path to the target file
+    absolute_path = os.path.join(base_dir, end_file)
+    
+    print(f"Relative Path: {end_file}")
+    return absolute_path
 
 # detect if label traxx is running
 def detect_process(process_name):
@@ -101,17 +119,16 @@ def read_coords(instructions):
             time.sleep(0.2)
 
 def to_Label_Traxx():
+
     # variables
     lt_process_name = "Label Traxx Client.exe"
-    # lt_path = path_finder.find_rel_path("login.py", "LT Client\Label Traxx Client.exe")
+    # lt_path = find_rel_path("login.py", "LT Client\Label Traxx Client.exe")
     lt_path = r"C:\\Program Files\\LT Client\\Label Traxx Client.exe"
     lt_pid = get_pid_from_process_name(lt_process_name)
     lt_hwnd = get_hwnd_or_title_from_pid(lt_pid, "handle")
     lt_title = get_hwnd_or_title_from_pid(lt_pid, "title")
-    login_info = read_json(path_finder.find_rel_path("src","instructions/login_credentials.json"))
-    # login_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\login_credentials.json')
-    home_btn_info = read_json(path_finder.find_rel_path("src", "instructions/home_btn.json"))
-    # home_btn_info = read_json(r'C:\\Users\\Joseph.Stadum\\lt_aimbot\\src\\instructions\\home_btn.json')
+    login_info = read_json(find_rel_path("src","instructions/login_credentials.json"))
+    home_btn_info = read_json(find_rel_path("src", "instructions/home_btn.json"))
     
     
     # logic

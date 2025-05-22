@@ -5,8 +5,8 @@ import os
 import csv
 import sys
 import tkinter as tk
+import open_files
 from tkinter import filedialog
-import login
 import process_csv
 
 
@@ -26,16 +26,16 @@ def browse_file(window):
             print("No file selected. Please try again.")
             return
             
-        print(f"Selected file: {file_path}")
         
         # Store the file path in the global variable
-        global tmp_file_path
+        # global tmp_file_path
         tmp_file_path = file_path
         
         # Close the window and proceed with processing
         window.destroy()
-        login.to_Label_Traxx()
-        process_csv.start(tmp_file_path)
+
+        # unfortunately we gonna have to keep with the gay chain of pythons files
+        open_files.open_csv_file(tmp_file_path)
         
     except Exception as e:
         print(f"Error in browse_file: {e}")
@@ -43,37 +43,30 @@ def browse_file(window):
         import tkinter.messagebox as messagebox
         messagebox.showerror("Error", f"Failed to process the file: {e}")
 
-# convert csv to 2d List
-def csv_converter(csv_file):
-    with open(csv_file, newline='') as file:
-        reader = csv.reader(file)
-        order = list(reader)
-        return order
         
 # makes temporary duplicate of json file
 
 def create_window():
-    print("ui.py started, print works")
     try:
+        # creates window
         window = tk.Tk()
         window.title("LT Aimbot")
         #window.iconbitmap("coding_dino.ico")
         window.geometry("450x150")
         
-        # Make sure the window is brought to the front
+        # Brings window to the front
         window.lift()
         window.attributes('-topmost', True)
         window.after_idle(window.attributes, '-topmost', False)
         
-        print("Creating Browse CSV button...")
+        # Make Button
         browse_button = tk.Button(window, text="Browse CSV",
                                   command=lambda: browse_file(window))
         browse_button.pack(pady=50)
         
-        print("Starting mainloop...")
+        # launch window
         window.mainloop()
-        print("Mainloop exited")
-        return tmp_file_path
+
     except Exception as e:
         print(f"Error in create_window: {e}")
         raise

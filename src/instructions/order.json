@@ -1,0 +1,14 @@
+[
+    {"Name": "Quantity Text Box", "Coordinates": [46, 376]},
+    {"Quantity": ""},
+    {"Name": "Product No. Text Box", "Coordinates": [223, 372]},
+    {"Product Number": ""},
+    {"Name": "Product No. Button", "Coordinates": [232, 351]},
+    {"Name": "Price Text Box", "Coordinates": [608, 377]},
+    {"Price": ""},
+    {"Name": "Order Notes Text Box", "Coordinates": [569, 308]},
+    {"Order Notes": ""},
+    {"Name": "Address Tab", "Coordinates": [206, 59]},
+    {"Name": "Address Text Box", "Coordinates": [209, 279]},
+    {"Zip": ""}
+]
