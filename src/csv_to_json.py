@@ -27,66 +27,118 @@ def type_keyboard(text):
     keyboard.write(text)
     time.sleep(0.2)
 
-def make_ticket_structure(key, value, element):
-    print(f"key after testing: {key}")
-    print(f"value after testing: {value}")
-    if key == "Coordinates": # works
-        move_mouse(value)
+def csv_to_array(user_csv):
+    csv_array = []
+    with open (user_csv, newline='') as csv_file:
+        reader = csv.reader(csv_file)
+        for row in reader: 
+            csv_array.append(row)
+    return csv_array
+
+def make_ticket_structure(json_key, json_value, csv_row):
+    """Process a single field using the current CSV row data"""
+    if json_key == "Coordinates":
+        move_mouse(json_value)
         time.sleep(0.5)
-    elif key == "Select All":
+    elif json_key == "Customer Name":
+        type_keyboard(csv_row[0] if len(csv_row) > 0 else "")
+    elif json_key == "PO Number":
+        type_keyboard(csv_row[1] if len(csv_row) > 1 else "")
+    elif json_key == "Select All":
         for _ in range(9):
             pyautogui.press('backspace')
         time.sleep(0.2)
-        action_is_done = True
-    elif not value:
-        print(f"just about to print: {element}")
-        type_keyboard(element)
-        action_is_done = True
-    else:
-        ticket_structure_is_done = True
-        print(f"ticket struct: {ticket_structure_is_done}")
+    elif json_key == "Ship Date":
+        type_keyboard(csv_row[2] if len(csv_row) > 2 else "")
+    elif json_key == "Quantity":
+        type_keyboard(csv_row[3] if len(csv_row) > 3 else "")
+    elif json_key == "Product Number":
+        type_keyboard(csv_row[4] if len(csv_row) > 4 else "")
+    elif json_key == "Price":
+        type_keyboard(csv_row[5] if len(csv_row) > 5 else "")
+    elif json_key == "Zip":
+        type_keyboard(csv_row[6] if len(csv_row) > 6 else "")
+    elif json_key == "Order Notes":
+        type_keyboard(csv_row[7] if len(csv_row) > 7 else "")
 
-def csv_into_json(user_csv, user_json):
-    action_is_done = False
-    csv_rows = csv_rows_to_array(user_csv)
-    product_amount = len(csv_rows)
-    json_objects = []
-    # Cycle through the JSON file
-    # Check the values of the key
-    # Add csv elements based on the value of the key
-    # Repeat from Quantity Text Box to Price
-    # Add objects
+# Turns the csv file into an array
+def get_instruction_array(user_json):
+    with open(user_json, 'r') as json_instructions:
+        return json.load(json_instructions)
+
+def process_instructions(instructions, csv_data):
+    """Process a single CSV row through all instructions"""
+    for instruction in instructions:
+        if "Name" in instruction and "Coordinates" in instruction:
+            # This is a clickable element (button, link, etc.)
+            print(f"Clicking: {instruction['Name']} at {instruction['Coordinates']}")
+            move_mouse(instruction["Coordinates"])
+            time.sleep(0.5)
+            pyautogui.click()
+            time.sleep(0.5)
+        elif any(key in instruction for key in ["Customer Name", "PO Number", "Select All", "Ship Date", 
+                                              "Quantity", "Product Number", "Price", "Zip", "Order Notes"]):
+            # This is a text field that needs data from CSV
+            for key in instruction:
+                if key in ["Customer Name", "PO Number", "Select All", "Ship Date", 
+                         "Quantity", "Product Number", "Price", "Zip", "Order Notes"]:
+                    print(f"Processing {key} for current CSV row")
+                    make_ticket_structure(key, instruction[key], csv_data)
+                    time.sleep(0.3)
+
+def add_csv_elements(user_json, user_csv):
+    # First, load all CSV data
+    with open(user_csv, newline='') as csvfile:
+        csv_reader = csv.reader(csvfile)
+        csv_data = list(csv_reader)  # Read all rows into memory
     
-    # load json file into memory with read permissions
-    with open (user_json, 'r') as json_instructions:
-        json_step = json.load(json_instructions)
+    # Load instructions
+    instructions = get_instruction_array(user_json)
     
-        for object in json_step: # repeats for every single step in the .json file
-            action_is_done = False
-            for key, value in object.items(): # this repeats for every element in each line
-                print(f"key: {key}, value:{value}")
-                # json_objects.append(f'{key}:{value}')
-                for order in csv_rows: # first loops through the order (x2)
-                    for element in order:
+    # Process each CSV row one at a time
+    for row in csv_data:
+        print(f"\nProcessing CSV row: {row}")
+        # Process all instructions for this CSV row
+        process_instructions(instructions, row)
+        
+        # Add a pause between processing different CSV rows
+        time.sleep(1.0)
 
-                        # Handle multiple orders
-                        if value == "Quantity Text Box":
-                            for product in range(product_amount):
-                                type
-                                action_is_done = True
+# def csv_into_json(user_csv, user_json):
 
-                        elif not (key == "Name" and ticket_structure_is_done):
-                            make_ticket_structure(key, value, element)
-                            break
-                        else: 
-                            break
-
-            if action_is_done:
-                break
-                
-        print(f"json_objects: {order}")
+#    add_csv_elements(user_json, user_csv)
 
 
+    # action_is_done = False
+    # csv_rows = csv_rows_to_array(user_csv)
+    # product_amount = len(csv_rows)
+    # json_objects = []
+
+    # We now have an array of json instructions
+    # Can access key and value at the same time
+    # Read this
+
+    # functionality for make_ticket_structure
+    # If Key = Coordinates, execute coordinates
+    # If Key = "Name" skip
+    # If Key = anything else, type
+    # 
+    # Core functionality: when something happens in json instrucions, do something with csv element
+    
+        # for order in csv_rows: # first loops through the order (x2)
+        #     for element in order:
+        #         # print(f"element: {element}")
+        #         # Handle multiple orders
+        #         if value == "Quantity Text Box":
+        #             for product in range(product_amount):
+        #                 type
+        #                 action_is_done = True
+
+        #         elif not (key == "Name" and ticket_structure_is_done):
+        #             make_ticket_structure(key, value, element)
+        #             continue
+
+        #     make_ticket_structure_is_done = True
 
 
 # Take csv and json as input
@@ -100,7 +152,7 @@ def cli_aimbot(cvs_file, json_file):
         print('Second file is not a json. Exiting ...')
         sys.exit()
 
-    csv_into_json(sys.argv[1],sys.argv[2])
+    add_csv_elements(sys.argv[1],sys.argv[2])
 
 if __name__ == "__main__":
     cli_aimbot(sys.argv[1], sys.argv[2])

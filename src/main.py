@@ -16,7 +16,7 @@ login.to_Label_Traxx()
 temp_file = ui.create_window()
 
 # Process the CSV file and get the JSON file path
-csv_to_json.csv_into_json(temp_file, test_json_file)
+csv_to_json.add_csv_elements(test_json_file, temp_file)
 # json_file = process_csv.start(temp_file)
 
 # Read the JSON file and process the data

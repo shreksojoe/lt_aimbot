@@ -10,7 +10,7 @@
     {"Name": "Ship Text Box", "Coordinates": [834, 208]},
     {"Name": "OK Button", "Coordinates": [705, 279]},
     {"Name": "Ship Text Box", "Coordinates": [834, 208]},
-    {"Select All": "ctrl+a"},
+    {"Select All": ""},
     {"Ship Date": ""},
     {"Name": "Quantity Text Box", "Coordinates": [46, 376]},
     {"Quantity": ""},
