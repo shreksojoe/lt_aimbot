@@ -1,4 +1,5 @@
 import pyautogui
+import address_search
 import keyboard
 import time
 import json
@@ -74,12 +75,10 @@ def order_instructions(user_csv, json_list):
             for key, value in object.items():
                 if key == "Name": 
                     continue
-                if key == "Plus":
-                    
                 if key == "Coordinates":
                     move_mouse(value)
                 if key == "Coordinate":
-                    value[1] += (i * 20)
+                    value[1] += (i * 18)
                     move_mouse(value)
                     time.sleep(0.5)
                 elif key == "Quantity":
@@ -91,13 +90,46 @@ def order_instructions(user_csv, json_list):
                 elif key == "Price":
                     type_keyboard(csv_rows[i][4])
                     time.sleep(0.5)
+                elif key == "Order Amount":
+                    type_keyboard('1')
+                    time.sleep(0.5)
 
+def finish_him_instructions(user_csv, finish_him_list):
+    csv_rows = csv_rows_to_array(user_csv)
+    location_coords = [157, 281]
+
+    # Process each instruction in sequence
+    for object in finish_him_list:
+        for key, value in object.items():
+            if key == "Name":
+                continue
+            if key == "Coordinates":
+                move_mouse(value)
+                time.sleep(0.5)
+            elif key == "Zip":
+                try:
+                    int(csv_rows[0][6])
+                    type_keyboard(csv_rows[0][6])
+                    time.sleep(0.5)
+                    move_mouse(location_coords)
+                    address_search.scan(str(csv_rows[0][6]))
+                    time.sleep(0.5)
+                except ValueError:
+                    type_keyboard(csv_rows[0][6])
+                    time.sleep(0.5)
+            elif key == "Order Notes":
+                try:
+                    type_keyboard(csv_rows[0][7])
+                    time.sleep(0.5)
+                except IndexError:
+                    continue
 
             
 
-def launch_instructions(user_csv, ticket_array, order_array):
+def launch_instructions(user_csv, ticket_array, order_array, finish_him_array):
     ticket_instructions(user_csv, ticket_array)
     order_instructions(user_csv, order_array)
+    finish_him_instructions(user_csv, finish_him_array)
     
     
             

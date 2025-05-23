@@ -5,5 +5,9 @@
     {"Product Number": ""},
     {"Name": "Product No. Button", "Coordinates": [232, 351]},
     {"Name": "Price Text Box", "Coordinate": [608, 377]},
-    {"Price": ""}
+    {"Price": ""}, 
+    {"Name": "Plus Button", "Coordinates": [834, 353]},
+    {"Name": "Product Button", "Coordinates":[885, 364]},
+    {"Order Amount": ""},
+    {"Name": "OK Button", "Coordinates":[703, 252]}
 ]
