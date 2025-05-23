@@ -28,6 +28,7 @@ def move_mouse(coords):
 
 def type_keyboard(text):
     keyboard.write(text)
+    print(f"text: {text}")
     time.sleep(0.3)
 
 def ticket_instructions(user_csv, json_list):
@@ -68,35 +69,48 @@ def ticket_instructions(user_csv, json_list):
 def order_instructions(user_csv, json_list):
     csv_rows = csv_rows_to_array(user_csv)
     product_amount = len(csv_rows)
+    # subtract = [833,550]
+    product_ammount_entered = False
 
     # Process each instruction in sequence
     for i in range(product_amount):
+        print(f"i: {i}")
         for object in json_list:
             for key, value in object.items():
                 if key == "Name": 
                     continue
                 if key == "Coordinates":
-                    move_mouse(value)
+                    if (value == [834, 353] or value == [885, 364]) and not product_ammount_entered:
+                        move_mouse(value)
+                        time.sleep(0.5)
+                        product_ammount_entered = True
+                    elif not value == [834, 353]:
+                        move_mouse(value)
+                        time.sleep(0.5)
                 if key == "Coordinate":
-                    value[1] += (i * 18)
-                    move_mouse(value)
+                    # value[1] + (i * 22)
+                    new_value = value[0], value[1] + (i * 22)
+                    move_mouse(new_value)
                     time.sleep(0.5)
                 elif key == "Quantity":
                     type_keyboard(csv_rows[i][3])
                     time.sleep(0.5)
                 elif key == "Product Number":
+                    print(f"product # {i}: {csv_rows[i][4]}")
+                    time.sleep(0.5)
                     type_keyboard(csv_rows[i][4])
                     time.sleep(0.5)
                 elif key == "Price":
-                    type_keyboard(csv_rows[i][4])
+                    type_keyboard(csv_rows[i][5])
                     time.sleep(0.5)
-                elif key == "Order Amount":
-                    type_keyboard('1')
+                elif key == "Order Amount" and not product_ammount_entered:
+                    type_keyboard(product_amount)
                     time.sleep(0.5)
 
 def finish_him_instructions(user_csv, finish_him_list):
     csv_rows = csv_rows_to_array(user_csv)
     location_coords = [157, 281]
+    ok_button_coords = [861, 510]
 
     # Process each instruction in sequence
     for object in finish_him_list:
@@ -114,6 +128,7 @@ def finish_him_instructions(user_csv, finish_him_list):
                     move_mouse(location_coords)
                     address_search.scan(str(csv_rows[0][6]))
                     time.sleep(0.5)
+                    move_mouse(ok_button_coords)
                 except ValueError:
                     type_keyboard(csv_rows[0][6])
                     time.sleep(0.5)
@@ -123,6 +138,8 @@ def finish_him_instructions(user_csv, finish_him_list):
                     time.sleep(0.5)
                 except IndexError:
                     continue
+
+
 
             
 
