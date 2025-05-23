@@ -1,31 +1,41 @@
-# also the order at which everything runs:
-
 import ui
 import login
-import process_csv
+import open_files
 import json_gps
-import address_search
+# import navigation
 import csv_to_json
 
-test_json_file = "instructions\\ticket.json"
+# list of new breed (muthafuckin) files
+# 1. god.py
+# 2. open_files.py
+# 3. navigation.py
+# 4. login.py
+# 5. ui.py
+# 6. 
 
-# Launch Label Traxx and navigate to starting point
+
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath('.')
+    return os.path.join(base_path, relative_path)
+
+ticket_json = resource_path('instructions/ticket.json')
+order_json = resource_path('instructions/order.json')
+finish_him_json = resource_path('instructions/finish_him.json')
+
 login.to_Label_Traxx()
+csv_file = ui.create_window()
 
-# Select CSV file and open UI
-temp_file = ui.create_window()
+print('ui done, json next')
 
-# Process the CSV file and get the JSON file path
-csv_to_json.add_csv_elements(test_json_file, temp_file)
-# json_file = process_csv.start(temp_file)
+ticket_array = open_files.open_json_file(ticket_json)
+order_array = open_files.open_json_file(order_json)
+finish_him_array = open_files.open_json_file(finish_him_json)
 
-# Read the JSON file and process the data
-# if json_file:
-#     data = json_gps.read_json(json_file)
-#     if data is not None:
-#         print("Successfully read JSON data:", data)
-#         # If you need to process coordinates, uncomment the following:
-#         zip_code = json_gps.read_coords(data)
-#         print(f"Processed zip code: {zip_code}")
-# else:
-#     print("No JSON file was processed.")
+csv_to_json.launch_instructions(csv_file, ticket_array, order_array, finish_him_array)
+
+# Keep console window open
+print('\nPress Enter to exit...')
+input()

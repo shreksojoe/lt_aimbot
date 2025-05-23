@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['src\\god.py'],
+    ['src\\main.py'],
     pathex=[],
     binaries=[],
     datas=[('src/instructions', 'instructions')],
@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,
     a.datas,
     [],
-    name='god',
+    name='main',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
