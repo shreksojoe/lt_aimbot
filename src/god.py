@@ -14,9 +14,16 @@ import csv_to_json
 # 6. 
 
 
-ticket_json = 'instructions\\ticket.json'
-order_json = 'instructions\\order.json'
-finish_him_json = 'instructions\\finish_him.json'
+def resource_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath('.')
+    return os.path.join(base_path, relative_path)
+
+ticket_json = resource_path('instructions/ticket.json')
+order_json = resource_path('instructions/order.json')
+finish_him_json = resource_path('instructions/finish_him.json')
 
 login.to_Label_Traxx()
 csv_file = ui.create_window()
@@ -28,3 +35,7 @@ order_array = open_files.open_json_file(order_json)
 finish_him_array = open_files.open_json_file(finish_him_json)
 
 csv_to_json.launch_instructions(csv_file, ticket_array, order_array, finish_him_array)
+
+# Keep console window open
+print('\nPress Enter to exit...')
+input()
