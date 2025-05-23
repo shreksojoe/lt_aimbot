@@ -28,15 +28,16 @@ def browse_file(window):
             
         
         # Store the file path in the global variable
-        # global tmp_file_path
+        global tmp_file_path
         tmp_file_path = file_path
         
         # Close the window and proceed with processing
         window.destroy()
 
-        # unfortunately we gonna have to keep with the gay chain of pythons files
+        # Process the CSV file
         open_files.open_csv_file(tmp_file_path)
-        
+        return tmp_file_path
+
     except Exception as e:
         print(f"Error in browse_file: {e}")
         # Optionally, show an error message to the user
@@ -66,6 +67,7 @@ def create_window():
         
         # launch window
         window.mainloop()
+        return tmp_file_path
 
     except Exception as e:
         print(f"Error in create_window: {e}")

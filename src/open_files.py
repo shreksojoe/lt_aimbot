@@ -11,18 +11,25 @@ def open_csv_file(ticket):
 # Open json file and return array of key-value pairs
 def open_json_file(manual):
     """
-    Read a JSON file and return an array of key-value pairs.
-    Handles the specific structure of ticket.json where each item is a dictionary
-    with a single key-value pair.
+    Read a JSON file containing a list of objects and return a list of key-value pairs.
+    Each object in the input JSON will be flattened into key-value pairs.
+    
+    Example input JSON:
+    [
+        {"name": "John", "age": 30},
+        {"city": "New York", "country": "USA"}
+    ]
+    
+    Example output:
+    [{"name": "John"}, {"age": 30}, {"city": "New York"}, {"country": "USA"}]
     """
     with open(manual, 'r') as f:
         data = json.load(f)
     
     result = []
     for item in data:
-        # Create a new dictionary for each item, excluding the 'Name' key
-        filtered_item = {k: v for k, v in item.items() if k != 'Name'}
-        if filtered_item:  # Only add if there are items after filtering
-            result.append(filtered_item)
+        # For each key-value pair in the object, create a separate dictionary
+        for key, value in item.items():
+            result.append({key: value})
     
     return result

@@ -125,11 +125,12 @@ def execute(instructions):
         pyautogui.moveTo(222, 280, duration=0.2)
         pyautogui.click()
         keyboard.write(info[-1])
-    
-if (len(sys.argv) > 1):
-    execute(sys.argv[1])
-else:
-    print('No file was inputed')
+
+if __name__ == "__main__":
+    if (len(sys.argv) > 1):
+        execute(sys.argv[1])
+    else:
+        print('No file was inputed (json_gps)')
 
 
 # goes from process_csv
