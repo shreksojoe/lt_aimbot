@@ -2,15 +2,16 @@ import ui
 import login
 import open_files
 import json_gps
-import navigation
+# import navigation
 import csv_to_json
 
 # list of new breed (muthafuckin) files
 # 1. god.py
 # 2. open_files.py
 # 3. navigation.py
-# 
-
+# 4. login.py
+# 5. ui.py
+# 6. 
 
 
 ticket_json = 'instructions\\ticket.json'
