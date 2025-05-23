@@ -13,15 +13,15 @@ import csv_to_json
 
 
 
-json_file = 'instructions\\ticket.json'
+ticket_json = 'instructions\\ticket.json'
+order_json = 'instructions\\order.json'
 
 login.to_Label_Traxx()
 csv_file = ui.create_window()
 
 print('ui done, json next')
 
-json_array = open_files.open_json_file(json_file)
-print(json_array)
-print('open_files is done, moving onto csv_to_json')
+ticket_array = open_files.open_json_file(ticket_json)
+order_array = open_files.open_json_file(order_json)
 
-csv_to_json.csv_into_json(csv_file, json_array)
+csv_to_json.launch_instructions(csv_file, ticket_array, order_array)

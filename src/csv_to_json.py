@@ -6,30 +6,32 @@ import csv
 import sys
 import os
 
+# location variables:
+
+ticket_json = "instructions\\ticket.json"
+order_json = "instructions\\order.json"
 
 # Opens the csv, and stores rows in array 
 def csv_rows_to_array(input_csv):
-    item_array = []
+    row_array = []
     with open(input_csv, newline = '') as opened_csv:
         reader = csv.reader(opened_csv)
         for row in reader:
-            for item in row:
-                item_array.append(item)
-    return item_array 
+            row_array.append(row)
+    return row_array 
 
 def move_mouse(coords):
-    pyautogui.moveTo(coords[0], coords[1])
+    pyautogui.moveTo(coords[0], coords[1], duration=0.3)
     pyautogui.click()
-    time.sleep(0.1)
+    time.sleep(0.5)
 
 def type_keyboard(text):
     keyboard.write(text)
-    time.sleep(0.1)
+    time.sleep(0.3)
 
-def csv_into_json(user_csv, json_list):
+def ticket_instructions(user_csv, json_list):
     csv_rows = csv_rows_to_array(user_csv)
-    product_amount = len(csv_rows)
-    
+
     # Process each instruction in sequence
     for object in json_list:
         for key, value in object.items():
@@ -51,20 +53,57 @@ def csv_into_json(user_csv, json_list):
                 time.sleep(0.5)
             elif key == "Customer Name":
                 print("Typing customer name")
-                type_keyboard(csv_rows[0])
+                type_keyboard(csv_rows[0][0])
                 time.sleep(0.5)
             elif key == "PO Number":
                 print("Typing PO number")
-                type_keyboard(csv_rows[1])
+                type_keyboard(csv_rows[0][1])
                 time.sleep(0.5)
             elif key == "Ship Date":
                 print("Typing ship date")
-                type_keyboard(csv_rows[2])
+                type_keyboard(csv_rows[0][2])
                 time.sleep(0.5)
+             
+def order_instructions(user_csv, json_list):
+    csv_rows = csv_rows_to_array(user_csv)
+    product_amount = len(csv_rows)
+
+    # Process each instruction in sequence
+    for i in range(product_amount):
+        for object in json_list:
+            for key, value in object.items():
+                if key == "Name": 
+                    continue
+                if key == "Plus":
+                    
+                if key == "Coordinates":
+                    move_mouse(value)
+                if key == "Coordinate":
+                    value[1] += (i * 20)
+                    move_mouse(value)
+                    time.sleep(0.5)
+                elif key == "Quantity":
+                    type_keyboard(csv_rows[i][3])
+                    time.sleep(0.5)
+                elif key == "Product Number":
+                    type_keyboard(csv_rows[i][4])
+                    time.sleep(0.5)
+                elif key == "Price":
+                    type_keyboard(csv_rows[i][4])
+                    time.sleep(0.5)
+
+
+            
+
+def launch_instructions(user_csv, ticket_array, order_array):
+    ticket_instructions(user_csv, ticket_array)
+    order_instructions(user_csv, order_array)
+    
+    
             
             # After each action, wait a bit
-            time.sleep(0.2)
-#def csv_into_json(user_csv, json_list):
+            # time.sleep(0.2)
+#def ticket_instructions(user_csv, json_list):
 #    csv_rows = csv_rows_to_array(user_csv)
 #    product_amount = len(csv_rows)
 #    # Cycle through the JSON file
@@ -142,7 +181,7 @@ if __name__ == "__main__":
         print('Second file is not a json. Exiting ...')
         sys.exit()
 
-    csv_into_json(sys.argv[1],sys.argv[2])
+    ticket_instructions(sys.argv[1],sys.argv[2])
 
 # We have now determined that we have a csv and json file
 # We need to add the csv elements to the json file
