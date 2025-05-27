@@ -49,7 +49,7 @@ def compare_zip(zip1, zip2):
 time.sleep(0.5)
 def move_mouse_down():
     x, y = pyautogui.position()
-    pyautogui.moveTo(x, y + 19)
+    pyautogui.moveTo(x, y + 20)
 
 # control loop
 def loop(zip_code):
