@@ -23,6 +23,7 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 ticket_json = resource_path('instructions/ticket.json')
+checkbox_json = resource_path('instructions/checkboxes.json')
 order_json = resource_path('instructions/order.json')
 finish_him_json = resource_path('instructions/finish_him.json')
 
@@ -32,10 +33,11 @@ csv_file = ui.create_window()
 print('ui done, json next')
 
 ticket_array = open_files.open_json_file(ticket_json)
+checkbox_array = open_files.open_json_file(checkbox_json)
 order_array = open_files.open_json_file(order_json)
 finish_him_array = open_files.open_json_file(finish_him_json)
 
-csv_to_json.launch_instructions(csv_file, ticket_array, order_array, finish_him_array)
+csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, finish_him_array)
 
 # Keep console window open
 print('\nPress Enter to exit...')

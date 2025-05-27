@@ -143,8 +143,9 @@ def finish_him_instructions(user_csv, finish_him_list):
 
             
 
-def launch_instructions(user_csv, ticket_array, order_array, finish_him_array):
+def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, finish_him_array):
     ticket_instructions(user_csv, ticket_array)
+    ticket_instructions(user_csv, checkbox_array)
     order_instructions(user_csv, order_array)
     finish_him_instructions(user_csv, finish_him_array)
     
