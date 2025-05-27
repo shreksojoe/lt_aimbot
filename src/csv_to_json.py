@@ -49,8 +49,11 @@ def ticket_instructions(user_csv, json_list):
                 continue
             if key == "Window":
                 print(f"title: {title} sould contain: {value}")
+                first_time = True
                 while value not in title:
-                    print('Program paused because pop up window...')
+                    if first_time:
+                        print('Program paused because pop up window...')
+                    first_time = False
                     hwnd = win32gui.GetForegroundWindow()
                     title = win32gui.GetWindowText(hwnd)
                     time.sleep(1)
@@ -90,6 +93,7 @@ def order_instructions(user_csv, json_list):
         for object in json_list:
             for key, value in object.items():
 
+
                 hwnd = win32gui.GetForegroundWindow()
                 title = win32gui.GetWindowText(hwnd)
                 print(f"Processing - key: {key}, value: {value}")
@@ -97,9 +101,12 @@ def order_instructions(user_csv, json_list):
                 if key == "Name": 
                     continue
                 if key == "Window":
+                    first_time = True
                     print(f"title: {title} sould contain: {value}")
                     while value not in title:
-                        print('Program paused because pop up window...')
+                        if first_time:
+                            print('Program paused because pop up window...')
+                        first_time = False
                         hwnd = win32gui.GetForegroundWindow()
                         title = win32gui.GetWindowText(hwnd)
                         time.sleep(1)
@@ -148,7 +155,12 @@ def finish_him_instructions(user_csv, finish_him_list):
             if key == "Name":
                 continue
             if key == "Window":
+                first_time = True
+
                 print(f"title: {title} sould contain: {value}")
+                if first_time:
+                    print('Program paused because pop up window...')
+                first_time = False
                 while value not in title:
                     print('Program paused because pop up window...')
                     hwnd = win32gui.GetForegroundWindow()
