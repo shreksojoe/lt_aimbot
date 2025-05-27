@@ -1,4 +1,5 @@
 [
+    {"Window": "Editing Ticket"},
     {"Name": "Quantity Text Box", "Coordinate": [46, 376]},
     {"Quantity": ""},
     {"Name": "Product No. Text Box", "Coordinate": [223, 372]},
@@ -8,6 +9,8 @@
     {"Price": ""}, 
     {"Name": "Plus Button", "Coordinates": [834, 353]},
     {"Name": "Product Button", "Coordinates":[885, 364]},
+    {"Window": "Request For Information"},
     {"Order Amount": ""},
-    {"Name": "OK Button", "Coordinates":[703, 252]}
+    {"Name": "OK Button", "Coordinates":[703, 252]},
+    {"Window": "Editing Ticket"}
 ]
