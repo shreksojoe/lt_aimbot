@@ -1,6 +1,4 @@
 import psutil
-import pygetwindow as gw
-import win32gui
 import win32process
 import win32con
 import time
@@ -8,6 +6,8 @@ import json
 import pyautogui
 import os
 import sys
+import pygetwindow as gw
+import win32gui
 
 def find_rel_path(start_file, end_file):
     # Get the current script directory
@@ -117,6 +117,11 @@ def read_coords(instructions):
         else:
             pyautogui.write(coord)
             time.sleep(0.2)
+
+def get_current_window_title():
+    hwnd = win32gui.GetForegroundWindow()
+    title = win32gui.GetWindowText(hwnd)
+    return title
 
 def to_Label_Traxx():
 
