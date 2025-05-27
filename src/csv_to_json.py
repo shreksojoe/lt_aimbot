@@ -1,5 +1,6 @@
 import pyautogui
 import address_search
+import win32gui
 import keyboard
 import time
 import json
@@ -37,14 +38,25 @@ def ticket_instructions(user_csv, json_list):
     # Process each instruction in sequence
     for object in json_list:
         for key, value in object.items():
+
+            hwnd = win32gui.GetForegroundWindow()
+            title = win32gui.GetWindowText(hwnd)
+
             print(f"Processing - key: {key}, value: {value}")
             
             # Skip name keys as they're just labels
             if key == "Name":
                 continue
+            if key == "Window":
+                print(f"title: {title} sould contain: {value}")
+                while value not in title:
+                    print('Program paused because pop up window...')
+                    hwnd = win32gui.GetForegroundWindow()
+                    title = win32gui.GetWindowText(hwnd)
+                    time.sleep(1)
                 
             # Handle each action
-            if key == "Coordinates":
+            elif key == "Coordinates":
                 print(f"Moving mouse to coordinates: {value}")
                 move_mouse(value)
                 time.sleep(0.5)  # Increased sleep time for reliability
@@ -77,14 +89,26 @@ def order_instructions(user_csv, json_list):
         print(f"i: {i}")
         for object in json_list:
             for key, value in object.items():
+
+                hwnd = win32gui.GetForegroundWindow()
+                title = win32gui.GetWindowText(hwnd)
+                print(f"Processing - key: {key}, value: {value}")
+                
                 if key == "Name": 
                     continue
-                if key == "Coordinates":
-                    if (value == [834, 353] or value == [885, 364]) and not product_ammount_entered:
+                if key == "Window":
+                    print(f"title: {title} sould contain: {value}")
+                    while value not in title:
+                        print('Program paused because pop up window...')
+                        hwnd = win32gui.GetForegroundWindow()
+                        title = win32gui.GetWindowText(hwnd)
+                        time.sleep(1)
+                elif key == "Coordinates":
+                    if ((value == [834, 353] or value == [885, 364]) and not product_ammount_entered):
                         move_mouse(value)
                         time.sleep(0.5)
                         product_ammount_entered = True
-                    elif not value == [834, 353]:
+                    elif (not value == [834, 353] or value == [885, 364]):
                         move_mouse(value)
                         time.sleep(0.5)
                 if key == "Coordinate":
@@ -104,7 +128,8 @@ def order_instructions(user_csv, json_list):
                     type_keyboard(csv_rows[i][5])
                     time.sleep(0.5)
                 elif key == "Order Amount" and not product_ammount_entered:
-                    type_keyboard(product_amount)
+                    print(len(csv_rows))
+                    type_keyboard(str(len(csv_rows) - 1))
                     time.sleep(0.5)
 
 def finish_him_instructions(user_csv, finish_him_list):
@@ -115,9 +140,21 @@ def finish_him_instructions(user_csv, finish_him_list):
     # Process each instruction in sequence
     for object in finish_him_list:
         for key, value in object.items():
+
+            hwnd = win32gui.GetForegroundWindow()
+            title = win32gui.GetWindowText(hwnd)
+            print(f"Processing - key: {key}, value: {value}")
+
             if key == "Name":
                 continue
-            if key == "Coordinates":
+            if key == "Window":
+                print(f"title: {title} sould contain: {value}")
+                while value not in title:
+                    print('Program paused because pop up window...')
+                    hwnd = win32gui.GetForegroundWindow()
+                    title = win32gui.GetWindowText(hwnd)
+                    time.sleep(1)
+            elif key == "Coordinates":
                 move_mouse(value)
                 time.sleep(0.5)
             elif key == "Zip":
