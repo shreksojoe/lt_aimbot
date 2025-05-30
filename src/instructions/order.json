@@ -6,8 +6,6 @@
     {"Product Number": ""},
     {"Name": "Product No. Button", "Coordinates": [232, 351]},
     {"Window": "Editing Ticket"},
-    {"Name": "Price Text Box", "Coordinate": [608, 377]},
-    {"Price": ""}, 
     {"Name": "Plus Button", "Coordinates": [834, 353]},
     {"Name": "Product Button", "Coordinates":[885, 364]},
     {"Order Amount": ""},

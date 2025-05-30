@@ -131,9 +131,9 @@ def order_instructions(user_csv, json_list):
                     time.sleep(0.5)
                     type_keyboard(csv_rows[i][4])
                     time.sleep(0.5)
-                elif key == "Price":
-                    type_keyboard(csv_rows[i][5])
-                    time.sleep(0.5)
+                # elif key == "Price":
+                #     type_keyboard(csv_rows[i][5])
+                #     time.sleep(0.5)
                 elif key == "Order Amount" and not product_ammount_entered:
                     print(len(csv_rows))
                     type_keyboard(str(len(csv_rows) - 1))
