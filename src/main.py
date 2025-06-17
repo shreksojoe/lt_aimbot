@@ -5,6 +5,7 @@ import open_files
 import json_gps
 # import navigation
 import csv_to_json
+import xlsx_to_csv
 
 # list of new breed (muthafuckin) files
 # 1. god.py
@@ -38,7 +39,11 @@ finish_him_array = open_files.open_json_file(finish_him_json)
 relapse_array = open_files.open_json_file(relapse_json)
 
 for csv_file in csv_files:
-    csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array)
+    if csv_file.lower().endswith(".xlsx"):
+        new_csv = xlsx_to_csv.convert(csv_file)
+        csv_to_json.launch_instructions(new_csv, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array)
+    else:
+        csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array)
 
 # Keep console window open
 print('\nPress Enter to exit...')
