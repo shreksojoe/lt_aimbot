@@ -12,8 +12,6 @@ import csv_to_json
 # 3. navigation.py
 # 4. login.py
 # 5. ui.py
-# 6. 
-
 
 def resource_path(relative_path):
     try:
@@ -26,9 +24,10 @@ ticket_json = resource_path('instructions/ticket.json')
 checkbox_json = resource_path('instructions/checkboxes.json')
 order_json = resource_path('instructions/order.json')
 finish_him_json = resource_path('instructions/finish_him.json')
+relapse_json = resource_path('instructions/relapse.json')
 
 login.to_Label_Traxx()
-csv_file = ui.create_window()
+csv_files = ui.create_window()
 
 print('ui done, json next')
 
@@ -36,8 +35,10 @@ ticket_array = open_files.open_json_file(ticket_json)
 checkbox_array = open_files.open_json_file(checkbox_json)
 order_array = open_files.open_json_file(order_json)
 finish_him_array = open_files.open_json_file(finish_him_json)
+relapse_array = open_files.open_json_file(relapse_json)
 
-csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, finish_him_array)
+for csv_file in csv_files:
+    csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array)
 
 # Keep console window open
 print('\nPress Enter to exit...')

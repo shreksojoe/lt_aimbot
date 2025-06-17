@@ -1,0 +1,6 @@
+[
+    {"Window":"Editing Ticket"},
+    {"Name": "Save Button", "Coordinates": [931, 191]},
+    {"Window":"Ticket Selector"},
+    {"Name": "Home Button", "Coordinates": [911, 655]}
+]
