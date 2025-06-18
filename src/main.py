@@ -26,6 +26,7 @@ checkbox_json = resource_path('instructions/checkboxes.json')
 order_json = resource_path('instructions/order.json')
 finish_him_json = resource_path('instructions/finish_him.json')
 relapse_json = resource_path('instructions/relapse.json')
+duplicate_json = resource_path('instructions/duplicate.json')
 
 login.to_Label_Traxx()
 csv_files = ui.create_window()
@@ -37,13 +38,19 @@ checkbox_array = open_files.open_json_file(checkbox_json)
 order_array = open_files.open_json_file(order_json)
 finish_him_array = open_files.open_json_file(finish_him_json)
 relapse_array = open_files.open_json_file(relapse_json)
+duplicate_array = open_files.open_json_file(duplicate_json)
 
 for csv_file in csv_files:
+    print(csv_files)
+    print(csv_file)
     if csv_file.lower().endswith(".xlsx"):
-        new_csv = xlsx_to_csv.convert(csv_file)
-        csv_to_json.launch_instructions(new_csv, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array)
+        print('is an xlsx')
+        new_csv = xlsx_to_csv.main(csv_file)
+        csv_to_json.launch_instructions(new_csv, ticket_array, checkbox_array, order_array, finish_him_array, duplicate_array, True)
     else:
-        csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array)
+        print('is a csv')
+        #  new_csv = xlsx_to_csv.main(csv_file)
+        csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array, False)
 
 # Keep console window open
 print('\nPress Enter to exit...')

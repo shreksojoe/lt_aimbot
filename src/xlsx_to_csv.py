@@ -5,7 +5,16 @@ import csv
 
 def convert(xlsx_file):
     # load file
-    load_file = pd.read_excel(xlsx_file)
+    try:
+        # Try with default engine
+        load_file = pd.read_excel(xlsx_file)
+    except ValueError:
+        # If format can't be determined, try with openpyxl engine
+        try:
+            load_file = pd.read_excel(xlsx_file, engine='openpyxl')
+        except Exception as e:
+            print(f"Error reading Excel file: {e}")
+            return None
     
     # declare and assign the name of the csv file
     base_name = os.path.splitext(xlsx_file)[0]
@@ -31,9 +40,11 @@ def construct(file_array):
 
         if ('low stock' in file_array[i][9].lower()) or ('out of stock' in file_array[i][9].lower()):
             new_row[7] = True
-        elif not ('low stock' in file_array[i][9].lower()):
+        else:
             new_row[7] = False
         new_array.append(new_row)
+    print(f"first row: {new_array[0]}")
+    new_array.pop(0)
     return new_array
 
 # Opens the csv, and stores rows in array 
@@ -49,10 +60,18 @@ def csv_rows_to_array(input_csv):
         writer = csv.writer(old_file)
         writer.writerows(new_file)
 
-
-xlsx_file = 'C:\\Users\\joseph.stadum\\Downloads\\FBA-US-215.xlsx'
-csv_rows_to_array(convert(xlsx_file))
+def main(input_xlsx):
+    try:
+        csv_file = convert(input_xlsx)
+        if csv_file:
+            csv_rows_to_array(csv_file)
+            return csv_file
+        else:
+            print(f"Failed to convert {input_xlsx}")
+            return input_xlsx
+    except Exception as e:
+        print(f"Error in xlsx_to_csv.main: {e}")
+        return input_xlsx
 
 # g 7 6 0 1 e g 9
 # 0 1 2 3 4 5 6 7
-

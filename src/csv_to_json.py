@@ -34,7 +34,7 @@ def type_keyboard(text):
     time.sleep(0.3)
 
 # base
-def ticket_instructions(user_csv, json_list):
+def ticket_instructions(user_csv, json_list, chromalabel):
     csv_rows = csv_rows_to_array(user_csv)
 
     # Process each instruction in sequence
@@ -82,13 +82,14 @@ def ticket_instructions(user_csv, json_list):
                 print("Typing ship date")
                 type_keyboard(csv_rows[0][2])
                 time.sleep(0.5)
+
              
 def order_instructions(user_csv, json_list):
     csv_rows = csv_rows_to_array(user_csv)
     product_amount = len(csv_rows)
     # subtract = [833,550]
     product_ammount_entered = False
-    executed = False
+    general_desciption_executed = False
 
     # Process each instruction in sequence
     for i in range(product_amount):
@@ -141,15 +142,15 @@ def order_instructions(user_csv, json_list):
                     print(len(csv_rows))
                     type_keyboard(str(len(csv_rows) - 1))
                     time.sleep(0.5)
-                elif (value == "Description Text Box" or value == "General Description Text Box") and executed == True:
+                elif (value == "Description Text Box" or value == "General Description Text Box") and general_description_executed == True:
                     continue
-                elif key == "Copy" and executed == False:
+                elif key == "Copy" and general_desciption_executed == False:
                     pyautogui.hotkey('ctrl','c')
                     time.sleep(0.3)
-                elif key == "Paste"and executed == False:
+                elif key == "Paste"and general_desciption_executed == False:
                     general_description = pyperclip.paste()
                     type_keyboard(general_description)
-                    executed = True
+                    general_desciption_executed = True
 
 def finish_him_instructions(user_csv, finish_him_list):
     csv_rows = csv_rows_to_array(user_csv)
@@ -215,15 +216,18 @@ def finish_him_instructions(user_csv, finish_him_list):
 # add this
 # 10. check boxes (new, already added tho)
 # 11. Enter address (same)
+
 #       REPEAT
-# 12. back go General tab
+# Customer number is taken out
+# So is PO No.
+# 
+# 12. back go General tab (execute once)
 # 13. Duplicate button
 # 14. [radio button] Duplicate this ticket and keep details (multi order)
 # 15. Duplicate button
 # 16. Ship Date
 # 17. enter Quantity
 # 18. enter product no
-# 19. copy past description into General Description
 # 20. Priority
 
 #      Differences
@@ -233,79 +237,18 @@ def finish_him_instructions(user_csv, finish_him_list):
 # QTY
 
 
-def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array):
+def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array, chromalabel):
     ticket_instructions(user_csv, ticket_array)
     ticket_instructions(user_csv, checkbox_array)
     order_instructions(user_csv, order_array)
     finish_him_instructions(user_csv, finish_him_array)
-    ticket_instructions(user_csv, relapse_array)
+    if chromalabel == True:
+        for 
+
+        
+    else:
+        ticket_instructions(user_csv, relapse_array, chromalabel)
     
-    
-            
-            # After each action, wait a bit
-            # time.sleep(0.2)
-#def ticket_instructions(user_csv, json_list):
-#    csv_rows = csv_rows_to_array(user_csv)
-#    product_amount = len(csv_rows)
-#    # Cycle through the JSON file
-#    # Check the values of the key
-#    # Add csv elements based on the value of the key
-#    # Repeat from Quantity Text Box to Price
-#    # Add objects
-#    
-#    # load json file into memory with read permissions
-#    #with open (user_json, 'r') as json_instructions:
-#    #    json_step = json.load(json_instructions)
-#    #
-#    for object in json_list:
-#         for key, value in object.items():
-#
-#             print(f"key: {key}, value: {value}")            
-#
-#             # move mouse and type for the rest
-#             if key == "Name":
-#                 continue
-#             elif key == "Coordinates": # works
-#                 move_mouse(value)
-#                 time.sleep(0.1)
-#                 continue
-#             elif key == "Select All":
-#                 for _ in range(9):
-#                     pyautogui.press('backspace')
-#                 time.sleep(0.1)
-#                 continue
-#             elif key == "Customer Name":
-#                 value = csv_rows[0]
-#                 type_keyboard(value)
-#                 time.sleep(0.1)
-#                 continue
-#             elif key == "PO Number":
-#                 value = csv_rows[1]
-#                 type_keyboard(value)
-#                 time.sleep(0.1)
-#                 continue
-#             elif key == "Ship Date":
-#                 value = csv_rows[2]
-#                 type_keyboard(value)
-#                 time.sleep(0.1)
-#                 continue
-#    print(f"json list: {json_list}")            
-#    for biatch in csv_rows:
-#        print(f"biatch: {biatch}")
-#
-#    # Loop through list
-#    # for objects in json_list:
-#    #     for key, value in objects.items():
-#
-#    #         if key == "Name":
-#    #             continue
-#    #         elif key == "Coordinate":
-#    #             move_mouse(value)
-#    #         elif key == "Select All":
-#    #             for _ in range(9):
-#    #                 keyboard.send('backspace')
-#    #         elif not value:
-#    #             type_keyboard(value)
     
 
 # Take csv and json as input
