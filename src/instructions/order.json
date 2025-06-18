@@ -10,5 +10,9 @@
     {"Name": "Product Button", "Coordinates":[885, 364]},
     {"Order Amount": ""},
     {"Name": "OK Button", "Coordinates":[703, 252]},
-    {"Window": "Editing Ticket"}
+    {"Window": "Editing Ticket"},
+    {"Name":"Description Text Box", "Coordinates":[466, 376]},
+    {"Copy":""},
+    {"Name":"General Description Text Box", "Coordinates":[240, 138]},
+    {"Paste":""}
 ]
