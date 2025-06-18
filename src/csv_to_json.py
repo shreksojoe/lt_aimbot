@@ -32,6 +32,7 @@ def type_keyboard(text):
     print(f"text: {text}")
     time.sleep(0.3)
 
+# base
 def ticket_instructions(user_csv, json_list):
     csv_rows = csv_rows_to_array(user_csv)
 
@@ -189,8 +190,28 @@ def finish_him_instructions(user_csv, finish_him_list):
                     continue
 
 
+# Instructions for Amazon Orders:
+# 1. click "Tickets"
+# 2. click "New Ticket"
+# 3. Customer Number (same)
+# 4. PO # (same)
+# 5. Ship Date (same, but don't alter it)
+# 6. Quantity (same)
+# 8. Item Number (same)
+# 9. copy paste description (new) (click, sleep, copy, move paste)
+# 10. check boxes (new, already added tho)
+# 11. Enter address (same)
+#       REPEAT
+# 12. back go General tab
+# 13. Duplicate button
+# 14. Duplicate button
+# 15. Ship Date
+#      Differences
+# SKU
+# Ship Date
+# FBA Lowstock
+# QTY
 
-            
 
 def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array):
     ticket_instructions(user_csv, ticket_array)
