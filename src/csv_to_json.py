@@ -8,6 +8,7 @@ import json
 import csv
 import sys
 import os
+from datetime import datetime
 
 # location variables:
 
@@ -33,14 +34,35 @@ def type_keyboard(text):
     print(f"text: {text}")
     time.sleep(0.3)
 
-# base
-def ticket_instructions(user_csv, json_list, chromalabel):
-    csv_rows = csv_rows_to_array(user_csv)
+# Date formate from YYYY-MM-DD to MM/DD/YYY
+def convert_date_format(date_str):
+    formats_to_try = [
+        "%Y-%m-%d",  # 2025-04-04
+        "%m/%d/%Y",  # 04/04/2025
+        "%d-%m-%Y",  # 04-04-2025
+        "%Y/%m/%d",  # 2025/04/04
+        "%d/%m/%Y",  # 04/04/2025 (common outside US)
+    ]
+        
+    for fmt in formats_to_try:
+        try:
+            parsed_date = datetime.strptime(date_str, fmt)
+            return parsed_date.strftime("%m/%d/%Y")
+        except ValueError:
+            continue
 
+    raise ValueError(f"Unrecognized date format: {date_str}")
+
+# does this repeat for each line in the csv?
+def ticket_instructions(user_csv, json_list):
+    csv_rows = csv_rows_to_array(user_csv)
+    
     # Process each instruction in sequence
     for object in json_list:
+        print(f'Cycling thorugh objects of json list: {object}')
         for key, value in object.items():
-
+            print(f'Cycling thorugh key, value pairs of objects: {key}, {value}')
+            
             hwnd = win32gui.GetForegroundWindow()
             title = win32gui.GetWindowText(hwnd)
 
@@ -79,14 +101,18 @@ def ticket_instructions(user_csv, json_list, chromalabel):
                 type_keyboard(csv_rows[0][1])
                 time.sleep(0.5)
             elif key == "Ship Date":
-                print("Typing ship date")
-                type_keyboard(csv_rows[0][2])
+                print(f"Typing ship date: {csv_rows[0][2]}")
+                type_keyboard(convert_date_format(csv_rows[0][2]))
                 time.sleep(0.5)
 
              
-def order_instructions(user_csv, json_list):
+def order_instructions(user_csv, json_list, chromalabel):
     csv_rows = csv_rows_to_array(user_csv)
-    product_amount = len(csv_rows)
+    product_ammount = 0
+    if chromalabel == True:
+        product_amount = 1 
+    else:
+        product_amount = len(csv_rows)
     # subtract = [833,550]
     product_ammount_entered = False
     general_desciption_executed = False
@@ -118,7 +144,6 @@ def order_instructions(user_csv, json_list):
                     if ((value == [834, 353] or value == [885, 364]) and not product_ammount_entered):
                         move_mouse(value)
                         time.sleep(0.5)
-                        product_ammount_entered = True
                     elif (not value == [834, 353] or value == [885, 364]):
                         move_mouse(value)
                         time.sleep(0.5)
@@ -140,8 +165,16 @@ def order_instructions(user_csv, json_list):
                 #     time.sleep(0.5)
                 elif key == "Order Amount" and not product_ammount_entered:
                     print(len(csv_rows))
-                    type_keyboard(str(len(csv_rows) - 1))
-                    time.sleep(0.5)
+                    if chromalabel == True:
+                        print("chroma be true")
+                        type_keyboard(str(0))
+                        time.sleep(0.5)
+                        product_ammount_entered = True
+                    else:
+                        print("chroma be false")
+                        type_keyboard(str(len(csv_rows) - 1))
+                        time.sleep(0.5)
+                        product_ammount_entered = True
                 elif (value == "Description Text Box" or value == "General Description Text Box") and general_description_executed == True:
                     continue
                 elif key == "Copy" and general_desciption_executed == False:
@@ -201,6 +234,39 @@ def finish_him_instructions(user_csv, finish_him_list):
                 except IndexError:
                     continue
 
+def duplicate(user_csv, relapse_list):
+
+    csv_rows = csv_rows_to_array(user_csv)
+
+    # Process each instruction in sequence
+    for object in relapse_list:
+        for key, value in object.items():
+
+            hwnd = win32gui.GetForegroundWindow()
+            title = win32gui.GetWindowText(hwnd)
+
+            print(f"Processing - key: {key}, value: {value}")
+            
+            # Skip name keys as they're just labels
+            if key == "Name":
+                continue
+            if key == "Window":
+                print(f"title: {title} sould contain: {value}")
+                first_time = True
+                while value not in title:
+                    if first_time:
+                        print('Program paused because pop up window...')
+                    first_time = False
+                    hwnd = win32gui.GetForegroundWindow()
+                    title = win32gui.GetWindowText(hwnd)
+                    time.sleep(1)
+                
+            # Handle each action
+            elif key == "Coordinates":
+                print(f"Moving mouse to coordinates: {value}")
+                move_mouse(value)
+                time.sleep(0.5)  # Increased sleep time for reliability
+
 
 # Instructions for Amazon Orders:
 # 1. click "Tickets"
@@ -236,18 +302,18 @@ def finish_him_instructions(user_csv, finish_him_list):
 # FBA Lowstock
 # QTY
 
+# Order: Go through the process of making a ticket normaly
+# Enter duplicate for every other order on that ticket
+# 
 
 def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array, chromalabel):
+    print(f"user csv: {user_csv}")
     ticket_instructions(user_csv, ticket_array)
     ticket_instructions(user_csv, checkbox_array)
-    order_instructions(user_csv, order_array)
+    order_instructions(user_csv, order_array, chromalabel)
     finish_him_instructions(user_csv, finish_him_array)
-    if chromalabel == True:
-        for 
-
-        
-    else:
-        ticket_instructions(user_csv, relapse_array, chromalabel)
+    if chromalabel == True: 
+        duplicate(user_csv, relapse_array)
     
     
 
@@ -272,9 +338,5 @@ if __name__ == "__main__":
 # 1. Cycle through csv
 # 2. Cycle through json
 # 3. 
-
-
-
-
 
 
