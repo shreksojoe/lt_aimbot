@@ -194,6 +194,68 @@ def order_instructions(user_csv, json_list, chromalabel, amz_exec):
                     type_keyboard(general_description)
                     general_desciption_executed = True
 
+
+def duplicate_order(csv_rows, order_array, amz_exec):
+
+    # subtract = [833,550]
+    print(f"csv rows: {csv_rows}")
+    product_ammount_entered = False
+    general_desciption_executed = False
+
+    # Process each instruction in sequence
+    
+    for object in order_array:
+        for key, value in object.items():
+
+
+            hwnd = win32gui.GetForegroundWindow()
+            title = win32gui.GetWindowText(hwnd)
+            print(f"Processing - key: {key}, value: {value}")
+            
+            if key == "Name": 
+                continue
+            if key == "Window":
+                first_time = True
+                print(f"title: {title} sould contain: {value}")
+                while value not in title:
+                    if first_time:
+                        print('Program paused because pop up window...')
+                    first_time = False
+                    hwnd = win32gui.GetForegroundWindow()
+                    title = win32gui.GetWindowText(hwnd)
+                    time.sleep(1)
+            elif key == "Coordinates":
+                if ((value == [834, 353] or value == [885, 364]) and not product_ammount_entered):
+                    move_mouse(value)
+                    time.sleep(0.5)
+                elif (not value == [834, 353] or value == [885, 364]):
+                    move_mouse(value)
+                    time.sleep(0.5)
+            elif key == "Coordinate":
+                new_value = value[0], value[1] + (amz_exec * 22)
+                move_mouse(new_value)
+                time.sleep(0.5)
+            elif key == "Quantity":
+                type_keyboard(csv_rows[3])
+                time.sleep(0.5)
+            elif key == "Product Number":
+                time.sleep(0.5)
+                type_keyboard(csv_rows[4])
+                time.sleep(0.5)
+            elif key == "Order Amount" and not product_ammount_entered:
+                type_keyboard(str(0))
+                time.sleep(0.5)
+                product_ammount_entered = True
+            elif (value == "Description Text Box" or value == "General Description Text Box") and general_description_executed == True:
+                continue
+            elif key == "Copy" and general_desciption_executed == False:
+                pyautogui.hotkey('ctrl','c')
+                time.sleep(0.3)
+            elif key == "Paste"and general_desciption_executed == False:
+                general_description = pyperclip.paste()
+                type_keyboard(general_description)
+                general_desciption_executed = True
+
 def finish_him_instructions(user_csv, finish_him_list):
     csv_rows = csv_rows_to_array(user_csv)
     location_coords = [157, 281]
@@ -321,14 +383,14 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, fin
     ticket_instructions(user_csv, checkbox_array)
 
     csv_rows = csv_rows_to_array(user_csv)
+    print(f"csv rows (from launch): {csv_rows}")
     for csv_row in range(len(csv_rows)):
         if chromalabel == True: 
-            order_instructions(user_csv, order_array, chromalabel, csv_row)
-
             if csv_row == 0: # only exec this the first time
+                order_instructions(user_csv, order_array, chromalabel, csv_row)
                 finish_him_instructions(user_csv, finish_him_array)
-
             duplicate(user_csv, relapse_array)
+            duplicate_order(csv_rows[csv_row], order_array, csv_row)
         else:
             order_instructions(user_csv, order_array, chromalabel, 0)
             finish_him_instructions(user_csv, finish_him_array)
