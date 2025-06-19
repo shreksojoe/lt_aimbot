@@ -105,9 +105,15 @@ def ticket_instructions(user_csv, json_list):
                 type_keyboard(convert_date_format(csv_rows[0][2]))
                 time.sleep(0.5)
 
-             
-def order_instructions(user_csv, json_list, chromalabel):
-    csv_rows = csv_rows_to_array(user_csv)
+def order_instructions(user_csv, json_list, chromalabel, amz_exec):
+
+    # if it is a file path (for normal csv), turn it into a 2d array
+    if isinstance(user_csv, str):
+        csv_rows = csv_rows_to_array(user_csv)
+    # if it is  an array (for chromalabel), keep it
+    elif isinstance(user_csv, list):
+        csv_rows = user_csv
+
     product_ammount = 0
     if chromalabel == True:
         product_amount = 1 
@@ -119,7 +125,10 @@ def order_instructions(user_csv, json_list, chromalabel):
 
     # Process each instruction in sequence
     for i in range(product_amount):
-        print(f"i: {i}")
+        if amz_exec == 0:
+            amz_exec = i
+        
+        print(f"i: {amz_exec}")
         for object in json_list:
             for key, value in object.items():
 
@@ -147,18 +156,18 @@ def order_instructions(user_csv, json_list, chromalabel):
                     elif (not value == [834, 353] or value == [885, 364]):
                         move_mouse(value)
                         time.sleep(0.5)
-                if key == "Coordinate":
+                elif key == "Coordinate":
                     # value[1] + (i * 22)
-                    new_value = value[0], value[1] + (i * 22)
+                    new_value = value[0], value[1] + (amz_exec * 22)
                     move_mouse(new_value)
                     time.sleep(0.5)
                 elif key == "Quantity":
-                    type_keyboard(csv_rows[i][3])
+                    type_keyboard(csv_rows[amz_exec][3])
                     time.sleep(0.5)
                 elif key == "Product Number":
                     print(f"product # {i}: {csv_rows[i][4]}")
                     time.sleep(0.5)
-                    type_keyboard(csv_rows[i][4])
+                    type_keyboard(csv_rows[amz_exec][4])
                     time.sleep(0.5)
                 # elif key == "Price":
                 #     type_keyboard(csv_rows[i][5])
@@ -310,10 +319,22 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, fin
     print(f"user csv: {user_csv}")
     ticket_instructions(user_csv, ticket_array)
     ticket_instructions(user_csv, checkbox_array)
-    order_instructions(user_csv, order_array, chromalabel)
-    finish_him_instructions(user_csv, finish_him_array)
-    if chromalabel == True: 
-        duplicate(user_csv, relapse_array)
+
+    csv_rows = csv_rows_to_array(user_csv)
+    for csv_row in range(len(csv_rows)):
+        if chromalabel == True: 
+            order_instructions(user_csv, order_array, chromalabel, csv_row)
+
+            if csv_row == 0: # only exec this the first time
+                finish_him_instructions(user_csv, finish_him_array)
+
+            duplicate(user_csv, relapse_array)
+        else:
+            order_instructions(user_csv, order_array, chromalabel, 0)
+            finish_him_instructions(user_csv, finish_him_array)
+            duplicate(user_csv, relapse_array)
+        
+        
     
     
 
