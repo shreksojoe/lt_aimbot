@@ -72,7 +72,7 @@ def ticket_instructions(user_csv, json_list):
             if key == "Name":
                 continue
             if key == "Window":
-                print(f"title: {title} sould contain: {value}")
+                print(f"title: {title} should contain: {value}")
                 first_time = True
                 while value not in title:
                     if first_time:
@@ -81,7 +81,6 @@ def ticket_instructions(user_csv, json_list):
                     hwnd = win32gui.GetForegroundWindow()
                     title = win32gui.GetWindowText(hwnd)
                     time.sleep(1)
-                
             # Handle each action
             elif key == "Coordinates":
                 print(f"Moving mouse to coordinates: {value}")
@@ -114,6 +113,7 @@ def order_instructions(user_csv, json_list, chromalabel, amz_exec):
     elif isinstance(user_csv, list):
         csv_rows = user_csv
 
+
     product_ammount = 0
     if chromalabel == True:
         product_amount = 1 
@@ -141,7 +141,9 @@ def order_instructions(user_csv, json_list, chromalabel, amz_exec):
                     continue
                 if key == "Window":
                     first_time = True
-                    print(f"title: {title} sould contain: {value}")
+                    print(f"title: |{title} sould contain: {value}")
+                    if "Warning" in title :
+                        move_mouse([514, 292])
                     while value not in title:
                         if first_time:
                             print('Program paused because pop up window...')
@@ -202,8 +204,8 @@ def duplicate_order(csv_rows, order_array, amz_exec):
     product_ammount_entered = False
     general_desciption_executed = False
 
+
     # Process each instruction in sequence
-    
     for object in order_array:
         for key, value in object.items():
 
@@ -217,6 +219,8 @@ def duplicate_order(csv_rows, order_array, amz_exec):
             if key == "Window":
                 first_time = True
                 print(f"title: {title} sould contain: {value}")
+                if "Warning" in title :
+                    move_mouse([514, 292])
                 while value not in title:
                     if first_time:
                         print('Program paused because pop up window...')
@@ -232,7 +236,7 @@ def duplicate_order(csv_rows, order_array, amz_exec):
                     move_mouse(value)
                     time.sleep(0.5)
             elif key == "Coordinate":
-                new_value = value[0], value[1] + (amz_exec * 22)
+                new_value = value[0], value[1] + amz_exec
                 move_mouse(new_value)
                 time.sleep(0.5)
             elif key == "Quantity":
@@ -251,9 +255,14 @@ def duplicate_order(csv_rows, order_array, amz_exec):
             elif key == "Copy" and general_desciption_executed == False:
                 pyautogui.hotkey('ctrl','c')
                 time.sleep(0.3)
-            elif key == "Paste"and general_desciption_executed == False:
-                general_description = pyperclip.paste()
-                type_keyboard(general_description)
+            elif key == "Paste" and general_desciption_executed == False:
+                pyautogui.press('end')
+                time.sleep(0.3)
+                for _ in range(150):
+                    keyboard.send('backspace')
+                time.sleep(0.3)
+                print('paste: ')
+                type_keyboard(pyperclip.paste())
                 general_desciption_executed = True
 
 def finish_him_instructions(user_csv, finish_him_list):
@@ -275,6 +284,8 @@ def finish_him_instructions(user_csv, finish_him_list):
                 first_time = True
 
                 print(f"title: {title} sould contain: {value}")
+                if "Warning" in title :
+                    move_mouse([514, 292])
                 if first_time:
                     print('Program paused because pop up window...')
                 first_time = False
@@ -323,6 +334,8 @@ def duplicate(user_csv, relapse_list):
                 continue
             if key == "Window":
                 print(f"title: {title} sould contain: {value}")
+                if "Warning" in title :
+                    move_mouse([514, 292])
                 first_time = True
                 while value not in title:
                     if first_time:
@@ -386,6 +399,15 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, fin
     print(f"csv rows (from launch): {csv_rows}")
     for csv_row in range(len(csv_rows)):
         if chromalabel == True: 
+            print(f"seventh row: {csv_rows[7]}")
+            if csv_rows[csv_row][7] == 'True' and not (csv_rows[csv_row - 1][7] == 'True'):
+                move_mouse([841, 118])
+                move_mouse([729, 171])
+                time.sleep(0.3)
+            elif csv_rows[csv_row][7] == 'False':
+                move_mouse([841, 118])
+                move_mouse([710, 138])
+                time.sleep(0.3)
             if csv_row == 0: # only exec this the first time
                 order_instructions(user_csv, order_array, chromalabel, csv_row)
                 finish_him_instructions(user_csv, finish_him_array)

@@ -3,7 +3,5 @@
     {"Name": "General Tab", "Coordinates": [35, 63]},
     {"Name":"Duplicate Button", "Coordinates": [920, 271]},
     {"Name":"Multi Order Button", "Coordinates": [335, 251]},
-    {"Name":"Second Duplicate Button", "Coordinates": [628, 504]},
-    {"Name":"Priority Dropdown Menu", "Coordinates": [841, 118]},
-    {"Name": "Priority Low Stock", "Coordinates": [729, 171]}
+    {"Name":"Second Duplicate Button", "Coordinates": [628, 504]}
 ]
