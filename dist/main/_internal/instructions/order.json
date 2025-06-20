@@ -1,0 +1,18 @@
+[
+    {"Window": "Editing Ticket"},
+    {"Name": "Quantity Text Box", "Coordinate": [46, 376]},
+    {"Quantity": ""},
+    {"Name": "Product No. Text Box", "Coordinate": [223, 372]},
+    {"Product Number": ""},
+    {"Name": "Product No. Button", "Coordinates": [232, 351]},
+    {"Window": "Editing Ticket"},
+    {"Name": "Plus Button", "Coordinates": [834, 353]},
+    {"Name": "Product Button", "Coordinates":[885, 364]},
+    {"Order Amount": ""},
+    {"Name": "OK Button", "Coordinates":[703, 252]},
+    {"Window": "Editing Ticket"},
+    {"Name":"Description Text Box", "Coordinates":[466, 376]},
+    {"Copy":""},
+    {"Name":"General Description Text Box", "Coordinates":[240, 138]},
+    {"Paste":""}
+]

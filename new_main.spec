@@ -1,12 +1,20 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+from PyInstaller.utils.hooks import collect_data_files, collect_submodules
+
 block_cipher = None
+
+datas = [('src/instructions', 'instructions')] + collect_data_files('numpy') + collect_data_files('pandas')
+
+# Add all numpy and pandas submodules
+numpy_imports = collect_submodules('numpy')
+pandas_imports = collect_submodules('pandas')
 
 a = Analysis(
     ['src\\main.py'],
     pathex=['src'],
     binaries=[],
-    datas=[('src/instructions', 'instructions')],
+    datas=datas,
     hiddenimports=[
         'psutil',
         'win32api',
@@ -36,9 +44,19 @@ a = Analysis(
         'win32api',
         'pyautogui._pyautogui_win',
         'pyautogui._window_win',
-        'pygetwindow._pygetwindow_win'
-    ],
-    hookspath=[],
+        'pygetwindow._pygetwindow_win',
+        'numpy',
+        'pandas',
+        'numpy.core',
+        'numpy.core._dtype_ctypes',
+        'numpy.core._methods',
+        'numpy.lib.format',
+        'pandas.core',
+        'pandas.io.formats',
+        'pandas.io.excel',
+        'openpyxl'
+    ] + numpy_imports + pandas_imports,
+    hookspath=['hooks'],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
@@ -46,6 +64,7 @@ a = Analysis(
     win_private_assemblies=False,
     cipher=block_cipher,
     noarchive=False,
+
 )
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
