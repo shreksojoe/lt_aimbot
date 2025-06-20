@@ -44,6 +44,8 @@ def construct(file_array):
             new_row[7] = False
         new_array.append(new_row)
     print(f"first row: {new_array[0]}")
+    print(f"first row: {new_array[1]}")
+    new_array.pop(0)
     new_array.pop(0)
     return new_array
 

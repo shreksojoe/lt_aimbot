@@ -42,6 +42,7 @@ def convert_date_format(date_str):
         "%d-%m-%Y",  # 04-04-2025
         "%Y/%m/%d",  # 2025/04/04
         "%d/%m/%Y",  # 04/04/2025 (common outside US)
+        "%m/%d/%y",  # 04/04/25
     ]
         
     for fmt in formats_to_try:
@@ -197,7 +198,7 @@ def order_instructions(user_csv, json_list, chromalabel, amz_exec):
                     general_desciption_executed = True
 
 
-def duplicate_order(csv_rows, order_array, amz_exec):
+def duplicate_order(csv_rows, dup_order_array, amz_exec):
 
     # subtract = [833,550]
     print(f"csv rows: {csv_rows}")
@@ -206,7 +207,7 @@ def duplicate_order(csv_rows, order_array, amz_exec):
 
 
     # Process each instruction in sequence
-    for object in order_array:
+    for object in dup_order_array:
         for key, value in object.items():
 
 
@@ -228,16 +229,8 @@ def duplicate_order(csv_rows, order_array, amz_exec):
                     hwnd = win32gui.GetForegroundWindow()
                     title = win32gui.GetWindowText(hwnd)
                     time.sleep(1)
-            elif key == "Coordinates":
-                if ((value == [834, 353] or value == [885, 364]) and not product_ammount_entered):
-                    move_mouse(value)
-                    time.sleep(0.5)
-                elif (not value == [834, 353] or value == [885, 364]):
-                    move_mouse(value)
-                    time.sleep(0.5)
             elif key == "Coordinate":
-                new_value = value[0], value[1] + amz_exec
-                move_mouse(new_value)
+                move_mouse(value)
                 time.sleep(0.5)
             elif key == "Quantity":
                 type_keyboard(csv_rows[3])
@@ -246,10 +239,10 @@ def duplicate_order(csv_rows, order_array, amz_exec):
                 time.sleep(0.5)
                 type_keyboard(csv_rows[4])
                 time.sleep(0.5)
-            elif key == "Order Amount" and not product_ammount_entered:
-                type_keyboard(str(0))
-                time.sleep(0.5)
-                product_ammount_entered = True
+            # elif key == "Order Amount" and not product_ammount_entered:
+            #     type_keyboard(str(0))
+            #     time.sleep(0.5)
+            #     product_ammount_entered = True
             elif (value == "Description Text Box" or value == "General Description Text Box") and general_description_executed == True:
                 continue
             elif key == "Copy" and general_desciption_executed == False:
@@ -257,12 +250,13 @@ def duplicate_order(csv_rows, order_array, amz_exec):
                 time.sleep(0.3)
             elif key == "Paste" and general_desciption_executed == False:
                 pyautogui.press('end')
-                time.sleep(0.3)
+                time.sleep(0.5)
                 for _ in range(150):
                     keyboard.send('backspace')
-                time.sleep(0.3)
+                time.sleep(0.5)
                 print('paste: ')
                 type_keyboard(pyperclip.paste())
+                time.sleep(0.5)
                 general_desciption_executed = True
 
 def finish_him_instructions(user_csv, finish_him_list):
@@ -390,15 +384,15 @@ def duplicate(user_csv, relapse_list):
 # Enter duplicate for every other order on that ticket
 # 
 
-def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array, chromalabel):
+def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, chromalabel):
     print(f"user csv: {user_csv}")
     ticket_instructions(user_csv, ticket_array)
     ticket_instructions(user_csv, checkbox_array)
 
     csv_rows = csv_rows_to_array(user_csv)
     print(f"csv rows (from launch): {csv_rows}")
-    for csv_row in range(len(csv_rows)):
-        if chromalabel == True: 
+    if chromalabel == True: 
+        for csv_row in range(len(csv_rows)):
             print(f"seventh row: {csv_rows[7]}")
             if csv_rows[csv_row][7] == 'True' and not (csv_rows[csv_row - 1][7] == 'True'):
                 move_mouse([841, 118])
@@ -411,12 +405,14 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, fin
             if csv_row == 0: # only exec this the first time
                 order_instructions(user_csv, order_array, chromalabel, csv_row)
                 finish_him_instructions(user_csv, finish_him_array)
-            duplicate(user_csv, relapse_array)
-            duplicate_order(csv_rows[csv_row], order_array, csv_row)
-        else:
-            order_instructions(user_csv, order_array, chromalabel, 0)
-            finish_him_instructions(user_csv, finish_him_array)
-            duplicate(user_csv, relapse_array)
+            duplicate(user_csv, duplicate_array)
+            duplicate_order(csv_rows[csv_row], dup_order_array, csv_row)
+        duplicate(user_csv, relapse_array)
+
+    else:
+        order_instructions(user_csv, order_array, chromalabel, 0)
+        finish_him_instructions(user_csv, finish_him_array)
+        duplicate(user_csv, relapse_array)
         
         
     

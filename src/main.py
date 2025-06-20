@@ -24,9 +24,10 @@ def resource_path(relative_path):
 ticket_json = resource_path('instructions/ticket.json')
 checkbox_json = resource_path('instructions/checkboxes.json')
 order_json = resource_path('instructions/order.json')
+dup_order_json = resource_path('instructions/dup_order.json')
 finish_him_json = resource_path('instructions/finish_him.json')
-relapse_json = resource_path('instructions/relapse.json')
 duplicate_json = resource_path('instructions/duplicate.json')
+relapse_json = resource_path('instructions/relapse.json')
 
 login.to_Label_Traxx()
 csv_files = ui.create_window()
@@ -36,21 +37,20 @@ print('ui done, json next')
 ticket_array = open_files.open_json_file(ticket_json)
 checkbox_array = open_files.open_json_file(checkbox_json)
 order_array = open_files.open_json_file(order_json)
+dup_order_array = open_files.open_json_file(dup_order_json)
 finish_him_array = open_files.open_json_file(finish_him_json)
-relapse_array = open_files.open_json_file(relapse_json)
 duplicate_array = open_files.open_json_file(duplicate_json)
+relapse_array = open_files.open_json_file(relapse_json)
 
 for csv_file in csv_files:
-    print(csv_files)
-    print(csv_file)
     if csv_file.lower().endswith(".xlsx"):
         print('is an xlsx')
         new_csv = xlsx_to_csv.main(csv_file)
-        csv_to_json.launch_instructions(new_csv, ticket_array, checkbox_array, order_array, finish_him_array, duplicate_array, True)
+        csv_to_json.launch_instructions(new_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, True)
     else:
         print('is a csv')
         #  new_csv = xlsx_to_csv.main(csv_file)
-        csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, finish_him_array, relapse_array, False)
+        csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, False)
 
 # Keep console window open
 print('\nPress Enter to exit...')
