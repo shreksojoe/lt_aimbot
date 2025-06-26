@@ -89,7 +89,7 @@ def ticket_instructions(csv_rows, json_list):
                     keyboard.send('backspace')
                 time.sleep(0.5)
             elif key == "Customer Name":
-                print("Typing customer name")
+                print(f"Typing customer name: {csv_rows}")
                 type_keyboard(csv_rows[0][0])
                 time.sleep(0.5)
             elif key == "PO Number":
@@ -122,6 +122,7 @@ def order_instructions(csv_rows, json_list, is_amazon, amz_exec):
     #     product_amount = len(csv_rows)
     # subtract = [833,550]
     # product_ammount_entered = False
+
     general_desciption_executed = False
 
     # Process each instruction in sequence
@@ -170,21 +171,6 @@ def order_instructions(csv_rows, json_list, is_amazon, amz_exec):
                 time.sleep(0.5)
                 type_keyboard(csv_rows[amz_exec][4])
                 time.sleep(0.5)
-            # elif key == "Price":
-            #     type_keyboard(csv_rows[i][5])
-            #     time.sleep(0.5)
-            elif key == "Order Amount" and not product_ammount_entered:
-                print(len(csv_rows))
-                if is_amazon == True:
-                    print("chroma be true")
-                    type_keyboard(str(0))
-                    time.sleep(0.5)
-                    product_ammount_entered = True
-                else:
-                    print("chroma be false")
-                    type_keyboard(str(len(csv_rows) - 1))
-                    time.sleep(0.5)
-                    product_ammount_entered = True
             elif (value == "Description Text Box" or value == "General Description Text Box") and general_description_executed == True:
                 continue
             elif key == "Copy" and general_desciption_executed == False:
@@ -342,39 +328,39 @@ def duplicate(csv_rows, relapse_list):
 
 def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, is_amazon):
     csv_rows = csv_rows_to_array(user_csv)
-
+    
     ticket_instructions(csv_rows, ticket_array)
-    ticket_instructions(csv_rows, checkbox_array) # where it skips
+    ticket_instructions(csv_rows, checkbox_array)
 
     for csv_row in range(len(csv_rows)):
         row = csv_rows[csv_row]
-        print(f'here is the length of each row: {len(row)}')
 
-        if len(row) > 8: # likely because len(row) is less than 8, may or may not 
-            continue
+        # disgaurds all rows that have no true or false at the end
         
         # executes the firt time as a setup for the rest of the order
+        # csv_row is an integer
         if csv_row == 0: 
             order_instructions(csv_rows, order_array, is_amazon, csv_row)
             finish_him_instructions(csv_rows, finish_him_array)
+            continue
 
-        else: 
-            prev_row = csv_rows[csv_rows -1]
-            if len(prev_row) >= 8:
+        prev_row = csv_rows[csv_row - 1]
+        if len(prev_row) >= 8:
 
-                # 'True' determins if the order is an amazon with FBA Low Stock or not
+            # 'True' determins if the order is an amazon with FBA Low Stock or not
 
-                #   This checks if the csv row before that was a FBA Low Stock, in which case it toggles
-                # based on whether or not the current one is FBA Low Stock. 
-                if row[7] == 'True' and prev_row[7] != 'True':
-                    move_mouse([841, 118])
-                    move_mouse([729, 171])
-                    time.sleep(0.3)
-
-        if row[7] == 'False':
-            move_mouse([841, 118])
-            move_mouse([710, 138])
-            time.sleep(0.3)
+            #   This checks if the csv row before that was a FBA Low Stock, in which case it toggles
+            # based on whether or not the current one is FBA Low Stock. 
+            if row[7] == 'True' and prev_row[7] != 'True':
+                move_mouse([841, 118])
+                move_mouse([729, 171])
+                time.sleep(0.3)
+            # this is for FBA Low Stock
+            elif row[7] == 'False':
+                move_mouse([841, 118])
+                move_mouse([710, 138])
+                time.sleep(0.3)
+    
 
         duplicate(csv_rows, duplicate_array)
         duplicate_order(csv_rows[csv_row], dup_order_array, csv_row)
