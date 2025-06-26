@@ -4,7 +4,8 @@ import login
 import open_files
 import json_gps
 # import navigation
-import csv_to_json
+# import csv_to_json
+import csv_no_plus
 import xlsx_to_csv
 
 # list of new breed (muthafuckin) files
@@ -46,11 +47,11 @@ for csv_file in csv_files:
     if csv_file.lower().endswith(".xlsx"):
         print('is an xlsx')
         new_csv = xlsx_to_csv.main(csv_file)
-        csv_to_json.launch_instructions(new_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, True)
+        csv_no_plus.launch_instructions(new_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, True)
     else:
         print('is a csv')
         #  new_csv = xlsx_to_csv.main(csv_file)
-        csv_to_json.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, False)
+        csv_no_plus.launch_instructions(csv_file, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, False)
 
 # Keep console window open
 print('\nPress Enter to exit...')

@@ -10,10 +10,7 @@ import sys
 import os
 from datetime import datetime
 
-# location variables:
-
-ticket_json = "instructions\\ticket.json"
-order_json = "instructions\\order.json"
+# new csv_to_json file with no multiple orders on the same ticket
 
 # Opens the csv, and stores rows in array 
 def csv_rows_to_array(input_csv):
@@ -55,8 +52,7 @@ def convert_date_format(date_str):
     raise ValueError(f"Unrecognized date format: {date_str}")
 
 # does this repeat for each line in the csv?
-def ticket_instructions(user_csv, json_list):
-    csv_rows = csv_rows_to_array(user_csv)
+def ticket_instructions(csv_rows, json_list):
     
     # Process each instruction in sequence
     for object in json_list:
@@ -106,15 +102,14 @@ def ticket_instructions(user_csv, json_list):
                 time.sleep(0.5)
 
 # code that repeats each product for each line in the csv. Just now finding out that that is only for a very specific use case. smh
-# copied the new main file to csv_no_plus.py
-def order_instructions(user_csv, json_list, chromalabel, amz_exec):
+def order_instructions(csv_rows, json_list, chromalabel, amz_exec):
 
-    # if it is a file path (for normal csv), turn it into a 2d array
-    if isinstance(user_csv, str):
-        csv_rows = csv_rows_to_array(user_csv)
-    # if it is  an array (for chromalabel), keep it
-    elif isinstance(user_csv, list):
-        csv_rows = user_csv
+    # # if it is a file path (for normal csv), turn it into a 2d array
+    # if isinstance(user_csv, str):
+    #     csv_rows = csv_rows_to_array(user_csv)
+    # # if it is  an array (for chromalabel), keep it
+    # elif isinstance(user_csv, list):
+    #     csv_rows = user_csv
 
 
     product_ammount = 0
@@ -128,8 +123,10 @@ def order_instructions(user_csv, json_list, chromalabel, amz_exec):
 
     # Process each instruction in sequence
     for i in range(product_amount):
-        if amz_exec == 0:
-            amz_exec = i
+
+        # other words amz_exec is never i -_-
+        # if amz_exec == 0:
+        #     amz_exec = i
         
         print(f"i: {amz_exec}")
         for object in json_list:
@@ -261,8 +258,7 @@ def duplicate_order(csv_rows, dup_order_array, amz_exec):
                 time.sleep(0.5)
                 general_desciption_executed = True
 
-def finish_him_instructions(user_csv, finish_him_list):
-    csv_rows = csv_rows_to_array(user_csv)
+def finish_him_instructions(csv_rows, finish_him_list):
     location_coords = [157, 281]
     ok_button_coords = [861, 510]
 
@@ -312,9 +308,7 @@ def finish_him_instructions(user_csv, finish_him_list):
                 except IndexError:
                     continue
 
-def duplicate(user_csv, relapse_list):
-
-    csv_rows = csv_rows_to_array(user_csv)
+def duplicate(csv_rows, relapse_list):
 
     # Process each instruction in sequence
     for object in relapse_list:
@@ -347,74 +341,52 @@ def duplicate(user_csv, relapse_list):
                 move_mouse(value)
                 time.sleep(0.5)  # Increased sleep time for reliability
 
-
-# Instructions for Amazon Orders:
-# 1. click "Tickets"
-# 2. click "New Ticket"
-# 3. Customer Number (same)
-# 4. PO # (same)
-# 5. Ship Date (same, but don't alter it)  
-# covered by ticket.json [make sure date isn't changed]
-
-# 6. Quantity (same)
-# 8. Item Number (same)
-# 9. copy paste description (new) (click, sleep, copy, move paste)
-# add this
-# 10. check boxes (new, already added tho)
-# 11. Enter address (same)
-
-#       REPEAT
-# Customer number is taken out
-# So is PO No.
-# 
-# 12. back go General tab (execute once)
-# 13. Duplicate button
-# 14. [radio button] Duplicate this ticket and keep details (multi order)
-# 15. Duplicate button
-# 16. Ship Date
-# 17. enter Quantity
-# 18. enter product no
-# 20. Priority
-
-#      Differences
-# SKU
-# Ship Date
-# FBA Lowstock
-# QTY
-
-# Order: Go through the process of making a ticket normaly
-# Enter duplicate for every other order on that ticket
-# 
-
 def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, chromalabel):
-    print(f"user csv: {user_csv}")
-    ticket_instructions(user_csv, ticket_array)
-    ticket_instructions(user_csv, checkbox_array)
-
     csv_rows = csv_rows_to_array(user_csv)
-    print(f"csv rows (from launch): {csv_rows}")
-    if chromalabel == True: 
-        for csv_row in range(len(csv_rows)):
-            print(f"seventh row: {csv_rows[7]}")
-            if csv_rows[csv_row][7] == 'True' and not (csv_rows[csv_row - 1][7] == 'True'):
-                move_mouse([841, 118])
-                move_mouse([729, 171])
-                time.sleep(0.3)
-            elif csv_rows[csv_row][7] == 'False':
-                move_mouse([841, 118])
-                move_mouse([710, 138])
-                time.sleep(0.3)
-            if csv_row == 0: # only exec this the first time
-                order_instructions(user_csv, order_array, chromalabel, csv_row)
-                finish_him_instructions(user_csv, finish_him_array)
-            duplicate(user_csv, duplicate_array)
-            duplicate_order(csv_rows[csv_row], dup_order_array, csv_row)
-        duplicate(user_csv, relapse_array)
 
-    else:
-        order_instructions(user_csv, order_array, chromalabel, 0)
-        finish_him_instructions(user_csv, finish_him_array)
-        duplicate(user_csv, relapse_array)
+    ticket_instructions(csv_rows, ticket_array)
+    ticket_instructions(csv_rows, checkbox_array)
+
+    print(f"user csv: {len(user_csv)}")
+    print(f"csv rows (from launch): {len(csv_rows)}")
+    # if chromalabel == True:  nah this is always true
+    print(f"seventh row: {len(csv_rows)}")
+    for csv_row in range(len(csv_rows)):
+        row = csv_rows[csv_row]
+        print(f'here is the length of each row: {len(row)}')
+
+        if len(row) < 8: 
+            continue
+        
+        # executes the firt time as a setup for the rest of the order
+        if csv_row == 0: 
+            order_instructions(csv_rows, order_array, chromalabel, csv_row)
+            finish_him_instructions(csv_rows, finish_him_array)
+
+        else: 
+            prev_row = csv_rows[csv_rows -1]
+            if len(prev_row) >= 8:
+                if row[7] == 'True' and prev_row[7] != 'True':
+                    move_mouse([841, 118])
+                    move_mouse([729, 171])
+                    time.sleep(0.3)
+
+        if row[7] == 'False':
+            move_mouse([841, 118])
+            move_mouse([710, 138])
+            time.sleep(0.3)
+
+        duplicate(csv_rows, duplicate_array)
+        duplicate_order(csv_rows[csv_row], dup_order_array, csv_row)
+
+    duplicate(csv_rows, relapse_array)
+
+# code| below triggers the plus funcionalitly, specifically the 0 passed into order_instructions
+#     V
+    # else:
+    #     order_instructions(user_csv, order_array, chromalabel, 0)
+    #     finish_him_instructions(user_csv, finish_him_array)
+    #     duplicate(user_csv, relapse_array)
         
         
     
