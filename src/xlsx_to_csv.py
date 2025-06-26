@@ -27,8 +27,18 @@ def convert(xlsx_file):
 
 def construct(file_array):
     new_array = []
+    print(f'file array: {file_array}')
+
     for i in range(0, len(file_array)):
         # Create a new list for each iteration
+        try:
+            if not isinstance(file_array[i][0], int):
+                file_array.pop(i)
+                continue
+        except UnicodeDecodeError:
+            print(f'Removing row: ', i)
+            file_array.pop(i)
+
         new_row = [None] * 8
         new_row[0] = ('Chromalabel')
         new_row[3] = file_array[i][0]
@@ -43,10 +53,7 @@ def construct(file_array):
         else:
             new_row[7] = False
         new_array.append(new_row)
-    print(f"first row: {new_array[0]}")
-    print(f"first row: {new_array[1]}")
-    new_array.pop(0)
-    new_array.pop(0)
+
     return new_array
 
 # Opens the csv, and stores rows in array 

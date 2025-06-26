@@ -15,11 +15,15 @@ from datetime import datetime
 # Opens the csv, and stores rows in array 
 def csv_rows_to_array(input_csv):
     row_array = []
-    with open(input_csv, newline = '') as opened_csv:
+    with open(input_csv, newline='') as opened_csv:
         reader = csv.reader(opened_csv)
         for row in reader:
-            row_array.append(row)
-    return row_array 
+            try:
+                row_array.append(row)
+            except UnicodeDecodeError:
+                print("Skipping a row due to UnicodeDecodeError")
+                continue
+    return row_array
 
 def move_mouse(coords):
     pyautogui.moveTo(coords[0], coords[1], duration=0.3)
@@ -102,7 +106,7 @@ def ticket_instructions(csv_rows, json_list):
                 time.sleep(0.5)
 
 # code that repeats each product for each line in the csv. Just now finding out that that is only for a very specific use case. smh
-def order_instructions(csv_rows, json_list, is_amazon, amz_exec):
+def order_instructions(csv_rows, json_list,  amz_exec):
 
     # # if it is a file path (for normal csv), turn it into a 2d array
     # if isinstance(user_csv, str):
@@ -326,7 +330,7 @@ def duplicate(csv_rows, relapse_list):
                 move_mouse(value)
                 time.sleep(0.5)  # Increased sleep time for reliability
 
-def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, is_amazon):
+def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array):
     csv_rows = csv_rows_to_array(user_csv)
     
     ticket_instructions(csv_rows, ticket_array)
@@ -340,7 +344,7 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup
         # executes the firt time as a setup for the rest of the order
         # csv_row is an integer
         if csv_row == 0: 
-            order_instructions(csv_rows, order_array, is_amazon, csv_row)
+            order_instructions(csv_rows, order_array, csv_row)
             finish_him_instructions(csv_rows, finish_him_array)
             continue
 
