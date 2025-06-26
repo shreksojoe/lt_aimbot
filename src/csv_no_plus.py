@@ -102,99 +102,98 @@ def ticket_instructions(csv_rows, json_list):
                 time.sleep(0.5)
 
 # code that repeats each product for each line in the csv. Just now finding out that that is only for a very specific use case. smh
-def order_instructions(csv_rows, json_list, chromalabel, amz_exec):
+def order_instructions(csv_rows, json_list, is_amazon, amz_exec):
 
     # # if it is a file path (for normal csv), turn it into a 2d array
     # if isinstance(user_csv, str):
     #     csv_rows = csv_rows_to_array(user_csv)
-    # # if it is  an array (for chromalabel), keep it
+    # # if it is  an array (for is_amazon), keep it
     # elif isinstance(user_csv, list):
     #     csv_rows = user_csv
 
+    print(f'csv rows: {csv_rows}')
+    print(f'json list: {json_list}')
 
-    product_ammount = 0
-    if chromalabel == True:
-        product_amount = 1 
-    else:
-        product_amount = len(csv_rows)
+
+    # product_ammount = 0
+    # if is_amazon == True:
+    #     product_amount = 1 
+    # else:
+    #     product_amount = len(csv_rows)
     # subtract = [833,550]
-    product_ammount_entered = False
+    # product_ammount_entered = False
     general_desciption_executed = False
 
     # Process each instruction in sequence
-    for i in range(product_amount):
-
-        # other words amz_exec is never i -_-
-        # if amz_exec == 0:
-        #     amz_exec = i
-        
-        print(f"i: {amz_exec}")
-        for object in json_list:
-            for key, value in object.items():
+    #for i in range(product_amount):
+    for object in json_list:
+        for key, value in object.items():
 
 
-                hwnd = win32gui.GetForegroundWindow()
-                title = win32gui.GetWindowText(hwnd)
-                print(f"Processing - key: {key}, value: {value}")
-                
-                if key == "Name": 
-                    continue
-                if key == "Window":
-                    first_time = True
-                    print(f"title: |{title} sould contain: {value}")
-                    if "Warning" in title :
-                        move_mouse([514, 292])
-                    while value not in title:
-                        if first_time:
-                            print('Program paused because pop up window...')
-                        first_time = False
-                        hwnd = win32gui.GetForegroundWindow()
-                        title = win32gui.GetWindowText(hwnd)
-                        time.sleep(1)
-                elif key == "Coordinates":
-                    if ((value == [834, 353] or value == [885, 364]) and not product_ammount_entered):
-                        move_mouse(value)
-                        time.sleep(0.5)
-                    elif (not value == [834, 353] or value == [885, 364]):
-                        move_mouse(value)
-                        time.sleep(0.5)
-                elif key == "Coordinate":
-                    # value[1] + (i * 22)
-                    new_value = value[0], value[1] + (amz_exec * 22)
-                    move_mouse(new_value)
+            hwnd = win32gui.GetForegroundWindow()
+            title = win32gui.GetWindowText(hwnd)
+            print(f"Processing - key: {key}, value: {value}")
+            
+            if key == "Name": 
+                continue
+            if key == "Window":
+                first_time = True
+                print(f"title: |{title} sould contain: {value}")
+                if "Warning" in title :
+                    move_mouse([514, 292])
+                while value not in title:
+                    if first_time:
+                        print('Program paused because pop up window...')
+                    first_time = False
+                    hwnd = win32gui.GetForegroundWindow()
+                    title = win32gui.GetWindowText(hwnd)
+                    time.sleep(1)
+            # archive this bitch
+            # elif key == "Coordinates":
+            #     if ((value == [834, 353] or value == [885, 364]) and not product_ammount_entered):
+            #         move_mouse(value)
+            #         time.sleep(0.5)
+            #     elif (not value == [834, 353] or value == [885, 364]):
+            #         move_mouse(value)
+            #         time.sleep(0.5)
+            elif key == "Coordinate":
+                print(f'moveing mouse to coords: {value}')
+                # new_value = value[0], value[1]  22
+                move_mouse(value)
+                time.sleep(0.5)
+            elif key == "Quantity":
+                type_keyboard(csv_rows[amz_exec][3])
+                time.sleep(0.5)
+            elif key == "Product Number":
+                print('Product Number evaluated to true')
+                print(f'typing... {csv_rows[amz_exec][4]}')
+                time.sleep(0.5)
+                type_keyboard(csv_rows[amz_exec][4])
+                time.sleep(0.5)
+            # elif key == "Price":
+            #     type_keyboard(csv_rows[i][5])
+            #     time.sleep(0.5)
+            elif key == "Order Amount" and not product_ammount_entered:
+                print(len(csv_rows))
+                if is_amazon == True:
+                    print("chroma be true")
+                    type_keyboard(str(0))
                     time.sleep(0.5)
-                elif key == "Quantity":
-                    type_keyboard(csv_rows[amz_exec][3])
+                    product_ammount_entered = True
+                else:
+                    print("chroma be false")
+                    type_keyboard(str(len(csv_rows) - 1))
                     time.sleep(0.5)
-                elif key == "Product Number":
-                    print(f"product # {i}: {csv_rows[i][4]}")
-                    time.sleep(0.5)
-                    type_keyboard(csv_rows[amz_exec][4])
-                    time.sleep(0.5)
-                # elif key == "Price":
-                #     type_keyboard(csv_rows[i][5])
-                #     time.sleep(0.5)
-                elif key == "Order Amount" and not product_ammount_entered:
-                    print(len(csv_rows))
-                    if chromalabel == True:
-                        print("chroma be true")
-                        type_keyboard(str(0))
-                        time.sleep(0.5)
-                        product_ammount_entered = True
-                    else:
-                        print("chroma be false")
-                        type_keyboard(str(len(csv_rows) - 1))
-                        time.sleep(0.5)
-                        product_ammount_entered = True
-                elif (value == "Description Text Box" or value == "General Description Text Box") and general_description_executed == True:
-                    continue
-                elif key == "Copy" and general_desciption_executed == False:
-                    pyautogui.hotkey('ctrl','c')
-                    time.sleep(0.3)
-                elif key == "Paste"and general_desciption_executed == False:
-                    general_description = pyperclip.paste()
-                    type_keyboard(general_description)
-                    general_desciption_executed = True
+                    product_ammount_entered = True
+            elif (value == "Description Text Box" or value == "General Description Text Box") and general_description_executed == True:
+                continue
+            elif key == "Copy" and general_desciption_executed == False:
+                pyautogui.hotkey('ctrl','c')
+                time.sleep(0.3)
+            elif key == "Paste"and general_desciption_executed == False:
+                general_description = pyperclip.paste()
+                type_keyboard(general_description)
+                general_desciption_executed = True
 
 
 def duplicate_order(csv_rows, dup_order_array, amz_exec):
@@ -341,31 +340,32 @@ def duplicate(csv_rows, relapse_list):
                 move_mouse(value)
                 time.sleep(0.5)  # Increased sleep time for reliability
 
-def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, chromalabel):
+def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array, is_amazon):
     csv_rows = csv_rows_to_array(user_csv)
 
     ticket_instructions(csv_rows, ticket_array)
-    ticket_instructions(csv_rows, checkbox_array)
+    ticket_instructions(csv_rows, checkbox_array) # where it skips
 
-    print(f"user csv: {len(user_csv)}")
-    print(f"csv rows (from launch): {len(csv_rows)}")
-    # if chromalabel == True:  nah this is always true
-    print(f"seventh row: {len(csv_rows)}")
     for csv_row in range(len(csv_rows)):
         row = csv_rows[csv_row]
         print(f'here is the length of each row: {len(row)}')
 
-        if len(row) < 8: 
+        if len(row) > 8: # likely because len(row) is less than 8, may or may not 
             continue
         
         # executes the firt time as a setup for the rest of the order
         if csv_row == 0: 
-            order_instructions(csv_rows, order_array, chromalabel, csv_row)
+            order_instructions(csv_rows, order_array, is_amazon, csv_row)
             finish_him_instructions(csv_rows, finish_him_array)
 
         else: 
             prev_row = csv_rows[csv_rows -1]
             if len(prev_row) >= 8:
+
+                # 'True' determins if the order is an amazon with FBA Low Stock or not
+
+                #   This checks if the csv row before that was a FBA Low Stock, in which case it toggles
+                # based on whether or not the current one is FBA Low Stock. 
                 if row[7] == 'True' and prev_row[7] != 'True':
                     move_mouse([841, 118])
                     move_mouse([729, 171])
@@ -384,7 +384,7 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup
 # code| below triggers the plus funcionalitly, specifically the 0 passed into order_instructions
 #     V
     # else:
-    #     order_instructions(user_csv, order_array, chromalabel, 0)
+    #     order_instructions(user_csv, order_array, is_amazon, 0)
     #     finish_him_instructions(user_csv, finish_him_array)
     #     duplicate(user_csv, relapse_array)
         
