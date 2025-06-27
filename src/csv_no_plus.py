@@ -287,6 +287,7 @@ def finish_him_instructions(csv_rows, finish_him_list):
                 time.sleep(0.5)
                 move_mouse(ok_button_coords)
             elif key == "Order Notes":
+                type_keyboard('. Production 1')
                 try:
                     type_keyboard(csv_rows[0][7])
                     time.sleep(0.5)
