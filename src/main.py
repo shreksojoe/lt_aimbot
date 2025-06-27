@@ -47,6 +47,7 @@ for csv_file in csv_files:
     if csv_file.lower().endswith(".xlsx") and 'fba' in csv_file.lower():
         print('is an xlsx')
         if csv_file.lower().endswith(".xlsx"):
+            print('going into xlsx_to_csv')
             new_csv_file = xlsx_to_csv.main(csv_file)
         print(f'new csv file: {new_csv_file}')
         csv_no_plus.launch_instructions(new_csv_file, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array)

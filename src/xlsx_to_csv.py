@@ -3,6 +3,7 @@ import os
 import sys
 import csv
 
+# issue is this returning a NoneType
 def convert(xlsx_file):
     # load file
     try:
@@ -27,33 +28,35 @@ def convert(xlsx_file):
 
 def construct(file_array):
     new_array = []
-    print(f'file array: {file_array}')
+    print(f'Processing {len(file_array)} rows')
 
-    for i in range(0, len(file_array)):
-        # Create a new list for each iteration
-        try:
-            if not isinstance(file_array[i][0], int):
-                file_array.pop(i)
+    for row in file_array:
+        # Convert first cell to string and strip whitespace
+        first_cell = str(row[0]).strip() if row and len(row) > 0 and row[0] is not None else ''
+        
+        # Only keep rows where first cell is a positive integer
+        if first_cell.isdigit() and int(first_cell) > 0:
+            try:
+                new_row = [None] * 8
+                new_row[0] = 'Chromalabel'  # Fixed value
+                new_row[3] = first_cell  # QTY (already validated as positive integer)
+                new_row[4] = str(row[1]) if len(row) > 1 and row[1] is not None else ''  # SKU
+                new_row[5] = ''  # Empty column
+                new_row[2] = str(row[6]) if len(row) > 6 and row[6] is not None else ''  # ENTERED date
+                new_row[1] = str(row[7]) if len(row) > 7 and row[7] is not None else ''  # PO Number
+                new_row[6] = 'AMAZON FBA USA'  # Fixed value
+                
+                # Check stock status safely
+                stock_status = str(row[9]).lower() if len(row) > 9 and row[9] is not None else ''
+                new_row[7] = 'low stock' in stock_status or 'out of stock' in stock_status
+                
+                new_array.append(new_row)
+                
+            except Exception as e:
+                print(f'Skipping row due to error: {e}')
                 continue
-        except UnicodeDecodeError:
-            print(f'Removing row: ', i)
-            file_array.pop(i)
 
-        new_row = [None] * 8
-        new_row[0] = ('Chromalabel')
-        new_row[3] = file_array[i][0]
-        new_row[4] = file_array[i][1]
-        new_row[5] = ''
-        new_row[2] = file_array[i][6]
-        new_row[1] = file_array[i][7]
-        new_row[6] = 'AMAZON FBA USA'
-
-        if ('low stock' in file_array[i][9].lower()) or ('out of stock' in file_array[i][9].lower()):
-            new_row[7] = True
-        else:
-            new_row[7] = False
-        new_array.append(new_row)
-
+    print(f'Processed {len(new_array)} valid rows')
     return new_array
 
 # Opens the csv, and stores rows in array 
@@ -71,7 +74,13 @@ def csv_rows_to_array(input_csv):
 
 def main(input_xlsx):
     try:
+        # convert xlsx file to a csv
         csv_file = convert(input_xlsx)
+        print(f'csv_file is a: {type(csv_file)}')
+
+        # if csv_file.endswith('.csv'):
+        #    print('successfuly converted to a csv')
+
         if csv_file:
             csv_rows_to_array(csv_file)
             return csv_file
