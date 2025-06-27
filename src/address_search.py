@@ -28,7 +28,11 @@ def extract_zip(string_address):
         return zips[0]
         print(f"potential second zip from extract_zip: {zips[0]}")
     else:
-        return None
+        address = 'If this ticket is marked'
+        if address in string_address:
+            return True
+        else: 
+            return None
 
 # checks if the last 2 addresses repeated
 def check_dup(prev_row, curr_row):
@@ -70,9 +74,17 @@ def loop(zip_code):
         print(f"current address: {current_address}")
 
         pyperclip.copy("")
+        # not necessarily a zip any more tho
         test_zip_code = extract_zip(current_address)
         print(f"test_zip_code: {test_zip_code}")
-        zip_status = compare_zip(zip_code, test_zip_code)
+
+        zip_status = 0
+
+        if test_zip_code == True:
+            zip_status = 1
+            print(f'zip_status is {zip_status}')
+        else:
+            zip_status = compare_zip(zip_code, test_zip_code)
 
         if zip_status == 1:
             print("correct address found!")
@@ -84,15 +96,37 @@ def loop(zip_code):
                 print("got a repeat")
                 return
 
+def json_replacement():
+    # Move to Locatin Link
+    pyautogui.moveTo(209, 279, duration=0.2)
+    pyautogui.click()
+    pyautogui.write(str(zip_code))
+
 def scan(addr): 
-    type_shit = login.find_rel_path("json_gps.py",
-                                          "instructions\type_location.json")
+    # type_shit = login.find_rel_path("json_gps.py", "instructions\type_location.json")
+
     try:
         zip_code = int(addr)
     except ValueError:
-        json_gps.execute(type_shit)
+        # json_gps.execute(type_shit)
         keyboard.write(addr)
+        zip_code = addr
+
+    # json_replacement()
     print(f"zip code switched to int: {zip_code}")
     zip_code = str(zip_code)
     loop(zip_code)
 
+
+
+
+# 1. Type Zip Code (or whatever value is in that position)
+# 2. If it is a Zip Code (and not something like "Amzon FBA"), it should click "Location"
+# 3. In the window it opens, it starts at the top of the chart and clicks the first row
+# 4. It copys the whole row to the clipboard
+# 5. Finds the zip code from the row, and compares that to the zip code from the csv file
+# 6. Moves the mouse down and clicks the next row
+# 7. Activates the Down Arrow (to highlight the next row)
+# 8. Copys that to clipboard
+# 9. repeat at step 5 untill it finds a match
+# 10. When a match is found it clicks the OK button

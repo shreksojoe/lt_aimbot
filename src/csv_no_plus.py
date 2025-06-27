@@ -279,17 +279,13 @@ def finish_him_instructions(csv_rows, finish_him_list):
                 move_mouse(value)
                 time.sleep(0.5)
             elif key == "Zip":
-                try:
-                    int(csv_rows[0][6])
-                    type_keyboard(csv_rows[0][6])
-                    time.sleep(0.5)
-                    move_mouse(location_coords)
-                    address_search.scan(str(csv_rows[0][6]))
-                    time.sleep(0.5)
-                    move_mouse(ok_button_coords)
-                except ValueError:
-                    type_keyboard(csv_rows[0][6])
-                    time.sleep(0.5)
+                # Originally a try catch for distinguishing between zip (integer) and strings
+                type_keyboard(csv_rows[0][6])
+                time.sleep(0.5)
+                move_mouse(location_coords)
+                address_search.scan(str(csv_rows[0][6]))
+                time.sleep(0.5)
+                move_mouse(ok_button_coords)
             elif key == "Order Notes":
                 try:
                     type_keyboard(csv_rows[0][7])
