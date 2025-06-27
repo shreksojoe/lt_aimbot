@@ -1,7 +1,0 @@
-[
-    {"Window":"Editing Ticket"},
-    {"Name": "Save Button", "Coordinates": [931, 191]},
-    {"Window":"Ticket Selector"},
-    {"Name": "New Ticket Button", "Coordinates": [912, 653]},
-    {"Window":"Home Page"}
-]

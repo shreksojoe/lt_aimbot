@@ -1,37 +1,25 @@
 # -*- mode: python ; coding: utf-8 -*-
+from PyInstaller.utils.hooks import collect_all
+
+datas = [('src\\instructions', 'instructions')]
+binaries = []
+hiddenimports = []
+tmp_ret = collect_all('numpy')
+datas += tmp_ret[0]; binaries += tmp_ret[1]; hiddenimports += tmp_ret[2]
 
 
 a = Analysis(
     ['src\\main.py'],
-    pathex=['src'],
-    binaries=[],
-    datas=[
-        ('src/instructions', 'instructions')
-    ],
-    hiddenimports=[
-        'pyautogui',
-        'keyboard',
-        'pygetwindow',
-        'json',
-        'csv',
-        'sys',
-        'os',
-        'time',
-        're',
-        'tkinter',
-        'pymsgbox',
-        'pytweening',
-        'pyscreeze',
-        'mouseinfo',
-        'pyperclip',
-        'pyrect'
-    ],
-    hookspath=['hooks'],
+    pathex=[],
+    binaries=binaries,
+    datas=datas,
+    hiddenimports=hiddenimports,
+    hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
     excludes=[],
     noarchive=False,
-    optimize=1,
+    optimize=0,
 )
 pyz = PYZ(a.pure)
 

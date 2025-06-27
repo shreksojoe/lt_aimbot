@@ -9,22 +9,26 @@ import sys
 import pygetwindow as gw
 import win32gui
 
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        # In development, paths are relative to this file's directory (src)
+        base_path = os.path.abspath(os.path.dirname(__file__))
+
+    return os.path.join(base_path, relative_path)
+
 def find_rel_path(start_file, end_file):
-    # Get the current script directory
-    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # This function is updated to use a robust helper that works for both
+    # development and the final bundled .exe.
+    # The 'start_file' argument is kept for compatibility but is no longer used.
     
-    # If start_file is 'src', we're looking for a file within the src directory
-    if start_file == "src":
-        # Just use the current directory (which is the src directory)
-        base_dir = current_dir
-    else:
-        # Navigate up to the parent directory for other cases
-        base_dir = os.path.dirname(current_dir)
+    # 'end_file' is the relative path, e.g., 'instructions/ticket.json'
+    absolute_path = resource_path(end_file)
     
-    # Create the absolute path to the target file
-    absolute_path = os.path.join(base_dir, end_file)
-    
-    print(f"Relative Path: {end_file}")
+    print(f"Resolved resource path to: {absolute_path}")
     return absolute_path
 
 # detect if label traxx is running
