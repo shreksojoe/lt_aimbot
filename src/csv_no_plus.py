@@ -98,7 +98,8 @@ def ticket_instructions(csv_rows, json_list):
                 time.sleep(0.5)
             elif key == "PO Number":
                 print("Typing PO number")
-                type_keyboard(csv_rows[0][1])
+                new_description = "TEST - " + csv_rows[0][1]
+                type_keyboard(new_description)
                 time.sleep(0.5)
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[0][2]}")
@@ -182,7 +183,7 @@ def order_instructions(csv_rows, json_list,  amz_exec):
                 time.sleep(0.3)
             elif key == "Paste"and general_desciption_executed == False:
                 general_description = pyperclip.paste()
-                type_keyboard(general_description)
+                type_keyboard("TEST - " + general_description)
                 general_desciption_executed = True
 
 
@@ -243,7 +244,7 @@ def duplicate_order(csv_rows, dup_order_array, amz_exec):
                     keyboard.send('backspace')
                 time.sleep(0.5)
                 print('paste: ')
-                type_keyboard(pyperclip.paste())
+                type_keyboard("TEST - " + pyperclip.paste())
                 time.sleep(0.5)
                 general_desciption_executed = True
 
