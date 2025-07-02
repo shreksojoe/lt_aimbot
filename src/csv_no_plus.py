@@ -185,6 +185,10 @@ def order_instructions(csv_rows, json_list,  amz_exec):
                 general_description = pyperclip.paste()
                 type_keyboard("TEST - " + general_description)
                 general_desciption_executed = True
+            elif key == "Ship Date":
+                print(f"Typing ship date: {csv_rows[amz_exec][2]}")
+                type_keyboard(convert_date_format(csv_rows[0][2]))
+                time.sleep(0.5)
 
 
 def duplicate_order(csv_rows, dup_order_array, amz_exec):
@@ -247,6 +251,10 @@ def duplicate_order(csv_rows, dup_order_array, amz_exec):
                 type_keyboard("TEST - " + pyperclip.paste())
                 time.sleep(0.5)
                 general_desciption_executed = True
+            elif key == "Ship Date":
+                print(f"Typing ship date: {csv_rows[amz_exec][2]}")
+                type_keyboard(convert_date_format(csv_rows[0][2]))
+                time.sleep(0.5)
 
 def finish_him_instructions(csv_rows, finish_him_list):
     location_coords = [157, 281]
@@ -290,7 +298,7 @@ def finish_him_instructions(csv_rows, finish_him_list):
             elif key == "Order Notes":
                 type_keyboard('Production 1')
 
-def duplicate(csv_rows, relapse_list):
+def duplicate(csv_rows, relapse_list, amz_exec):
 
     # Process each instruction in sequence
     for object in relapse_list:
@@ -322,6 +330,15 @@ def duplicate(csv_rows, relapse_list):
                 print(f"Moving mouse to coordinates: {value}")
                 move_mouse(value)
                 time.sleep(0.5)  # Increased sleep time for reliability
+            elif key == "Ship Date":
+                print(f"Typing ship date: {csv_rows[amz_exec][2]}")
+                type_keyboard(convert_date_format(csv_rows[0][2]))
+                time.sleep(0.5)
+            elif key == "Select All":
+                print("Performing select all")
+                for _ in range(9):
+                    keyboard.send('backspace')
+                time.sleep(0.5)
 
 def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array):
     csv_rows = csv_rows_to_array(user_csv)
@@ -348,7 +365,7 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup
 
             #   This checks if the csv row before that was a FBA Low Stock, in which case it toggles
             # based on whether or not the current one is FBA Low Stock. 
-            if row[7] == 'True' and prev_row[7] != 'True':
+            if row[7] == 'True': # and prev_row[7] != 'True':
                 move_mouse([841, 118])
                 move_mouse([729, 171])
                 time.sleep(0.3)
@@ -359,7 +376,7 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup
                 time.sleep(0.3)
     
 
-        duplicate(csv_rows, duplicate_array)
+        duplicate(csv_rows, duplicate_array, csv_row)
         duplicate_order(csv_rows[csv_row], dup_order_array, csv_row)
 
     duplicate(csv_rows, relapse_array)

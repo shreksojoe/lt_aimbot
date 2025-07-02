@@ -3,5 +3,8 @@
     {"Name": "General Tab", "Coordinates": [35, 63]},
     {"Name":"Duplicate Button", "Coordinates": [920, 271]},
     {"Name":"Multi Order Button", "Coordinates": [335, 251]},
-    {"Name":"Second Duplicate Button", "Coordinates": [628, 504]}
+    {"Name":"Second Duplicate Button", "Coordinates": [628, 504]},
+    {"Name": "Ship Text Box", "Coordinates": [834, 208]},
+    {"Select All": ""},
+    {"Ship Date": ""}
 ]
