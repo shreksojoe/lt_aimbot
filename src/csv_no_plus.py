@@ -98,7 +98,7 @@ def ticket_instructions(csv_rows, json_list):
                 time.sleep(0.5)
             elif key == "PO Number":
                 print("Typing PO number")
-                new_description = "TEST - " + csv_rows[0][1]
+                new_description = csv_rows[0][1]
                 type_keyboard(new_description)
                 time.sleep(0.5)
             elif key == "Ship Date":
