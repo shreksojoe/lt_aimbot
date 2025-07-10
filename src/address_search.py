@@ -28,8 +28,8 @@ def extract_zip(string_address):
         return zips[0]
         print(f"potential second zip from extract_zip: {zips[0]}")
     else:
-        address = 'If this ticket is marked'
-        if address in string_address:
+        location = 'AMAZON FBA USA'
+        if location in string_address:
             return True
         else: 
             return None
