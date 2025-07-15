@@ -93,7 +93,7 @@ def wait_for_program(pid, timeout=30):
             print("Program is opened")
             return
         else:
-            exit
+            sys.exit()
         time.sleep(0.5)
     print("Program Timed Out")
 

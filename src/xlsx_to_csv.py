@@ -23,7 +23,6 @@ def convert(xlsx_file):
     
     # takes the open xlsx file and writes it to a csv
     load_file.to_csv(csv_file, index=False, encoding='utf-8-sig')
-
     return csv_file
 
 def construct(file_array):
@@ -93,3 +92,13 @@ def main(input_xlsx):
 
 # g 7 6 0 1 e g 9
 # 0 1 2 3 4 5 6 7
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python xlsx_to_csv.py <path_to_xlsx_file>")
+        sys.exit(1)
+    input_xlsx = sys.argv[1]
+    if not os.path.isfile(input_xlsx):
+        print(f"File not found: {input_xlsx}")
+        sys.exit(1)
+    main(input_xlsx)

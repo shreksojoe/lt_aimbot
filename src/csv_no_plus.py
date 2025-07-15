@@ -183,7 +183,7 @@ def order_instructions(csv_rows, json_list,  amz_exec):
                 time.sleep(0.3)
             elif key == "Paste"and general_desciption_executed == False:
                 general_description = pyperclip.paste()
-                type_keyboard("TEST - " + general_description)
+                type_keyboard(general_description)
                 general_desciption_executed = True
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[amz_exec][2]}")
@@ -248,7 +248,7 @@ def duplicate_order(csv_rows, dup_order_array, amz_exec):
                     keyboard.send('backspace')
                 time.sleep(0.5)
                 print('paste: ')
-                type_keyboard("TEST - " + pyperclip.paste())
+                type_keyboard(pyperclip.paste())
                 time.sleep(0.5)
                 general_desciption_executed = True
             elif key == "Ship Date":
