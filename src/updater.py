@@ -117,12 +117,23 @@ def download_update(download_url):
 def install_update(update_file):
     """Install the update"""
     try:
-        # Run the installer silently
+        # Run the installer with standard UI to avoid triggering Windows Defender
         logger.info(f"Running installer: {update_file}")
+        
+        # Verify the file exists before attempting to run it
+        if not os.path.exists(update_file):
+            logger.error(f"Update file not found: {update_file}")
+            return False
+        
+        # Show a message box to notify the user that the installer will run
+        show_message("Installing Update", 
+                   "The update installer will now run.\n\n" +
+                   "Please follow the on-screen instructions to complete installation.")
+        
+        # Run with visible UI instead of silently
         subprocess.run(
-            [update_file, '/VERYSILENT', '/NORESTART'], 
-            check=True, 
-            creationflags=subprocess.CREATE_NO_WINDOW
+            [update_file, '/NORESTART'], 
+            check=True
         )
         return True
     except Exception as e:

