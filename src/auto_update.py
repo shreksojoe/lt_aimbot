@@ -78,8 +78,3 @@ def auto_update():
     else:
         print("Already up to date.")
 
-# ------------------- Run updater -------------------
-if __name__ == "__main__":
-    auto_update()
-    # Your main program code starts here
-    print("Running main program...")

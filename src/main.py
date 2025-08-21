@@ -7,6 +7,7 @@ import json_gps
 # import csv_to_json
 import csv_no_plus
 import xlsx_to_csv
+import auto_update
 
 # list of new breed (muthafuckin) files
 # 1. god.py
@@ -16,6 +17,9 @@ import xlsx_to_csv
 # 5. ui.py
 
 from utils import resource_path
+
+# auto update
+auto_update.auto_update()
 
 ticket_json = resource_path('instructions/ticket.json')
 print(f"[DEBUG] main.py: ticket_json path: {ticket_json}")
