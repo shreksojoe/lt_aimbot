@@ -37,6 +37,11 @@ def type_keyboard(text):
 
 # Date formate from YYYY-MM-DD to MM/DD/YYY
 def convert_date_format(date_str):
+    try:
+        datetime.strptime(date_str, "%%m/%d/%Y %H:%M:%S")
+    except ValueError:
+        print("not that format")
+
     formats_to_try = [
         "%Y-%m-%d",  # 2025-04-04
         "%m/%d/%Y",  # 04/04/2025
@@ -45,6 +50,7 @@ def convert_date_format(date_str):
         "%d/%m/%Y",  # 04/04/2025 (common outside US)
         "%m/%d/%y",  # 04/04/25
     ]
+
         
     for fmt in formats_to_try:
         try:
@@ -94,7 +100,10 @@ def ticket_instructions(csv_rows, json_list):
                 time.sleep(0.5)
             elif key == "Customer Name":
                 print(f"Typing customer name: {csv_rows}")
-                type_keyboard(csv_rows[0][0])
+                try:
+                    type_keyboard(csv_rows[0][0])
+                except IndexError:
+                    print(f"Customer Name is: {csv_rows[0][0]}. \(likely blank\)")
                 time.sleep(0.5)
             elif key == "PO Number":
                 print("Typing PO number")
@@ -104,6 +113,7 @@ def ticket_instructions(csv_rows, json_list):
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[0][2]}")
                 type_keyboard(convert_date_format(csv_rows[0][2]))
+
                 time.sleep(0.5)
 
 # code that repeats each product for each line in the csv. Just now finding out that that is only for a very specific use case. smh

@@ -1,0 +1,1 @@
+pyinstaller --onefile --add-data "login.py;." --add-data "process_csv.py;." --add-data "json_gps.py;." --add-data "address_search.py;." --add-data "home_btn.json;data" --add-data "login_credentials.json;data" --add-data "ticket.json;data" ui.py

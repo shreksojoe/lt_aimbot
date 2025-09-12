@@ -45,7 +45,6 @@ def construct(file_array):
                 new_row[2] = str(row[6]) if len(row) > 6 and row[6] is not None else ''  # ENTERED date
                 new_row[1] = str(row[7]) if len(row) > 7 and row[7] is not None else ''  # PO Number
                 new_row[6] = 'AMAZON FBA USA'  # Fixed value
-                
                 # Check stock status safely
                 stock_status = str(row[9]).lower() if len(row) > 9 and row[9] is not None else ''
                 new_row[7] = 'low stock' in stock_status or 'out of stock' in stock_status

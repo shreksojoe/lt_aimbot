@@ -54,7 +54,10 @@ def download_and_extract():
         d = os.path.join(".", item)
         if os.path.isdir(s):
             if os.path.exists(d):
-                shutil.rmtree(d)
+                try:
+                    shutil.rmtree(d)
+                except PermissionError:
+                    print("can't update")
             shutil.copytree(s, d)
         else:
             shutil.copy2(s, d)

@@ -43,6 +43,7 @@ def convert_date_format(date_str):
         "%Y/%m/%d",  # 2025/04/04
         "%d/%m/%Y",  # 04/04/2025 (common outside US)
         "%m/%d/%y",  # 04/04/25
+        "%m/%d/%Y %H:%M:%S" # blah blah 
     ]
         
     for fmt in formats_to_try:
@@ -54,7 +55,7 @@ def convert_date_format(date_str):
 
     raise ValueError(f"Unrecognized date format: {date_str}")
 
-# does this repeat for each line in the csv?
+# does this repeat for each line in the csv? - idk you tell me
 def ticket_instructions(user_csv, json_list):
     csv_rows = csv_rows_to_array(user_csv)
     
@@ -101,6 +102,10 @@ def ticket_instructions(user_csv, json_list):
                 type_keyboard(csv_rows[0][1])
                 time.sleep(0.5)
             elif key == "Ship Date":
+                try:
+                    datetime.strptime(date_str, "%%m/%d/%Y %H:%M:%S")
+                except ValueError:
+                    continue
                 print(f"Typing ship date: {csv_rows[0][2]}")
                 type_keyboard(convert_date_format(csv_rows[0][2]))
                 time.sleep(0.5)

@@ -23,7 +23,7 @@ call "%PYTHON_EXE%" -m pip install -r requirements.txt
 
 :runmain
 REM Run the main script
-call "%PYTHON_EXE%" src\main.py
+call "%PYTHON_EXE%" \main.py
 
 endlocal
 pause

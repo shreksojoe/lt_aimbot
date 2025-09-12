@@ -36,3 +36,16 @@ Slack for questions, comments, and/or concerns.
 
 
 
+### Segmented into 3 parts: 
+
+1. Windows\Process manipulation
+2. Text\Data manipulation
+3. Keyboard\Mouse manipulation
+
+### Work Flow:
+1. Launch custom UI
+2. Text\Data manipulation based off that
+3. Launch Label Traxx: Windows\Process
+4. Text\Data into Keyboard\Mouse manipulation
+5. Windows Manipulation
+
