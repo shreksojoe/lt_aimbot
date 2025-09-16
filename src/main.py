@@ -19,7 +19,7 @@ import auto_update
 from utils import resource_path
 
 # auto update
-auto_update.auto_update()
+# auto_update.auto_update()
 
 ticket_json = resource_path('instructions/ticket.json')
 print(f"[DEBUG] main.py: ticket_json path: {ticket_json}")

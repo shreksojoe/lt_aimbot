@@ -31,29 +31,37 @@ def move_mouse(coords):
     time.sleep(0.5)
 
 def type_keyboard(text):
-    keyboard.write(text)
     print(f"text: {text}")
+    # Guard against None and ensure we always write a string
+    if text is None:
+        text = ""
+    keyboard.write(str(text))
     time.sleep(0.3)
 
 # Date formate from YYYY-MM-DD to MM/DD/YYY
 def convert_date_format(date_str):
+    # Normalize input and strip any time component (e.g., "2025-09-26 23:52:37.038" or ISO "2025-09-26T23:52:37Z")
+    date_str = "" if date_str is None else str(date_str).strip()
+    date_only = date_str.replace('T', ' ').split(' ')[0]
+
     formats_to_try = [
         "%Y-%m-%d",  # 2025-04-04
         "%m/%d/%Y",  # 04/04/2025
         "%d-%m-%Y",  # 04-04-2025
         "%Y/%m/%d",  # 2025/04/04
         "%d/%m/%Y",  # 04/04/2025 (common outside US)
-        "%m/%d/%y",  # 04/04/25
+        # "%M/%d/%Y",  # Incorrect: %M is minutes; keep for reference
+        "%m/%d/%y"  # 04/04/25
     ]
         
     for fmt in formats_to_try:
         try:
-            parsed_date = datetime.strptime(date_str, fmt)
+            parsed_date = datetime.strptime(date_only, fmt)
             return parsed_date.strftime("%m/%d/%Y")
         except ValueError:
             continue
-
-    raise ValueError(f"Unrecognized date format: {date_str}")
+    # Fallback: if parsing fails, return the original input to avoid NoneType downstream
+    return date_only
 
 # does this repeat for each line in the csv?
 def ticket_instructions(csv_rows, json_list):
