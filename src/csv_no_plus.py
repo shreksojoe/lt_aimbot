@@ -97,7 +97,7 @@ def ticket_instructions(csv_rows, json_list):
                 time.sleep(0.5)  # Increased sleep time for reliability
             elif key == "Select All":
                 print("Performing select all")
-                for _ in range(9):
+                for _ in range(12):
                     keyboard.send('backspace')
                 time.sleep(0.5)
             elif key == "Customer Name":
@@ -344,7 +344,7 @@ def duplicate(csv_rows, relapse_list, amz_exec):
                 time.sleep(0.5)
             elif key == "Select All":
                 print("Performing select all")
-                for _ in range(9):
+                for _ in range(12):
                     keyboard.send('backspace')
                 time.sleep(0.5)
 
