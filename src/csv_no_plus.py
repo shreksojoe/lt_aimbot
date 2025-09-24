@@ -63,6 +63,22 @@ def convert_date_format(date_str):
     # Fallback: if parsing fails, return the original input to avoid NoneType downstream
     return date_only
 
+# this function, when called will determine if a ticket is fba low stock and act accordinglingy
+# ISSUE: there is an offset in which tickets are getting read
+def check_for_low_stock(indicator):
+    print("d4vd", indicator)
+    if indicator == 'True': # and prev_row[7] != 'True':
+        move_mouse([841, 118])
+        time.sleep(0.3)
+        move_mouse([729, 171])
+        time.sleep(0.3)
+    # this is for FBA Low Stock
+    elif indicator == 'False':
+        move_mouse([841, 118])
+        time.sleep(0.3)
+        move_mouse([710, 138])
+        time.sleep(0.3)
+
 # does this repeat for each line in the csv?
 def ticket_instructions(csv_rows, json_list):
     
@@ -89,7 +105,7 @@ def ticket_instructions(csv_rows, json_list):
                     first_time = False
                     hwnd = win32gui.GetForegroundWindow()
                     title = win32gui.GetWindowText(hwnd)
-                    time.sleep(1)
+                    time.sleep(1.0)
             # Handle each action
             elif key == "Coordinates":
                 print(f"Moving mouse to coordinates: {value}")
@@ -107,34 +123,24 @@ def ticket_instructions(csv_rows, json_list):
             elif key == "PO Number":
                 print("Typing PO number")
                 new_description = csv_rows[0][1]
-                type_keyboard(new_description)
+                type_keyboard(new_description + "TEST")
                 time.sleep(0.5)
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[0][2]}")
                 type_keyboard(convert_date_format(csv_rows[0][2]))
                 time.sleep(0.5)
+            elif key == "Low Stock":
+                print("nvr more")
+                check_for_low_stock(csv_rows[0][7])
+                time.sleep(0.5)
+                
 
 # code that repeats each product for each line in the csv. Just now finding out that that is only for a very specific use case. smh
 def order_instructions(csv_rows, json_list,  amz_exec):
 
-    # # if it is a file path (for normal csv), turn it into a 2d array
-    # if isinstance(user_csv, str):
-    #     csv_rows = csv_rows_to_array(user_csv)
-    # # if it is  an array (for is_amazon), keep it
-    # elif isinstance(user_csv, list):
-    #     csv_rows = user_csv
-
     print(f'csv rows: {csv_rows}')
     print(f'json list: {json_list}')
 
-
-    # product_ammount = 0
-    # if is_amazon == True:
-    #     product_amount = 1 
-    # else:
-    #     product_amount = len(csv_rows)
-    # subtract = [833,550]
-    # product_ammount_entered = False
 
     general_desciption_executed = False
 
@@ -195,7 +201,7 @@ def order_instructions(csv_rows, json_list,  amz_exec):
                 general_desciption_executed = True
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[amz_exec][2]}")
-                type_keyboard(convert_date_format(csv_rows[0][2]))
+                type_keyboard(convert_date_format(csv_rows[amz_exec][2]))
                 time.sleep(0.5)
 
 
@@ -306,7 +312,7 @@ def finish_him_instructions(csv_rows, finish_him_list):
             elif key == "Order Notes":
                 type_keyboard('Production 1')
 
-def duplicate(csv_rows, relapse_list, amz_exec):
+def duplicate(csv_rows, relapse_list, amz_exec=0):
 
     # Process each instruction in sequence
     for object in relapse_list:
@@ -340,7 +346,7 @@ def duplicate(csv_rows, relapse_list, amz_exec):
                 time.sleep(0.5)  # Increased sleep time for reliability
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[amz_exec][2]}")
-                type_keyboard(convert_date_format(csv_rows[0][2]))
+                type_keyboard(convert_date_format(csv_rows[amz_exec][2]))
                 time.sleep(0.5)
             elif key == "Select All":
                 print("Performing select all")
@@ -357,6 +363,7 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup
     for csv_row in range(len(csv_rows)):
         row = csv_rows[csv_row]
 
+
         # disgaurds all rows that have no true or false at the end
         
         # executes the firt time as a setup for the rest of the order
@@ -366,23 +373,17 @@ def launch_instructions(user_csv, ticket_array, checkbox_array, order_array, dup
             finish_him_instructions(csv_rows, finish_him_array)
             continue
 
-        prev_row = csv_rows[csv_row - 1]
-        if len(prev_row) >= 8:
+        time.sleep(0.5)
+        check_for_low_stock(csv_rows[csv_row - 1][7])
+        time.sleep(0.5)
+        # prev_row = csv_rows[csv_row - 1]
+        # if len(prev_row) >= 8:
 
             # 'True' determins if the order is an amazon with FBA Low Stock or not
 
             #   This checks if the csv row before that was a FBA Low Stock, in which case it toggles
             # based on whether or not the current one is FBA Low Stock. 
-            if row[7] == 'True': # and prev_row[7] != 'True':
-                move_mouse([841, 118])
-                move_mouse([729, 171])
-                time.sleep(0.3)
-            # this is for FBA Low Stock
-            elif row[7] == 'False':
-                move_mouse([841, 118])
-                move_mouse([710, 138])
-                time.sleep(0.3)
-    
+
 
         duplicate(csv_rows, duplicate_array, csv_row)
         duplicate_order(csv_rows[csv_row], dup_order_array, csv_row)
