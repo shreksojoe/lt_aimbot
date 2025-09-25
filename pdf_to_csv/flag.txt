@@ -1,0 +1,54 @@
+"Grainger - PO No 4647327521.csv"
+"Grainger - PO No 4647333358.csv"
+"Grainger - PO No 4647334067.csv"
+
+detect the first (0000x
+detect how long the (0000x continues
+
+
+x = ammount of products
+y = index of starting row (for x)
+
+for i in range 0...x:
+    current_row = y+i
+    product += row[y+i]
+    current_row+=1
+    product 
+
+
+x = 3
+y = 47
+product = ""
+prod_sub_row_len = from z to sublime 
+
+for i in range 0 ... x
+    product += row[y+i]
+    cur = y + x + i
+          47  3   0 = 50
+    product += row[cur]
+    cur = y + x + i
+          50  3   0 = 53
+    product += row [cur]
+    for j in range 1 ... 4:
+       prod_sub_row += row[cur + j]
+       prod_sub_row += '\n'
+    cur += ((x - i) * 5)
+             3 - 0  = 3 * 5  = 15 + 53 = 68
+
+cycle through rows 
+get the ammount of products
+
+when you get to description
+1. add the first line  
+2. skip the lines until you get to "Subline"
+3. add the last element of that row as the ship datek
+4. add the next line
+
+
+search for (00001
+turn each element of that row into an array
+remove the last element
+remove the "Each" Element (
+get the next row with "Ship" and "Date:" 
+get an array of like rows
+
