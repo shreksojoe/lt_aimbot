@@ -5,29 +5,50 @@ import sys
 
 # text: 
 
-def fix_date(date_string):
+def standardize_date(date_str):
+    if date_str is None:
+        return ""
+
+    # Ensure string, strip spaces
+    date_str = str(date_str).strip()
+
+    # Normalize ISO-like inputs (replace T with space, drop time if present)
+    date_only = date_str.replace('T', ' ').split(' ')[0]
 
     separators = ['/', '-', '.', ' ']
     formats = []
 
+    # Generate a broad set of formats for each separator
     for sep in separators:
         formats.extend([
-            f"%m{sep}%d{sep}%Y",
-            f"%m{sep}%d{sep}%y",
-            f"%d{sep}%m{sep}%Y",
-            f"%d{sep}%m{sep}%y",
-            f"%Y{sep}%m{sep}%d",
-            f"%y{sep}%m{sep}%d",
+            f"%m{sep}%d{sep}%Y",  # 12-31-2025
+            f"%m{sep}%d{sep}%y",  # 12-31-25
+            f"%d{sep}%m{sep}%Y",  # 31-12-2025
+            f"%d{sep}%m{sep}%y",  # 31-12-25
+            f"%Y{sep}%m{sep}%d",  # 2025-12-31
+            f"%y{sep}%m{sep}%d",  # 25-12-31
         ])
 
+    # Add explicit formats for ISO and common machine-generated dates
+    formats.extend([
+        "%Y-%m-%d",      # 2025-09-26
+        "%Y/%m/%d",      # 2025/09/26
+        "%m/%d/%Y",      # 09/26/2025
+        "%d/%m/%Y",      # 26/09/2025
+        "%m/%d/%y",      # 09/26/25
+        "%d/%m/%y",      # 26/09/25
+    ])
+
+    # Try parsing against all formats
     for fmt in formats:
         try:
-            dt = datetime.strptime(date_string, fmt)
-            return dt.strftime("%m/%d/%Y")
+            parsed_date = datetime.strptime(date_only, fmt)
+            return parsed_date.strftime("%m/%d/%Y")
         except ValueError:
             continue
 
-    return None
+    # Fallback: return original input to avoid breaking pipelines
+    return date_str
 
 # files:
 
