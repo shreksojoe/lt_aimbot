@@ -64,6 +64,15 @@
     - takes relative coordinates, as well as the process name, and scales them based off of the screen
 
     coords_to_ratio(hwnd, x, y)
+    - translates x, y coords to a ratio relative to the hwnd
 
+    move_rel_normalized(hwnd, x_ratio, y_ratio)
+    - relative, but to the client area of the window
 
+    move_rel_pixels
+    - another relative thing but something to do with pixels
 
+    coords_from_screen_to_ratio
+    - convets screen coords to ratios relative to the client area
+
+    
