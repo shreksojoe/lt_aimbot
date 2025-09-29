@@ -1,9 +1,10 @@
 import motion
 import window
+import data
 
 process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
-hwnd = window.get_hwnd(process_name)
+# hwnd = window.get_hwnd(process_name)
 
 # -- WINDOW -- 
 # window.launch_program(process_path) -- works
@@ -25,15 +26,18 @@ hwnd = window.get_hwnd(process_name)
 # -- MOTION --
 # motion.maneuver(process_name) -- works
 # motion.capture_mouse_relative(hwnd) -- works
-# motion.move_rel(hwnd, 500, 425) -- works
-# motion.move_abs(1690, 454)
+# motion.move_rel(hwnd, 912, 654) -- works
+# motion.move_abs(1571, 842) -- works
+# motion.capture_mouse_absolute(hwnd) -- works
 
-print(window.get_title_hwnd(hwnd))
+# -- DATA --
+# print(data.find_rel_path("run_lt_aimbot.bat")) -- works
 
-# motion.capture_mouse_absolute(hwnd)
-motion.move_abs(1472, 490, process_name)
+# print(data.find_abs_path(process_name)) -- works
 
-#  motion necesseties
-#  move coordinates rel and abs
-#  caputre coordinates rel and abs
-#  scale coordinates baesd on window size
+# dates = ["2025-09-29", "29-09-2025", "09/29/2025", "2025-09-29 14:35:07", "2025-09-29T14:35:07Z", "2025-09-29T14:35:07+00:00", "09/29/2025 2:35 PM", "29-09-2025 14:35"]
+# 
+# for date in dates:
+#     # print("before date: ", date)
+#     after_date = data.standardize_date(date) -- works
+#     print("after date: ", after_date)

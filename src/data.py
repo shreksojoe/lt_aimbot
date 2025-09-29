@@ -80,6 +80,42 @@ def _search_same_drive(filename: str, base_path: Path) -> Path | None:
                 return Path(root) / f
     return None
 
+def find_rel_path(filename, max_depth=5):
+    """
+    Search for the closest file named `filename` relative to CWD.
+    Expands outward: current dir → children → parent → deeper children → higher parents...
+    Returns the relative path or None if not found.
+    """
+    cwd = Path.cwd()
+    
+    # Step 1: check current directory directly
+    candidate = cwd / filename
+    if candidate.exists():
+        return Path(filename)  # relative already
+
+    # Expand outward
+    for depth in range(1, max_depth + 1):
+        # --- search downward (subdirectories) ---
+        for path in cwd.rglob(filename):
+            # limit depth by relative part length
+            if len(path.relative_to(cwd).parts) <= depth + 1:
+                try:
+                    return path.relative_to(cwd)
+                except ValueError:
+                    return Path(os.path.relpath(path, cwd))
+
+        # --- search upward (parent directories) ---
+        if cwd.parents and depth <= len(cwd.parents):
+            parent = cwd.parents[depth - 1]
+            candidate = parent / filename
+            if candidate.exists():
+                try:
+                    return candidate.relative_to(cwd)
+                except ValueError:
+                    return Path(os.path.relpath(candidate, cwd))
+
+    return None
+
 def find_abs_path(filename, extra_paths=None):
     """Return the absolute Path to filename if it exists, otherwise None.
 
@@ -144,25 +180,3 @@ def find_abs_path(filename, extra_paths=None):
         return found.resolve()
 
     return None
-
-def find_rel_path(filename):
-    """Return Path to filename relative to the caller's current working directory.
-
-    If the file can be resolved via find_abs_path, we compute the relative
-    path from Path.cwd(); otherwise, return None.
-    """
-    abs_path = find_abs_path(filename)
-    if abs_path is None:
-        return None
-    try:
-        return abs_path.relative_to(Path.cwd())
-    except ValueError:
-        # If abs_path is on a different drive or outside cwd's tree, use relpath
-        return Path(os.path.relpath(abs_path, Path.cwd()))
-
-    # cwd = Path.cwd()
-    # for root, dirs, files in os.walk(cwd):
-    #     if filename in files:
-    #         abs_path = Path(root) / filename
-    #         return abs_path.relative_to(cwd)
-    # return None
