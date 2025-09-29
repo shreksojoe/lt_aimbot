@@ -63,7 +63,7 @@ def _init_dpi_awareness():
 
 _dpi_mode = _init_dpi_awareness()
 
-def menuever(process_name):
+def maneuver(process_name):
     window.highlight_window(process_name)
     time.sleep(0.5)
 
@@ -117,6 +117,44 @@ def capture_mouse_relative(hwnd):
         if keyboard.is_pressed('esc'):
             print("Exiting...")
             break
+
+def capture_mouse_absolute(hwnd):
+
+    mouse_controller = pynput_mouse.Controller()
+
+    def on_press(key):
+        try:
+            if key == pynput_keyboard.Key.enter:
+                x, y = mouse_controller.position  # current screen position
+                print(f"Captured screen=({x},{y})")
+            elif key == pynput_keyboard.Key.esc:
+                print("Exiting...")
+                return False  # stop listener
+        except Exception as e:
+            print("Error:", e)
+
+    with pynput_keyboard.Listener(on_press=on_press) as listener:
+        listener.join()
+
+    return
+
+def scale_to_current_monitor(x: int, y: int, reference_width: int = 1920, reference_height: int = 1080) -> tuple[int, int]:
+
+    # Get current monitor resolution
+    user32 = ctypes.windll.user32
+    screen_width = user32.GetSystemMetrics(0)
+    screen_height = user32.GetSystemMetrics(1)
+
+    # Calculate scale factors
+    scale_x = screen_width / reference_width
+    scale_y = screen_height / reference_height
+
+    # Apply scaling
+    scaled_x = int(x * scale_x)
+    scaled_y = int(y * scale_y)
+
+    return scaled_x, scaled_y
+
 
 def move_abs(x, y, process_name, retries=2):
 #     pyautogui.FAILSAFE = False  # Disable failsafe to prevent pausing on smaller screens
@@ -332,9 +370,10 @@ def collect_coords(hwnd):
         try:
             if key == pynput_keyboard.Key.enter:
                 x, y = mouse_controller.position  # current screen position
-                x_ratio, y_ratio = coords_from_screen_to_ratio(hwnd, x, y)
-                print(f"Captured screen=({x},{y}) → ratios=({x_ratio:.4f}, {y_ratio:.4f})")
-                results.append(((x, y), (x_ratio, y_ratio)))
+                # x_ratio, y_ratio = coords_from_screen_to_ratio(hwnd, x, y)
+                # print(f"ratios=({x_ratio:.4f}, {y_ratio:.4f})")
+                print(f"Captured screen=({x},{y})")
+                # results.append(((x, y), (x_ratio, y_ratio)))
             elif key == pynput_keyboard.Key.esc:
                 print("Exiting...")
                 return False  # stop listener

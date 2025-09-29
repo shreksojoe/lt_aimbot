@@ -8,6 +8,7 @@ import subprocess
 import winreg
 import os
 import ctypes
+import win32gui
 
 user32 = ctypes.windll.user32
 kernel32 = ctypes.windll.kernel32
@@ -60,8 +61,8 @@ def get_hwnds_from_pid(process_name):
     win32gui.EnumWindows(callback, hwnds)
     return hwnds
 
-def get_title(process_name):
-    titles = get_titles(process_name)
+def get_title():
+    # titles = get_titles(process_name)
 
     cw = user32.GetForegroundWindow()
     length = 512
@@ -77,6 +78,8 @@ def get_hwnd(process_name):
     Prefers a visible top-level window belonging to the process PID.
     Returns None if not found.
     """
+    highlight_window(process_name)
+
     pid = get_pid(process_name)
     if not pid:
         return None
@@ -157,7 +160,7 @@ def highlight_window(process_name):
 
 # only works, if the titles are different
 def toggle_window(process_name, iterations=1):
-    cw_title = get_title(process_name)
+    cw_title = get_title()
     titles = get_titles(process_name)
 
     cw_index = 0
@@ -175,8 +178,12 @@ def toggle_window(process_name, iterations=1):
         print("Window cannot be toggled (your likely in the login stage)")
         return False
 
-def title_contains(process_name, text):
-    window_title = get_title(process_name)
+def title_contains(text, process_name=""):
+    if process_name:
+        highlight_window(process_name)
+        time.sleep(0.1)
+
+    window_title = get_title()
     if text in window_title:
         return True
     else:
@@ -184,15 +191,13 @@ def title_contains(process_name, text):
 
 def title_is_empty(process_name):
     highlight_window(process_name)
-    window_title = get_title(process_name).replace(" ", "")
-    if window_title:
+    window_title = get_title().replace(" ", "")
+    if not window_title:
         print(window_title)
         return True
     else:
         print(window_title)
         return False
-
-
 # we want to get the hwnd
 
 def highlight_console(hwnd=None):

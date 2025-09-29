@@ -12,62 +12,17 @@ This document provides comprehensive documentation for the core modules of the L
 
 ## motion.py
 
-This module handles mouse movement, cursor positioning, and coordinate transformations using Windows API calls. It's designed to work with DPI-aware applications and provides multiple coordinate systems.
-
-### DPI Awareness Functions
-
-#### `_init_dpi_awareness()`
-**Purpose**: Initializes DPI awareness for the application to ensure accurate cursor positioning across different monitor scaling settings.
-
-**Implementation**: 
-- Attempts Per-Monitor V2 DPI awareness first (most accurate)
-- Falls back to Per-Monitor DPI awareness via shcore
-- Final fallback to System DPI awareness
-- Returns a string indicating which mode was successfully set
-
-**Returns**: String describing DPI mode ("per_monitor_v2", "per_monitor", "system", or "unknown")
-
-### Window Interaction Functions
-
 #### `menuever(process_name)`
 **Purpose**: Performs a sequence of window highlighting and input operations.
-
-**Implementation**:
-- Highlights the specified process window
-- Switches to console window  
-- Presses Enter key
-- Returns focus to the original process window
-- Uses 0.5-second delays between operations
-
-**Parameters**: 
-- `process_name` (str): Name of the target process
+**Parameters**: `process_name` (str): Name of the target process
 
 #### `capture_mouse_relative(hwnd)`
 **Purpose**: Interactive coordinate capture tool for getting mouse positions relative to a window.
-
-**Implementation**:
-- Waits for Enter key presses to capture current mouse position
-- Calculates coordinates relative to the window's top-left corner
-- Exits on Escape key press
-- Prints captured coordinates in real-time
-
-**Parameters**:
-- `hwnd` (int): Window handle for coordinate reference
-
+**Parameters**: `hwnd` (int): Window handle for coordinate reference
 **Note**: Uses `keyboard.wait()` which blocks execution until key press.
-
-### Mouse Movement Functions
 
 #### `move_abs(x, y, process_name, retries=2)`
 **Purpose**: Moves cursor to absolute screen coordinates and performs a click.
-
-**Implementation**:
-- Uses Windows API `SetCursorPos()` for cursor movement
-- Performs click using Windows API mouse events
-- Includes retry logic (default 2 attempts)
-- Presses Enter and highlights window between operations
-- Uses `mouse_event()` with MOUSEEVENTF_LEFTDOWN/LEFTUP flags
-
 **Parameters**:
 - `x, y` (int): Absolute screen coordinates
 - `process_name` (str): Target process name
@@ -77,13 +32,6 @@ This module handles mouse movement, cursor positioning, and coordinate transform
 
 #### `move_rel(hwnd, x, y)`
 **Purpose**: Moves cursor to coordinates relative to a window's position.
-
-**Implementation**:
-- Gets window rectangle using `GetWindowRect()`
-- Converts relative coordinates to absolute screen coordinates
-- Uses `SetCursorPos()` for movement
-- Does NOT perform a click (movement only)
-
 **Parameters**:
 - `hwnd` (int): Window handle
 - `x, y` (int): Coordinates relative to window's top-left corner
@@ -340,213 +288,79 @@ This module provides window management functionality, including process detectio
 
 #### `get_pid(process_name)`
 **Purpose**: Retrieves the process ID for a given process name.
-
-**Implementation**:
-- Uses psutil to iterate through all running processes
-- Performs case-insensitive name matching
-- Returns first matching PID found
-
-**Parameters**:
-- `process_name` (str): Name of the process executable
-
+**Parameters**: `process_name` (str): Name of the process executable
 **Returns**: Process ID (int) or False if not found
 
 #### `get_titles(process_name)`
 **Purpose**: Gets all window titles for a given process.
-
-**Implementation**:
-- Gets process PID using `get_pid()`
-- Enumerates all windows using `EnumWindows()`
-- Filters windows by PID and visibility
-- Includes empty titles as empty strings
-
-**Parameters**:
-- `process_name` (str): Name of the process executable
-
+**Parameters**: `process_name` (str): Name of the process executable
 **Returns**: List of window titles (strings) or error message if process not running
 
 #### `get_hwnds_from_pid(process_name)`
 **Purpose**: Gets all window handles for a given process.
-
-**Implementation**:
-- Gets process PID using `get_pid()`
-- Enumerates all windows and collects handles matching the PID
-- Does not filter by visibility (returns all windows)
-
-**Parameters**:
-- `process_name` (str): Name of the process executable
-
+**Parameters**: `process_name` (str): Name of the process executable
 **Returns**: List of window handles (integers)
-
-**Note**: As commented, this can return many handles for complex applications like Label Traxx.
 
 #### `get_title(process_name)`
 **Purpose**: Gets the title of the currently foreground window.
-
-**Implementation**:
-- Gets foreground window using `GetForegroundWindow()`
-- Retrieves window text using `GetWindowTextW()`
-- Uses Unicode buffer with 512 character limit
-**Parameters**:
-- `process_name` (str): Process name (not actually used in implementation)
-
 **Returns**: Current foreground window title (string)
-
-**⚠️ Issue**: The `process_name` parameter is not used; function always returns foreground window title regardless of process.
 
 #### `get_hwnd(process_name)`
 **Purpose**: Gets a representative window handle for a process.
-
-**Implementation**:
-- Gets process PID using `get_pid()`
-- Enumerates windows and finds first visible top-level window for the PID
-- Includes exception handling for windows that can't be queried
-- Stops enumeration after finding first match
-
-**Parameters**:
-- `process_name` (str): Name of the process executable
-
+**Parameters**: `process_name` (str): Name of the process executable
 **Returns**: Window handle (int) or None if not found
-
-### Process Management Functions
 
 #### `wait_on_program(process_name)`
 **Purpose**: Waits for a program to finish loading (when foreground window title becomes empty).
-
-**Implementation**:
-- Polls foreground window title every iteration
-- Returns when title becomes empty string
-- Has 30-second timeout with timeout message
-
-**Parameters**:
-- `process_name` (str): Process name (not actually used in implementation)
-
-**⚠️ Issue**: The function doesn't actually use the `process_name` parameter and only checks foreground window.
+**Parameters**: `process_name` (str): Process name (not actually used in implementation)
 
 #### `launch_program(process_path)`
 **Purpose**: Launches a program and waits for it to finish loading.
-
-**Implementation**:
-- Uses `subprocess.Popen()` to start the program
-- Extracts process name from path using `os.path.basename()`
-- Calls `wait_on_program()` to wait for completion
-
-**Parameters**:
-- `process_path` (str): Full path to executable
+**Parameters**: `process_path` (str): Full path to executable
 
 #### `detect_process(process_name)`
 **Purpose**: Checks if a process is currently running.
-
-**Implementation**:
-- Uses psutil to iterate through all processes
-- Performs case-insensitive name matching
-- Returns boolean result
-
-**Parameters**:
-- `process_name` (str): Name of the process executable
-
+**Parameters**: `process_name` (str): Name of the process executable
 **Returns**: Boolean (True if running, False if not)
 
 ### Window Manipulation Functions
 
 #### `highlight_window(process_name)`
 **Purpose**: Brings a process window to the foreground and restores it if minimized.
-
-**Implementation**:
-- First checks if process is running using `detect_process()`
-- Gets process PID and enumerates windows using pygetwindow
-- Finds window handle matching the PID
-- Uses `ShowWindow()` with `SW_RESTORE` and `SetForegroundWindow()`
-- Includes exception handling for cases where window can't be activated
-
-**Parameters**:
-- `process_name` (str): Name of the process executable
-
+**Parameters**: `process_name` (str): Name of the process executable
 **Returns**: False if process not running or window can't be toggled
-
-**Note**: Includes helpful error message about login stage when window can't be toggled.
 
 #### `toggle_window(process_name, iterations=1)`
 **Purpose**: Switches between multiple windows of the same process.
-
-**Implementation**:
-- Gets current window title and all titles for the process
-- Finds current window index in the titles list
-- Switches to window at specified iteration index
-- Uses `FindWindowW()`, `ShowWindow()`, and `SetForegroundWindow()`
-
 **Parameters**:
 - `process_name` (str): Name of the process executable
 - `iterations` (int): Index of window to switch to (default 1)
-
 **Returns**: False if not enough windows or window can't be toggled
-
 **Note**: Only works if windows have different titles.
-
-### Window State Functions
 
 #### `title_contains(process_name, text)`
 **Purpose**: Checks if the current foreground window title contains specific text.
-
-**Implementation**:
-- Gets current window title using `get_title()`
-- Performs simple string containment check
-
 **Parameters**:
 - `process_name` (str): Process name (passed to `get_title()` but not used)
 - `text` (str): Text to search for in title
-
 **Returns**: Boolean (True if text found in title)
 
 #### `title_is_empty(process_name)`
 **Purpose**: Checks if the window title is empty after removing spaces.
-
-**Implementation**:
-- Highlights the window first using `highlight_window()`
-- Gets window title and removes all spaces
-- Prints the title for debugging
-- Returns boolean based on whether title exists
-
-**Parameters**:
-- `process_name` (str): Name of the process executable
-
+**Parameters**: `process_name` (str): Name of the process executable
 **Returns**: Boolean (True if title exists after space removal, False if empty)
-
-**⚠️ Issue**: The function name suggests it should return True when title IS empty, but it actually returns True when title is NOT empty.
-
-### Console and Utility Functions
 
 #### `highlight_console(hwnd=None)`
 **Purpose**: Brings the console window to the foreground.
-
-**Implementation**:
-- Gets console window handle using `GetConsoleWindow()` if not provided
-- Restores window if minimized using `ShowWindow()` with `SW_RESTORE`
-- Attempts to set foreground using `SetForegroundWindow()`
-- Includes fallback using topmost window positioning if focus is refused
-
-**Parameters**:
-- `hwnd` (int, optional): Console window handle (auto-detected if None)
+**Parameters**: `hwnd` (int, optional): Console window handle (auto-detected if None)
 
 #### `get_title_hwnd(hwnd)`
 **Purpose**: Gets and prints the title of a specific window handle.
-
-**Implementation**:
-- Uses `GetWindowText()` to get window title
-- Prints the title and returns it
-
-**Parameters**:
-- `hwnd` (int): Window handle
-
+**Parameters**: `hwnd` (int): Window handle
 **Returns**: Window title (string)
 
 #### `mark_hwnd()`
 **Purpose**: Gets and prints the handle of the current foreground window.
-
-**Implementation**:
-- Uses `GetForegroundWindow()` to get current window handle
-- Prints the handle and returns it
-
 **Returns**: Current foreground window handle (int)
 
 ---
