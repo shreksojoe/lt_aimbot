@@ -2,46 +2,50 @@ import os
 import csv
 from pdf2image import convert_from_path
 import pytesseract
+import data
+
+import csv_sort
 
 # ====== Configuration Variables ======
-INPUT_FOLDER = r"C:\\Users\\joseph.stadum\\Downloads\\Grainger" # stores pdfs
-OUTPUT_FOLDER = r"C:\\Users\\joseph.stadum\\pdf_to_csv\\output" #stores converted csvs
-POPPLER_PATH = r"C:\\Users\\joseph.stadum\\poppler\\poppler-25.07.0\\Library\\bin"  #path to poppler 
-TESSERACT_PATH = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"  #path to tesseract 
+def convert(filename):
 
-# Set pytesseract executable path
-pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+    # INPUT_FOLDER = r"C:\\Users\\joseph.stadum\\Downloads\\Grainger" # stores pdfs
+    OUTPUT_FOLDER = r"C:\\Users\\joseph.stadum\\pdf_to_csv\\output" #stores converted csvs
+    POPPLER_PATH = r"C:\\Users\\joseph.stadum\\poppler\\poppler-25.07.0\\Library\\bin"  #path to poppler 
+    TESSERACT_PATH = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"  #path to tesseract 
 
-# Ensure output folder exists
-os.makedirs(OUTPUT_FOLDER, exist_ok=True)
+    # Set pytesseract executable path
+    pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
-# Process each PDF in the input folder
-for filename in os.listdir(INPUT_FOLDER):
-    if filename.lower().endswith(".pdf"):
-        pdf_path = os.path.join(INPUT_FOLDER, filename)
-        print(f"Processing {filename}...")
+    # Ensure output folder exists
+    os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 
-        # Convert PDF pages to images
-        images = convert_from_path(pdf_path, poppler_path=POPPLER_PATH)
+    # Process each PDF in the input folder
+    # for filename in os.listdir(INPUT_FOLDER):
+    # pdf_path = os.path.join(INPUT_FOLDER, filename)
+    # print(f"Processing {filename}...")
 
-        # Prepare CSV file path
-        csv_filename = os.path.splitext(filename)[0] + ".csv"
-        csv_path = os.path.join(OUTPUT_FOLDER, csv_filename)
+    # Convert PDF pages to images
+    images = convert_from_path(filename, poppler_path=POPPLER_PATH)
 
-        with open(csv_path, mode='w', newline='', encoding='utf-8') as csv_file:
-            writer = csv.writer(csv_file)
+    # Prepare CSV file path
+    csv_filename = os.path.splitext(filename)[0] + ".csv"
+    csv_path = os.path.join(OUTPUT_FOLDER, csv_filename)
 
-            for page_number, image in enumerate(images, start=1):
-                # Use pytesseract to extract text line by line
-                text = pytesseract.image_to_string(image)
-                lines = text.splitlines()
+    with open(csv_path, mode='w', newline='', encoding='utf-8') as csv_file:
+        writer = csv.writer(csv_file)
 
-                for line in lines:
-                    if line.strip():  # skip empty lines
-                        # Split line by whitespace into multiple cells
-                        row = line.split()
-                        writer.writerow(row)
+        for page_number, image in enumerate(images, start=1):
+            # Use pytesseract to extract text line by line
+            text = pytesseract.image_to_string(image)
+            lines = text.splitlines()
 
-        print(f"Saved CSV to {csv_path}")
+            for line in lines:
+                if line.strip():  # skip empty lines
+                    # Split line by whitespace into multiple cells
+                    row = line.split()
+                    writer.writerow(row)
 
-print("All PDFs processed.")
+    print(f"Saved CSV to {csv_path}")
+    return csv_sort.process_file(csv_path)
+

@@ -1,4 +1,4 @@
-import requests
+# import requests
 import io
 import os
 import shutil

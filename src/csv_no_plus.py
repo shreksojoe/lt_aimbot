@@ -10,6 +10,9 @@ import sys
 import os
 from datetime import datetime
 
+import window
+import motion
+import data
 # new csv_to_json file with no multiple orders on the same ticket
 
 # Opens the csv, and stores rows in array 
@@ -127,7 +130,7 @@ def ticket_instructions(csv_rows, json_list):
                 time.sleep(0.5)
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[0][2]}")
-                type_keyboard(convert_date_format(csv_rows[0][2]))
+                type_keyboard(data.standardize_date(csv_rows[0][2]))
                 time.sleep(0.5)
             elif key == "Low Stock":
                 print("nvr more")
@@ -201,7 +204,7 @@ def order_instructions(csv_rows, json_list,  amz_exec):
                 general_desciption_executed = True
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[amz_exec][2]}")
-                type_keyboard(convert_date_format(csv_rows[amz_exec][2]))
+                type_keyboard(data.standardize_date(csv_rows[amz_exec][2]))
                 time.sleep(0.5)
 
 
@@ -267,7 +270,7 @@ def duplicate_order(csv_rows, dup_order_array, amz_exec):
                 general_desciption_executed = True
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[amz_exec][2]}")
-                type_keyboard(convert_date_format(csv_rows[0][2]))
+                type_keyboard(data.standardize_date(csv_rows[0][2]))
                 time.sleep(0.5)
 
 def finish_him_instructions(csv_rows, finish_him_list):
@@ -346,7 +349,7 @@ def duplicate(csv_rows, relapse_list, amz_exec=0):
                 time.sleep(0.5)  # Increased sleep time for reliability
             elif key == "Ship Date":
                 print(f"Typing ship date: {csv_rows[amz_exec][2]}")
-                type_keyboard(convert_date_format(csv_rows[amz_exec][2]))
+                type_keyboard(data.standardize_date(csv_rows[amz_exec][2]))
                 time.sleep(0.5)
             elif key == "Select All":
                 print("Performing select all")

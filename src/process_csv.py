@@ -16,7 +16,7 @@ import date
     
 from utils import resource_path
 
-fd_path = resource_path("instructions/ticket.json")  # Always resolve path relative to install location
+fd_path = resource_path("instructions\\ticket.json")  # Always resolve path relative to install location
 print(f"[DEBUG] process_csv is using fd_path: {fd_path}")
 csv_array = []
 

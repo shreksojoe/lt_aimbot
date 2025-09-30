@@ -4,6 +4,8 @@ import sys
 import csv
 import re
 
+import data
+
 # issue is this returning a NoneType
 def convert(xlsx_file):
     # load file
@@ -27,8 +29,8 @@ def convert(xlsx_file):
 
     return csv_file
 
-def strip_time(s: str) -> str:
-    return re.sub(r"\s+\d{1,2}(?::\d{2})?(?::\d{2}(?:\.\d+)?)?", "", s)
+# def strip_time(s: str) -> str:
+#     return re.sub(r"\s+\d{1,2}(?::\d{2})?(?::\d{2}(?:\.\d+)?)?", "", s)
 
 def construct(file_array):
     new_array = []
@@ -48,7 +50,8 @@ def construct(file_array):
                 new_row[5] = ''  # Empty column
                 new_row[2] = str(row[6]) if len(row) > 6 and row[6] is not None else ''  # ENTERED date
                 print("you would too: ", new_row[2])
-                strip_time(new_row[2])
+                data.standardize_date(new_row[2])
+                # strip_time(new_row[2])
 
                 new_row[1] = str(row[7]) if len(row) > 7 and row[7] is not None else ''  # PO Number
                 new_row[6] = 'AMAZON FBA USA'  # Fixed value

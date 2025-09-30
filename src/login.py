@@ -9,6 +9,7 @@ import sys
 import pygetwindow as gw
 import win32gui
 
+import data
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
