@@ -5,6 +5,12 @@ import importlib.util
 import csv
 import sys
 import os
+from utils import resource_path
+import open_files
+
+# custom dropship instructions variables
+cust_drop_one_json = resource_path("instructions/cust_drop_one.json")
+cust_drop_one_array = open_files.open_json_file(cust_drop_one_json)
 
 
 def stock(product):
@@ -53,4 +59,5 @@ def execute_grainger(grainger_pdf):
         else: # it is a grainger
             print("it was an iStock dammit")
     
+    print(cust_drop_one_array)
     return product_array

@@ -4,7 +4,7 @@ import data
 
 process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
-# hwnd = window.get_hwnd(process_name)
+hwnd = window.get_hwnd(process_name)
 
 # -- WINDOW -- 
 # window.launch_program(process_path) -- works
@@ -25,7 +25,7 @@ process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
 
 # -- MOTION --
 # motion.maneuver(process_name) -- works
-# motion.capture_mouse_relative(hwnd) -- works
+motion.capture_mouse_relative(hwnd) -- works
 # motion.move_rel(hwnd, 912, 654) -- works
 # motion.move_abs(1571, 842) -- works
 # motion.capture_mouse_absolute(hwnd) -- works

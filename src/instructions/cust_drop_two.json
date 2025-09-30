@@ -1,0 +1,10 @@
+[
+    {"Window": "Editing Ticket"},
+    {"Name": "Customer PO Textbox", "Coordinate": [548, 165]},
+    {"Text": ""},
+    {"Name": "New Ticket Button", "Coordinate": [834, 202]},
+    {"Text": ""},
+    {"Name": "Customer No. Link", "Coordinate": [53, 379]},
+    {"Name": "Name Text Box", "Coordinate": [148, 379]},
+    {"Text": ""},
+]

@@ -1,0 +1,12 @@
+[
+    {"Window": "Home Page"},
+    {"Name": "Tickets Button", "Coordinate": [494, 425]},
+    {"Window": "Ticket Selector"},
+    {"Name": "New Ticket Button", "Coordinate": [142, 661]},
+    {"Window": "Editing Ticket"},
+    {"Name": "Customer No. Link", "Coordinate": [131, 163]},
+    {"Window": "Find and Select a Customer"},
+    {"Name": "Name Text Box", "Coordinate": [221, 159]},
+    {"Text": ""},
+    {"Name": "Select Button", "Coordinate": [855, 574]}
+]
