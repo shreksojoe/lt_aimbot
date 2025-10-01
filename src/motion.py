@@ -187,8 +187,8 @@ def move_abs(x, y, process_name=""):
     user32.SetCursorPos(int(x), int(y))
     print(f"cursor moved to ({x}, {y}) via Windows API")
 
+    time.sleep(1)
     pyautogui.click()
-    time.sleep(0.4)
 
 
 def move_rel(hwnd, x, y):
@@ -215,3 +215,30 @@ def move_rel(hwnd, x, y):
     pyautogui.FAILSAFE = False
     user32.SetCursorPos(abs_x, abs_y)
     print("move possition")
+    time.sleep(1)
+    pyautogui.click()
+
+def select_all():
+    for _ in range(12):
+        keyboard.send('backspace')
+    time.sleep(1)
+
+def compare_text(text):
+    # copy
+    pyautogui.hotkey('ctrl','c')
+    clipboard_text = pyperclip.paste()
+
+    if text == clipboard_text:
+        return True
+    else:
+        return False
+
+
+
+
+
+
+
+
+
+

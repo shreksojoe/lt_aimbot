@@ -5,6 +5,8 @@ import importlib.util
 import csv
 import sys
 import os
+import json
+import keyboard
 
 process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
@@ -20,10 +22,10 @@ def custom(product):
             "Coordinate":motion.move_rel,
             "Window":window.title_contains,
             "Customer Name": lambda: keyboard.write("W.W. Grainger"),
-            "PO Number": lambda: keyboard.write(""),
-            "Select All": lambda: keyboard.write(),
-            "Ship Date": lambda: keyboard.write(),
-            "Low Stock": lambda: keyboard.write
+            "PO Number": lambda: keyboard.write(product[1]),
+            "Select All": motion.select_all,
+            "Ship Date": lambda: keyboard.write(product[4]),
+            "Low Stock": lambda: keyboard.write("test")
             }
 
     # ops["Airbreakingsystem"](lt_hwnd, 25, 373)
@@ -31,13 +33,12 @@ def custom(product):
     json_file = data.find_rel_path("instructions\\cust_drop_one.json")
 
     with open(json_file, "r") as file:
-        data = json.load(file)
+        json_data = json.load(file)
 
-    for entry in data:
+    for entry in json_data:
         for key, value in entry.items():
 
             print(f"Key: {key} -> Value: {value}")
-            print("lenghthththththt", len(value))
             if isinstance(value, list):
                 ops[key](lt_hwnd, value[0], value[1])
             elif key == "Name":
@@ -46,18 +47,6 @@ def custom(product):
                 ops[key]()
             else:
                 ops[key](value, process_name)
-
-    # clicking actions, type:
-    # Customer Name -> product[0]  "W.W. Grainger, Inc."
-    # PO# -> product[1]
-    # Ship Date -> product[4]
-    # QTY -> product[5]
-    # Product # -> product[2]
-    # 
-    # 
-    # 
-    # copy price of product 
-    # 
 
 def dropship(product):
     print("Dealing with a dropship")
@@ -80,6 +69,7 @@ def dropship(product):
         if not product[7] == "Custom":
             print(product[7])
             product[7] = "Custom"
+            custom(product)
         print(product[7])
 
         # in grainger_instructions: line 47 custom products, 
