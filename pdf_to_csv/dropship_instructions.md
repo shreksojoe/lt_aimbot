@@ -143,4 +143,3 @@ than group the products together
 27. Select it and hit "Open"
 28. Hit "OK" on the pop-up
 29. Continue Filling out all tickets for the PO
-
