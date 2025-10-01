@@ -5,19 +5,59 @@ import importlib.util
 import csv
 import sys
 import os
-from utils import resource_path
-import open_files
 
-# custom dropship instructions variables
-cust_drop_one_json = resource_path("instructions/cust_drop_one.json")
-cust_drop_one_array = open_files.open_json_file(cust_drop_one_json)
-
+process_name = "Label Traxx Client.exe"
+process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
+lt_hwnd = window.get_hwnd(process_name)
 
 def stock(product):
     print("tis stock: ", product)
 
 def custom(product):
+
     print("tis custom: ", product)
+    ops = {
+            "Coordinate":motion.move_rel,
+            "Window":window.title_contains,
+            "Customer Name": lambda: keyboard.write("W.W. Grainger"),
+            "PO Number": lambda: keyboard.write(""),
+            "Select All": lambda: keyboard.write(),
+            "Ship Date": lambda: keyboard.write(),
+            "Low Stock": lambda: keyboard.write
+            }
+
+    # ops["Airbreakingsystem"](lt_hwnd, 25, 373)
+
+    json_file = data.find_rel_path("instructions\\cust_drop_one.json")
+
+    with open(json_file, "r") as file:
+        data = json.load(file)
+
+    for entry in data:
+        for key, value in entry.items():
+
+            print(f"Key: {key} -> Value: {value}")
+            print("lenghthththththt", len(value))
+            if isinstance(value, list):
+                ops[key](lt_hwnd, value[0], value[1])
+            elif key == "Name":
+                continue
+            elif not value:
+                ops[key]()
+            else:
+                ops[key](value, process_name)
+
+    # clicking actions, type:
+    # Customer Name -> product[0]  "W.W. Grainger, Inc."
+    # PO# -> product[1]
+    # Ship Date -> product[4]
+    # QTY -> product[5]
+    # Product # -> product[2]
+    # 
+    # 
+    # 
+    # copy price of product 
+    # 
 
 def dropship(product):
     print("Dealing with a dropship")
@@ -29,8 +69,19 @@ def dropship(product):
     if product[2] in stock_product_numbers:
         print("It is a stock product")
         stock(product)
+        if not product[7] == "iStock":
+            print(product[7])
+            product[7] = "iStock"
+        print(product[7])
     else:
         print("this is a custom product")
+        print(product[7])
+
+        if not product[7] == "Custom":
+            print(product[7])
+            product[7] = "Custom"
+        print(product[7])
+
         # in grainger_instructions: line 47 custom products, 
 
 def execute_grainger(grainger_pdf):
@@ -57,7 +108,6 @@ def execute_grainger(grainger_pdf):
             print("grainger isn't in the address, tis a dropship")
             dropship(product)
         else: # it is a grainger
-            print("it was an iStock dammit")
+            print("it was an grainger dammit")
     
-    print(cust_drop_one_array)
     return product_array

@@ -47,7 +47,7 @@ stock or custom
 ### Custom Products:
 1. Click Tickets under Order Processing
 2. Click "New Ticket"
-3. Enter Customer Number
+3. Type W.W. Grainger into Name section of the Customer No.
 4. Enter PO# in Customer PO box
 5. Enter in the Ship Date (in the description box on the PO, should be rounded to the next wednesday (Or current wednesday if it is wednesday)) 
 6. Enter Qty in Qty box

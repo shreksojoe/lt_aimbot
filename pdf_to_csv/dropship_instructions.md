@@ -26,6 +26,18 @@ Above "Ship-To,Qualifier:,"
 Print \n for new line
 Remove all ','s unless they are surrounded by "double quotes"
 
+Tickets contain 2 types of products: 
+stock and custom
+ye shit boi
+
+There are 2 types of tickets:
+Dropship and Grainger
+pew! pew!
+
+blah blah 
+Get the ticket type
+than group the products together
+
 
 ## Determine if it is a Grainger Dropship:
 1. If 'Grainger' is in the title (It is a grainger, continue)
