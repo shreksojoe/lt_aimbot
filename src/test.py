@@ -25,7 +25,7 @@ hwnd = window.get_hwnd(process_name)
 
 # -- MOTION --
 # motion.maneuver(process_name) -- works
-# motion.capture_mouse_relative(hwnd)
+motion.capture_mouse_relative(hwnd)
 # motion.move_rel(hwnd, 912, 654) -- works
 # motion.move_abs(1571, 842) -- works
 # motion.capture_mouse_absolute(hwnd) -- works
@@ -34,7 +34,7 @@ hwnd = window.get_hwnd(process_name)
 # print(data.find_rel_path("run_lt_aimbot.bat")) -- works
 
 # print(data.find_abs_path(process_name)) -- works
-data.address_search("Grainger Dropship Acct")
+# data.address_search("Grainger Dropship Acct")
 
 # dates = ["2025-09-29", "29-09-2025", "09/29/2025", "2025-09-29 14:35:07", "2025-09-29T14:35:07Z", "2025-09-29T14:35:07+00:00", "09/29/2025 2:35 PM", "29-09-2025 14:35"]
 # 

@@ -7,36 +7,65 @@ import sys
 import os
 import json
 import keyboard
+import time
+import pyperclip
+import pyautogui
+import re
 
 process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
 lt_hwnd = window.get_hwnd(process_name)
 
+def copy():
+    time.sleep(1)
+    pyautogui.hotkey("ctrl", "c")
+    clipboard = pyperclip.paste()
+    print("copied: ", clipboard)
+    time.sleep(1)
+
 def stock(product):
     print("tis stock: ", product)
 
-def custom(product):
+
+def custom(product, ln):
+
+    def strip_zeros():
+        text = pyperclip.paste()
+        print("on clipboard: ", text)
+        ln_numb = "L#" + str(ln) + " - "
+        print("General description: ", ln_numb + text)
+        data.write(ln_numb + text)
 
     print("tis custom: ", product)
     ops = {
             "Coordinate":motion.move_rel,
             "Window":window.title_contains,
-            "Customer Name": lambda: keyboard.write("W.W. Grainger"),
-            "PO Number": lambda: keyboard.write(product[1]),
+            "Window Maybe":window.title_contains_option,
+            "Customer Name": lambda: data.write("W.W. Grainger"),
+            "PO Number": lambda: data.write(product[1]),
             "Select All": motion.select_all,
-            "Ship Date": lambda: keyboard.write(product[4]),
-            "Low Stock": lambda: keyboard.write("test")
+            "Ship Date": lambda: data.write(product[4]),
+            "Low Stock": lambda: data.write("test"),
+            "Quantity": lambda: data.write(product[5]),
+            "Product No.": lambda: data.write(product[2]),
+            "Price Text Box": lambda: data.write(product[6]),
+            "Copy": copy,
+            "Line Number": strip_zeros
             }
 
     # ops["Airbreakingsystem"](lt_hwnd, 25, 373)
 
-    json_file = data.find_rel_path("instructions\\cust_drop_one.json")
+    cust_drop_one = data.find_rel_path("instructions\\cust_drop_one.json")
+    cust_drop_two = data.find_rel_path("instructions\\cust_drop_two.json")
+    cust_drop_three = data.find_rel_path("instructions\\cust_drop_three.json")
+    cust_drop_four = data.find_rel_path("instructions\\cust_drop_four.json")
 
-    with open(json_file, "r") as file:
-        json_data = json.load(file)
+    with open(cust_drop_one, "r") as file:
+        cust_drop_one_data = json.load(file)
 
-    for entry in json_data:
+    for entry in cust_drop_one_data:
         for key, value in entry.items():
+            time.sleep(0.2)
 
             print(f"Key: {key} -> Value: {value}")
             if isinstance(value, list):
@@ -48,7 +77,7 @@ def custom(product):
             else:
                 ops[key](value, process_name)
 
-def dropship(product):
+def dropship(product, ln):
     print("Dealing with a dropship")
 
     stock_product_numbers = [
@@ -69,7 +98,7 @@ def dropship(product):
         if not product[7] == "Custom":
             print(product[7])
             product[7] = "Custom"
-            custom(product)
+            custom(product, ln)
         print(product[7])
 
         # in grainger_instructions: line 47 custom products, 
@@ -91,12 +120,12 @@ def execute_grainger(grainger_pdf):
     product_array = pdf_module.convert(grainger_pdf)
     
     print(f"Processed {len(product_array)} product(s) from Grainger PDF")
-    for product in product_array:
+    for ln, product in enumerate(product_array):
         print(product)
         # determine if it is a grainger or dropship
         if not ("grainger" in product[-1].lower()): # it is a dropship
             print("grainger isn't in the address, tis a dropship")
-            dropship(product)
+            dropship(product, ln + 1)
         else: # it is a grainger
             print("it was an grainger dammit")
     

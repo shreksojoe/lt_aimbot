@@ -99,6 +99,7 @@ than group the products together
 19. Press on "Location"
 20. Press the "State" column header
 21. Double click the "Grainger Dropship Acct"
+
 22. Fill in the Address as listed in the PO
     Leave fields: "Attention, Email", "Instructions, Via", "Ship Via", and "Freight Acct. No." near the bottom as they are
 23. Click the Doc Button

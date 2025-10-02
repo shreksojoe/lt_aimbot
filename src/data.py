@@ -7,6 +7,7 @@ import window
 import pyperclip
 import pyautogui
 import time
+import keyboard
 
 # text: 
 
@@ -191,6 +192,10 @@ def address_search(text):
     process_name = "Label Traxx Client.exe"
     window.highlight_window(process_name)
     hwnd = window.get_hwnd(process_name)
+    if window.title_contains("Editing Ticket"):
+        motion.move_rel(hwnd, 157, 284)
+        time.sleep(0.4)
+    hwnd = window.get_hwnd(process_name)
     repeat = 0
     x = 176
     y = 122
@@ -225,3 +230,8 @@ def address_search(text):
             # pyautogui.click()
 
 
+def write(text):
+    time.sleep(1)
+    print("typing: ", text)
+    keyboard.write(text)
+    time.sleep(3)

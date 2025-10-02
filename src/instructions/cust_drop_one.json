@@ -20,9 +20,10 @@
     {"Quantity": ""},
     {"Name": "Product No. Text Box", "Coordinate": [197, 380]},
     {"Product No.": ""},
-    {"Window": "Note"},
-    {"Name":"OK Button", "Coordinates": [456, 149]},
     {"Name": "Product No. Button", "Coordinate": [222, 354]},
+    {"Window Maybe": "Note"},
+    {"Name":"OK Button", "Coordinate": [456, 149]},
+    {"Window": "Editing Ticket"},
     {"Price Text Box": ""},
     {"Name": "Desciption Text Box", "Coordinate": [321, 381]},
     {"Copy": ""},
@@ -34,8 +35,8 @@
     {"Name": "Tool Checkbox", "Coordinate": [438, 676]},
     {"Name": "Ink Checkbox", "Coordinate": [438, 608]},
     {"Name": "Products Tab", "Coordinate": [87, 67]},
-    {"Name": "Note Text Box", "Coordinates": [343, 220]},
-    {"Name": "Note Text Box", "Coordinates": [420, 220]},
+    {"Name": "Note Text Box", "Coordinate": [343, 220]},
+    {"Name": "Note Text Box", "Coordinate": [420, 220]},
     {"Line Number Zero": ""}
 ]
 

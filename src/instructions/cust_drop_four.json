@@ -1,17 +1,4 @@
 [
     {"Window": "Editing Ticket"},
     {"Name": "Address Tab", "Coordinate": [204, 61]},
-    {"Name": "Location Link", "Coordinate": [159, 284]},
-    {"Name": "Location Link", "Coordinate": [159, 284]},
-    {"Window": "W.W. Grainger, Inc."},
-    {"Name": "State Column Header", "Coordinate": [654, 264]},
-
-    {"Name": "Stock Notes Link", "Coordinate": [41, 115]},
-    {"Window": "Quick Phrase"},
-    {"Name": "Pull From Shelves Row", "Coordinate": [297, 363]},
-    {"Name": "Paste Button", "Coordinate": [711, 557]},
-    {"Name": "General Tab", "Coordinate": [34, 60]},
-    {"Name": "Stock Drop Down Menu", "Coordinate": [396, 629]},
-    {"Name": "Stock In Option", "Coordinate": [346, 684]},
-    {"Name": "Stock Done Check Box", "Coordinate": [441, 628]}
 ]

@@ -187,6 +187,19 @@ def title_contains(text, process_name=""):
     if text in window_title:
         return True
     else:
+        while text not in get_title():
+            time.sleep(5)
+
+def title_contains_option(text, process_name=""):
+    if process_name:
+        highlight_window(process_name)
+        time.sleep(0.1)
+
+    window_title = get_title()
+    if text in window_title:
+        return True
+    else:
+        time.sleep
         return False
 
 def title_is_empty(process_name):
