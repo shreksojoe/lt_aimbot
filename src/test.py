@@ -1,6 +1,7 @@
 import motion
 import window
 import data
+import win32gui
 
 process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
@@ -25,7 +26,10 @@ hwnd = window.get_hwnd(process_name)
 
 # -- MOTION --
 # motion.maneuver(process_name) -- works
-motion.capture_mouse_relative(hwnd)
+# motion.capture_mouse_relative(hwnd)
+window.highlight_by_title("Note")
+hwnd = win32gui.GetForegroundWindow()
+motion.move_rel(hwnd, 456, 149)
 # motion.move_rel(hwnd, 912, 654) -- works
 # motion.move_abs(1571, 842) -- works
 # motion.capture_mouse_absolute(hwnd) -- works

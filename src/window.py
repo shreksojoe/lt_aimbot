@@ -46,6 +46,18 @@ def get_titles(process_name):
     else:
         return titles
 
+def get_all_window_titles():
+    """Return a list of all window titles currently open."""
+    titles = []
+
+    def enum_windows_callback(hwnd, _):
+        if win32gui.IsWindowVisible(hwnd):
+            title = win32gui.GetWindowText(hwnd)
+            if title:  # Skip empty titles
+                titles.append(title)
+    win32gui.EnumWindows(enum_windows_callback, None)
+    return titles
+
 # works but practically useless when it comes to Label traxx (way to many "hwnds")
 # take in the title
 def get_hwnds_from_pid(process_name):
@@ -178,9 +190,24 @@ def toggle_window(process_name, iterations=1):
         print("Window cannot be toggled (your likely in the login stage)")
         return False
 
+def highlight_by_title(text):
+    # Find the window by title
+    
+    titles = get_all_window_titles()
+    for title in titles:
+        if text.lower() in title.lower():  # case-insensitive match
+            hwnd = win32gui.FindWindow(None, title)
+            if hwnd:
+                win32gui.ShowWindow(hwnd, win32con.SW_RESTORE)
+                win32gui.SetForegroundWindow(hwnd)
+                print(f"Highlighted window: {title}")
+                return
+    print(f"No window found containing: {text}")
+
 def title_contains(text, process_name=""):
     if process_name:
-        highlight_window(process_name)
+        highlight_by_title(text)
+#        highlight_window(process_name)
         time.sleep(0.1)
 
     window_title = get_title()
@@ -191,8 +218,9 @@ def title_contains(text, process_name=""):
             time.sleep(5)
 
 def title_contains_option(text, process_name=""):
+    highlight_by_title(text)
     if process_name:
-        highlight_window(process_name)
+        # highlight_window(process_name)
         time.sleep(0.1)
 
     window_title = get_title()
@@ -227,6 +255,7 @@ def highlight_console(hwnd=None):
                               win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
         win32gui.SetWindowPos(hwnd, win32con.HWND_NOTOPMOST, 0, 0, 0, 0,
                               win32con.SWP_NOMOVE | win32con.SWP_NOSIZE)
+
 
 def get_title_hwnd(hwnd):
     title = win32gui.GetWindowText(hwnd)

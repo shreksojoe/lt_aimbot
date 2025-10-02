@@ -11,6 +11,7 @@ import time
 import pyperclip
 import pyautogui
 import re
+import win32gui
 
 process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
@@ -26,7 +27,12 @@ def copy():
 def stock(product):
     print("tis stock: ", product)
 
-
+def write_zeros(x):
+    y = "00000"
+    z = 5 - len(x) # ammount of digits
+    y[-z] = x
+    print(y)
+    data.write()
 def custom(product, ln):
 
     def strip_zeros():
@@ -39,6 +45,7 @@ def custom(product, ln):
     print("tis custom: ", product)
     ops = {
             "Coordinate":motion.move_rel,
+            "Coordinate Maybe":motion.move_rel,
             "Window":window.title_contains,
             "Window Maybe":window.title_contains_option,
             "Customer Name": lambda: data.write("W.W. Grainger"),
@@ -50,7 +57,8 @@ def custom(product, ln):
             "Product No.": lambda: data.write(product[2]),
             "Price Text Box": lambda: data.write(product[6]),
             "Copy": copy,
-            "Line Number": strip_zeros
+            "Line Number": strip_zeros,
+            "Line Number Zero": lambda: data.write(str(ln))
             }
 
     # ops["Airbreakingsystem"](lt_hwnd, 25, 373)
@@ -68,7 +76,10 @@ def custom(product, ln):
             time.sleep(0.2)
 
             print(f"Key: {key} -> Value: {value}")
-            if isinstance(value, list):
+            if isinstance(value, list) :
+                if key.endswith("Maybe"):
+                    hwnd = win32gui.GetForegroundWindow()
+                    ops[key](hwnd, value[0], value[1])
                 ops[key](lt_hwnd, value[0], value[1])
             elif key == "Name":
                 continue
