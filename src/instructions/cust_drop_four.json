@@ -1,6 +1,11 @@
 [
     {"Window": "Editing Ticket"},
-    {"Name": "Common Tab", "Coordinate": [144, 63]},
+    {"Name": "Address Tab", "Coordinate": [204, 61]},
+    {"Name": "Location Link", "Coordinate": [159, 284]},
+    {"Name": "Location Link", "Coordinate": [159, 284]},
+    {"Window": "W.W. Grainger, Inc."},
+    {"Name": "State Column Header", "Coordinate": [654, 264]},
+
     {"Name": "Stock Notes Link", "Coordinate": [41, 115]},
     {"Window": "Quick Phrase"},
     {"Name": "Pull From Shelves Row", "Coordinate": [297, 363]},

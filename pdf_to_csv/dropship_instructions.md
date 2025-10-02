@@ -86,10 +86,11 @@ than group the products together
 13. Check the 5 boxes at the bottom of the page
 14. Go to the Products Tab
 15. In the note section Enter the Line # with all of the 0s 
+
 16. Check the Qty. If it is less than 30 units (For basic alocation):
     1. Go to the "Common" tab at the top
     2. Click on "Stock Notes"
-    3. In the popup, click on "Marked in (IN) Pull from shelves"
+    3. In the popup, click on "Pull from shelves"
     4. Click on Paste
     5. Return to General tab
     6. Change Stock Status to "In" and check mark the box as Done

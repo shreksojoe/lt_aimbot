@@ -2,6 +2,11 @@ from datetime import datetime
 import os
 from pathlib import Path
 import sys
+import motion
+import window
+import pyperclip
+import pyautogui
+import time
 
 # text: 
 
@@ -180,3 +185,43 @@ def find_abs_path(filename, extra_paths=None):
         return found.resolve()
 
     return None
+
+def address_search(text):
+    pyperclip.copy("")
+    process_name = "Label Traxx Client.exe"
+    window.highlight_window(process_name)
+    hwnd = window.get_hwnd(process_name)
+    repeat = 0
+    x = 176
+    y = 122
+    motion.move_rel(hwnd, x, y)
+    rep = 10
+    reach_end = 0
+    for _ in range(35):
+        past_address = pyperclip.paste()
+        pyautogui.hotkey("ctrl", "c")
+        time.sleep(0.4)
+        current_address = pyperclip.paste()
+        print("searching... ", current_address)
+        if text.lower() in current_address.lower():
+            pyautogui.click()
+            motion.move_rel(hwnd, 780, 346)
+            # pyautogui.press("enter")
+            return True
+        elif current_address == past_address:
+            print("curr: ", current_address, "past: ", past_address)
+            repeat += 1
+            if repeat <= 3:
+                return False
+        elif reach_end >= 9:
+            print("end of 9")
+            pyautogui.press("down")
+            pyautogui.click()
+        elif reach_end < 9:
+            reach_end += 1
+            print("still moving down: ", reach_end)
+            y += 19
+            motion.move_rel(hwnd, x, y)
+            # pyautogui.click()
+
+
