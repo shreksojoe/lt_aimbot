@@ -33,7 +33,20 @@ def write_zeros(x):
     y[-z] = x
     print(y)
     data.write()
+
+def move_down(i):
+    time.sleep(1)
+    for _ in range(i): 
+        time.sleep(1)
+        pyautogui.press('down')
+    keyboard.press_and_release("enter")
+    time.sleep(1)
+    # pyautogui.click()
+
+
 def custom(product, ln):
+
+    product[6] = str(int(product[6]) + 30)
 
     def strip_zeros():
         text = pyperclip.paste()
@@ -58,7 +71,9 @@ def custom(product, ln):
             "Price": lambda: data.compare(product[7]),
             "Copy": copy,
             "Line Number": strip_zeros,
-            "Line Number Zero": lambda: data.write(str(ln))
+            "Line Number Zero": lambda: data.write(product[2]),
+            "Move Down": lambda: move_down(2),
+            "Click": lambda: pyautogui.click()
             }
 
     # ops["Airbreakingsystem"](lt_hwnd, 25, 373)
@@ -70,6 +85,15 @@ def custom(product, ln):
 
     with open(cust_drop_one, "r") as file:
         cust_drop_one_data = json.load(file)
+
+    with open(cust_drop_two, "r") as file:
+        cust_drop_two_data = json.load(file)
+        
+    with open(cust_drop_three, "r") as file:
+        cust_drop_three_data = json.load(file)
+
+    with open(cust_drop_four, "r") as file:
+        cust_drop_four_data = json.load(file)
 
     for entry in cust_drop_one_data:
         for key, value in entry.items():
@@ -87,6 +111,50 @@ def custom(product, ln):
                 ops[key]()
             else:
                 ops[key](value, process_name)
+
+    if int(product[6]) < 30:
+        for entry in cust_drop_two_data:
+            for key, value in entry.items():
+                if isinstance(value, list):
+                    if key.endswith("maybe"):
+                        hwnd = win32gui.GetForegroundWindow()
+                        ops[key](hwnd, value[0], value[1])
+                    ops[key](lt_hwnd, value[0], value[1])
+                elif key == "Name":
+                    continue
+                elif not value:
+                    ops[key]()
+                else:
+                    ops[key](value, process_name)
+    else:
+        for entry in cust_drop_three_data:
+            for key, value in entry.items():
+                if isinstance(value, list):
+                    if key.endswith("maybe"):
+                        hwnd = win32gui.GetForegroundWindow()
+                        ops[key](hwnd, value[0], value[1])
+                    ops[key](lt_hwnd, value[0], value[1])
+                elif key == "Name":
+                    continue
+                elif not value:
+                    ops[key]()
+                else:
+                    ops[key](value, process_name)
+
+    for entry in cust_drop_two_data:
+        for key, value in entry.items():
+            if isinstance(value, list):
+                if key.endswith("maybe"):
+                    hwnd = win32gui.GetForegroundWindow()
+                    ops[key](hwnd, value[0], value[1])
+                ops[key](lt_hwnd, value[0], value[1])
+            elif key == "Name":
+                continue
+            elif not value:
+                ops[key]()
+            else:
+                ops[key](value, process_name)
+        
 
 def dropship(product, ln):
     print("Dealing with a dropship")

@@ -95,6 +95,7 @@ than group the products together
     5. Return to General tab
     6. Change Stock Status to "In" and check mark the box as Done
 17. else give em ***
+
 18. Click to the "Address" tab
 19. Press on "Location"
 20. Press the "State" column header

@@ -7,6 +7,6 @@
     {"Name": "Paste Button", "Coordinate": [711, 557]},
     {"Name": "General Tab", "Coordinate": [34, 60]},
     {"Name": "Stock Drop Down Menu", "Coordinate": [396, 629]},
-    {"Name": "Stock In Option", "Coordinate": [346, 684]},
+    {"Move Down": ""},
     {"Name": "Stock Done Check Box", "Coordinate": [441, 628]}
 ]
