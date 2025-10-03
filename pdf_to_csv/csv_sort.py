@@ -30,7 +30,9 @@ def extract_po_data(file_path, start_row):
             i += 1
             continue
         if re.match(r"\(\d{5}", line):
-            initial_products.append([line])  # store as array
+            # Extract just the numeric part of the line number
+            line_number = re.sub(r'\D', '', line)
+            initial_products.append([line_number])  # store line number as first element
             i += 1
         else:
             break
@@ -204,7 +206,7 @@ def process_file(file_name):
         # product.append(addr.replace("ROLL PRODUCTS INC.", ""))
         product.append(addr)
         product.insert(0, "Grainger")
-        product.pop(2)
+        # Keep line number at index 2 (don't pop it like the original code did)
         for item in product:
             item = item.replace('[', '')
     # else:

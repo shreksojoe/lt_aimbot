@@ -51,11 +51,11 @@ def custom(product, ln):
             "Customer Name": lambda: data.write("W.W. Grainger"),
             "PO Number": lambda: data.write(product[1]),
             "Select All": motion.select_all,
-            "Ship Date": lambda: data.write(product[4]),
+            "Ship Date": lambda: data.write(product[5]),
             "Low Stock": lambda: data.write("test"),
-            "Quantity": lambda: data.write(product[5]),
-            "Product No.": lambda: data.write(product[2]),
-            "Price Text Box": lambda: data.write(product[6]),
+            "Quantity": lambda: data.write(product[6]),
+            "Product No.": lambda: data.write(product[3]),
+            "Price": lambda: data.compare(product[7]),
             "Copy": copy,
             "Line Number": strip_zeros,
             "Line Number Zero": lambda: data.write(str(ln))
@@ -95,22 +95,22 @@ def dropship(product, ln):
     "10Y376","8X606","10Y373","8EE38","8E085", "10Y374", "8EEP0", "10Y370", "8E984", "9WA32", "10Y372", "8EE37", "10Y371", "8NCA9", "8AY66", "9WC95", "10Y495"
     ]
     
-    if product[2] in stock_product_numbers:
+    if product[3] in stock_product_numbers:
         print("It is a stock product")
         stock(product)
-        if not product[7] == "iStock":
-            print(product[7])
-            product[7] = "iStock"
-        print(product[7])
+        if not product[8] == "iStock":
+            print(product[8])
+            product[8] = "iStock"
+        print(product[8])
     else:
         print("this is a custom product")
-        print(product[7])
+        print(product[8])
 
-        if not product[7] == "Custom":
-            print(product[7])
-            product[7] = "Custom"
+        if not product[8] == "Custom":
+            print(product[8])
+            product[8] = "Custom"
             custom(product, ln)
-        print(product[7])
+        print(product[8])
 
         # in grainger_instructions: line 47 custom products, 
 

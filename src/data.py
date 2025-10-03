@@ -229,6 +229,24 @@ def address_search(text):
             motion.move_rel(hwnd, x, y)
             # pyautogui.click()
 
+def compare(expected: str):
+
+    # Simulate Ctrl+C
+    time.sleep(2) 
+    pyperclip.copy("")
+    pyautogui.hotkey("ctrl", "c")
+    # Small delay to let clipboard update
+    pyautogui.sleep(0.1)
+    
+    # Get clipboard text
+    clipboard_text = pyperclip.paste()
+    
+    # Compare with expected string
+    if clipboard_text != expected:
+        print(f"[ERROR] Clipboard text does not match expected.")
+        print(f"  Expected: {expected!r}")
+        print(f"  Got:      {clipboard_text!r}")
+        input("Press Enter to resume...")
 
 def write(text):
     time.sleep(1)
