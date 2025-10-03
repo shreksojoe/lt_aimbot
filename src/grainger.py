@@ -44,16 +44,26 @@ def move_down(i):
     # pyautogui.click()
 
 
-def custom(product, ln):
+def strip_zeros(text):
+    result = text.lstrip("0")
+    text = pyperclip.paste()
+    print("on clipboard: ", text)
+    ln_numb = "L#" + result + " - "
+    print("General description: ", ln_numb + text)
+    data.write(ln_numb + text)
+    return int(result)
+
+def custom(product, grainger_pdf):
 
     product[6] = str(int(product[6]) + 30)
 
-    def strip_zeros():
-        text = pyperclip.paste()
-        print("on clipboard: ", text)
-        ln_numb = "L#" + str(ln) + " - "
-        print("General description: ", ln_numb + text)
-        data.write(ln_numb + text)
+    # def strip_zeros():
+    #     result = product[2].lstrip("0")
+    #     text = pyperclip.paste()
+    #     print("on clipboard: ", text)
+    #     ln_numb = "L#" + result + " - "
+    #     print("General description: ", ln_numb + text)
+    #     data.write(ln_numb + text)
 
     print("tis custom: ", product)
     ops = {
@@ -70,7 +80,7 @@ def custom(product, ln):
             "Product No.": lambda: data.write(product[3]),
             "Price": lambda: data.compare(product[7]),
             "Copy": copy,
-            "Line Number": strip_zeros,
+            "Line Number": lambda: strip_zeros(product[2]),
             "Line Number Zero": lambda: data.write(product[2]),
             "Move Down": lambda: move_down(2),
             "Click": lambda: pyautogui.click()
@@ -78,23 +88,12 @@ def custom(product, ln):
 
     # ops["Airbreakingsystem"](lt_hwnd, 25, 373)
 
-    cust_drop_one = data.find_rel_path("instructions\\cust_drop_one.json")
-    cust_drop_two = data.find_rel_path("instructions\\cust_drop_two.json")
-    cust_drop_three = data.find_rel_path("instructions\\cust_drop_three.json")
-    cust_drop_four = data.find_rel_path("instructions\\cust_drop_four.json")
-
-    with open(cust_drop_one, "r") as file:
-        cust_drop_one_data = json.load(file)
-
-    with open(cust_drop_two, "r") as file:
-        cust_drop_two_data = json.load(file)
-        
-    with open(cust_drop_three, "r") as file:
-        cust_drop_three_data = json.load(file)
-
-    with open(cust_drop_four, "r") as file:
-        cust_drop_four_data = json.load(file)
-
+    cust_drop_one_data = data.load_file(data.find_rel_path("instructions\\cust_drop_one.json"))
+    cust_drop_two_data = data.load_file(data.find_rel_path("instructions\\cust_drop_two.json"))
+    cust_drop_three_data = data.load_file(data.find_rel_path("instructions\\cust_drop_three.json"))
+    cust_drop_four_data = data.load_file(data.find_rel_path("instructions\\cust_drop_four.json"))
+    grainger_address_data = data.load_file(data.find_rel_path("instructions\\grainger_address.json"))
+    
     for entry in cust_drop_one_data:
         for key, value in entry.items():
             time.sleep(0.2)
@@ -141,7 +140,9 @@ def custom(product, ln):
                 else:
                     ops[key](value, process_name)
 
-    for entry in cust_drop_two_data:
+    time.sleep(2)
+
+    for entry in cust_drop_four_data:
         for key, value in entry.items():
             if isinstance(value, list):
                 if key.endswith("maybe"):
@@ -154,9 +155,44 @@ def custom(product, ln):
                 ops[key]()
             else:
                 ops[key](value, process_name)
-        
 
-def dropship(product, ln):
+    data.address_search("Grainger Dropship Acct")
+
+    address_array = data.split_addr(product[9])
+
+    def type_address(address):
+        for segment in address:
+            data.write(segment)
+            time.sleep(1)
+            keyboard.press_and_release("tab")
+            time.sleep(1)
+
+    addr = {
+            "Coordinate":motion.move_rel,
+            "Coordinate Maybe":motion.move_rel,
+            "Window":window.title_contains,
+            "Window Maybe":window.title_contains_option,
+            "File Name": lambda: data.write(data.swap_slash(grainger_pdf)),
+            "Address": lambda: type_address(address_array)
+            }
+
+    for entry in grainger_address_data:
+        for key, value in entry.items():
+            if isinstance(value, list):
+                if key.endswith("maybe"):
+                    hwnd = win32gui.GetForegroundWindow()
+                    addr[key](hwnd, value[0], value[1])
+                addr[key](lt_hwnd, value[0], value[1])
+            elif key == "Name":
+                continue
+            elif not value:
+                addr[key]()
+            else:
+                addr[key](value, process_name)
+
+    
+
+def dropship(product, grainger_pdf):
     print("Dealing with a dropship")
 
     stock_product_numbers = [
@@ -177,7 +213,10 @@ def dropship(product, ln):
         if not product[8] == "Custom":
             print(product[8])
             product[8] = "Custom"
-            custom(product, ln)
+        if strip_zeros(product[2]) > 1:
+            motion.move_rel(lt_hwnd, 494, 425)
+            time.sleep(0.1)
+        custom(product, grainger_pdf)
         print(product[8])
 
         # in grainger_instructions: line 47 custom products, 
@@ -199,12 +238,12 @@ def execute_grainger(grainger_pdf):
     product_array = pdf_module.convert(grainger_pdf)
     
     print(f"Processed {len(product_array)} product(s) from Grainger PDF")
-    for ln, product in enumerate(product_array):
+    for product in product_array:
         print(product)
         # determine if it is a grainger or dropship
         if not ("grainger" in product[-1].lower()): # it is a dropship
             print("grainger isn't in the address, tis a dropship")
-            dropship(product, ln + 1)
+            dropship(product, grainger_pdf)
         else: # it is a grainger
             print("it was an grainger dammit")
     

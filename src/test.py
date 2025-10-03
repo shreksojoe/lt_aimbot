@@ -26,10 +26,11 @@ hwnd = window.get_hwnd(process_name)
 
 # -- MOTION --
 # motion.maneuver(process_name) -- works
+#hwnd = win32gui.GetForegroundWindow()
 motion.capture_mouse_relative(hwnd)
-# window.highlight_by_title("Note")
-# hwnd = win32gui.GetForegroundWindow()
-# motion.move_rel(hwnd, 456, 149)
+# print(data.split_addr())
+#window.highlight_by_title("Documents")
+#motion.move_rel(hwnd, 208, 306)
 # motion.move_rel(hwnd, 912, 654) -- works
 # motion.move_abs(1571, 842) -- works
 # motion.capture_mouse_absolute(hwnd) -- works
