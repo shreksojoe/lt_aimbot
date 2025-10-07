@@ -51,16 +51,26 @@ def move_down(i):
 
 def strip_zeros(text):
 
-    stripped = [str(int(num)) for num in text]
+    if isinstance(text, str):
+        # Split on commas and strip spaces
+        text = [t.strip() for t in text.split(",") if t.strip()]
+
+    stripped = [str(int(num)) for num in text if num.strip().isdigit()]
+
     joined = ",".join(stripped)
-    string =  f"L#{joined} - "
+    string = f"L#{joined} - "
 
     desc = pyperclip.paste()
-    print("on clipboard: ", desc)
+    print("On clipboard:", desc)
     gen_desc = string + desc
-    print("General description: ", gen_desc)
-    data.write(gen_desc)
-    return joined
+    print("General description:", gen_desc)
+
+    if 'data' in globals():
+        data.write(gen_desc)
+    else:
+        print("Warning: 'data' file handle not found. Skipping write.")
+
+    return gen_desc
 
 def multiple_prod(products):
     dup_order_data = data.load_file(data.find_rel_path("instructions\\dup_order.json"))
@@ -246,7 +256,7 @@ def dropship(product, grainger_pdf):
         if not product[8] == "Custom":
             print(product[8])
             product[8] = "Custom"
-        if strip_zeros(product[2]) > 1:
+        if int(product[2]) > 1:
             motion.move_rel(lt_hwnd, 494, 425)
             time.sleep(0.1)
         custom(product, grainger_pdf)
