@@ -1,29 +1,11 @@
 [
     {"Window": "Editing Stock Ticket"},
     {"Name": "Plus Button", "Coordinate": [824, 396]},
-    {"Window Maybe": ""Request For Information"},
+    {"Window Maybe": "Request For Information"},
     {"Product Ammount": ""},
+    {"Name": "OK Button", "Coordinate": [702, 248]},
     {"Name": "Quantity Text Box", "Coordinate": [75, 422]},
     {"Quantity": ""},
-    {"Name": "OK Button", "Coordinate": [174, 420]},
-
-    {"Name": "Product No. Text Box", "Coordinate": [174, 420]},
-    {"Product No.": ""},
-    {"Window Maybe": "Select a Product or Kit"},
-    {""},
-    {"Name": "Description Text Box", "Coordinate": [607, 422]},
-    {"Name": "Customer PO Text Box", "Coordinate": [563, 170]},
-    {"PO Number": ""},
-    {"Name": "Ship Text Box", "Coordinate": [828, 204]},
-    {"Name": "OK Button", "Coordinate": [705, 279]},
-    {"Name": "Ship Text Box", "Coordinate": [828, 204]},
-    {"Select All": ""},
-    {"Ship Date": ""},
-    {"Name": "Quantity Text Box", "Coordinate": [204, 61]},
-    {"Quantity": ""},
-    {"Name": "Product No. Text Box", "Coordinate": [150, 432]},
-    {"Product No.": ""},
-    {"Name": "Product No. Button", "Coordinate": [162, 397]},
-    {"Name": "Price Text Box", "Coordinate": [580, 437]},
-    {"Price": ""}
+    {"Tab": ""},
+    {"Product No.": ""}
 ]
