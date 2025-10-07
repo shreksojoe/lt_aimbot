@@ -5,7 +5,7 @@
     {"Name": "New Stock Ticket Button", "Coordinate": [99, 655]},
     {"Window": "Editing Stock Ticket"},
     {"Name": "Customer No. Link", "Coordinate": [123, 173]},
-    {"Window": "Find and Select a Customer"},
+    {"Window Maybe": "Find and Select a Customer"},
     {"Name": "Name Text Box", "Coordinate": [222, 161]},
     {"Customer Name": ""},
     {"Name": "Select Button", "Coordinate": [859, 577]},
@@ -15,12 +15,5 @@
     {"Name": "OK Button", "Coordinate": [705, 279]},
     {"Name": "Ship Text Box", "Coordinate": [828, 204]},
     {"Select All": ""},
-    {"Ship Date": ""},
-    {"Name": "Quantity Text Box", "Coordinate": [204, 61]},
-    {"Quantity": ""},
-    {"Name": "Product No. Text Box", "Coordinate": [150, 432]},
-    {"Product No.": ""},
-    {"Name": "Product No. Button", "Coordinate": [162, 397]},
-    {"Name": "Price Text Box", "Coordinate": [580, 437]},
-    {"Price": ""}
+    {"Ship Date": ""}
 ]

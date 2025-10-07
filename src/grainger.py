@@ -29,9 +29,6 @@ def copy():
     print("copied: ", clipboard)
     time.sleep(1)
 
-def stock(product):
-    print("tis stock: ", product)
-
 def write_zeros(x):
     y = "00000"
     z = 5 - len(x) # ammount of digits
@@ -75,32 +72,6 @@ def strip_zeros(text):
 
     return gen_desc
 
-def multiple_prod(products):
-    dup_order_data = data.load_file(data.find_rel_path("instructions\\dup_order.json"))
-
-    dups = {
-            "Coordinate": motion.move_rel,
-            "Window": window.title_contains,
-            "Product Ammount":data.write(str(len(products))),
-            }
-
-    for product in products:
-        for entry in dup_order_data:
-            for key, value in entry.items():
-                time.sleep(0.2)
-
-                print(f"Key: {key} -> Value: {value}")
-                if isinstance(value, list) :
-                    if key.endswith("Maybe"):
-                        hwnd = win32gui.GetForegroundWindow()
-                        dups[key](hwnd, value[0], value[1])
-                    dups[key](lt_hwnd, value[0], value[1])
-                elif key == "Name":
-                    continue
-                elif not value:
-                    dups[key]()
-                else:
-                    dups[key](value, process_name)
 
 def exec_json(json_data, ops):
     for entry in json_data:
@@ -120,7 +91,12 @@ def exec_json(json_data, ops):
             else:
                 ops[key](value, process_name)
 
-
+def type_address(address):
+    for segment in address:
+        data.write(segment)
+        time.sleep(1)
+        keyboard.press_and_release("tab")
+        time.sleep(1)
 
 def custom(product, grainger_pdf):
 
@@ -160,69 +136,82 @@ def custom(product, grainger_pdf):
     cust_drop_one_data = data.load_file(data.find_rel_path("instructions\\cust_drop_one.json"))
     cust_drop_two_data = data.load_file(data.find_rel_path("instructions\\cust_drop_two.json"))
     cust_drop_three_data = data.load_file(data.find_rel_path("instructions\\cust_drop_three.json"))
-    cust_drop_four_data = data.load_file(data.find_rel_path("instructions\\cust_drop_four.json"))
+    cust_drop_four_data = data.load_file(data.find_rel_path("instructiotns\\cust_drop_four.json"))
     grainger_address_data = data.load_file(data.find_rel_path("instructions\\grainger_address.json"))
     
     # Execute instructions
     exec_json(cust_drop_one_data, ops)
-    if int(product[6]) < 30: 
+    if int(product[6]) < 30:
         exec_json(cust_drop_two_data, ops)
-    else:
-        exec_json(cust_drop_three_data, ops)
-    # time.sleep(2)
+    else: exec_json(cust_drop_three_data, ops)
     exec_json(cust_drop_four_data, ops)
 
     data.address_search("Grainger Dropship Acct")
-
     address_array = data.split_addr(product[9])
-
-    def type_address(address):
-        for segment in address:
-            data.write(segment)
-            time.sleep(1)
-            keyboard.press_and_release("tab")
-            time.sleep(1)
-
     exec_json(grainger_address_data, addr)
 
-def stock(stock_list):
-    if not stock_list: return False
-
+def multiple_order(products):
+    print("I sware")
     istock_two_data = data.load_file(data.find_rel_path("instructions\\istock_two.json"))
 
-    # if len(stock_list) > 1: multiple_prod(stock_list)
-
-    addr = {
+    prod = {
             "Coordinate":motion.move_rel,
             "Coordinate Maybe":motion.move_rel,
             "Window":window.title_contains,
             "Window Maybe":window.title_contains_option,
-            "File Name": lambda: data.write(data.swap_slash(grainger_pdf)),
-            "Address": lambda: type_address(address_array)
+            "Product Ammount": lambda: print("filler"),
+            "Quantity": lambda: data.write(product[6]),
+            "Tab": lambda: keyboard.press_and_release("tab"),
+            "Product No.": lambda: data.write(product[3])
             }
+            
+    for product in products:
+        exec_json(istock_one_data, prod)
+        for _ in range(3):
+            time.sleep(1)
+            keyboard.press_and_release("tab")
+            time.sleep(1)
 
-    for product in stock_list:
 
-        for entry in istock_two_data:
-            for key, value in entry.items():
-                if isinstance(value, list):
-                    if key.endswith("maybe"):
-                        hwnd = win32gui.GetForegroundWindow()
-                        addr[key](hwnd, value[0], value[1])
-                    addr[key](lt_hwnd, value[0], value[1])
-                elif key == "Name":
-                    continue
-                elif not value:
-                    addr[key]()
-                else:
-                    addr[key](value, process_name)
+def stock(stock_list):
+    print("stock_list: ", stock_list)
+    print("Stock being executed")
+    if not stock_list: return False
+
+    istock_one_data = data.load_file(data.find_rel_path("instructions\\istock_one.json"))
+    istock_two_data = data.load_file(data.find_rel_path("instructions\\istock_two.json"))
+
+    # if len(stock_list) > 1: multiple_prod(stock_list)
+    print("RUnning through it")
+    for stock_product in stock_list:
+        print("STOCK PRODUCT: ", stock_product)
+
+        addr = {
+                "Coordinate":motion.move_rel,
+                "Coordinate Maybe":motion.move_rel,
+                "Window":window.title_contains,
+                "Window Maybe":window.title_contains_option,
+                "File Name": lambda: data.write(data.swap_slash(grainger_pdf)),
+                "Address": lambda: type_address(address_array),
+                "Customer Name": lambda: data.write("W.W. Grainger"),
+                "PO Number": lambda: data.write(stock_product[1]),
+                "Select All":lambda: motion.select_all,
+                "Ship Date": lambda: data.write(stock_product[5]),
+                "Quantity": lambda: data.write(stock_product[6]),
+                "Product No.": lambda: data.write(stock_product[3]),
+                "Price": lambda: data.write(stock_product[7])
+                }
+    
+        exec_json(istock_one_data, addr)
+    
+    # multiple_order(stock_list)
 
 def dropship(product, grainger_pdf):
     print("Dealing with a dropship")
 
     if product[3] in stock_product_numbers:
         print("It is a stock product")
-        stock(product)
+        # stock(product)
         if not product[8] == "iStock":
             print(product[8])
             product[8] = "iStock"
@@ -261,6 +250,7 @@ def execute_grainger(grainger_pdf):
     product_array = pdf_module.convert(grainger_pdf)
     
     print(f"Processed {len(product_array)} product(s) from Grainger PDF")
+    print(f"Product Array: {product_array}")
     for product in product_array:
         # determine if it is a grainger or dropship
         # if not ("grainger" in product[-1].lower()): # it is a dropship
@@ -268,12 +258,15 @@ def execute_grainger(grainger_pdf):
 
         if product[3] in stock_product_numbers:
             print("It is a stock product")
-            stock(product)
+            # stock(product)
             if not product[8] == "iStock":
                 print(product[8])
                 product[8] = "iStock"
-            stock_list += product
+            stock_list.append(product)
+        print("stock_list: ", stock_list)
+        stock(stock_list)
         dropship(product, grainger_pdf)
+
          
         # else: # it is a grainger
         #     print("it was an grainger dammit")
