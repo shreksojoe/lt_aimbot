@@ -17,6 +17,11 @@ process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
 lt_hwnd = window.get_hwnd(process_name)
 
+
+stock_product_numbers = [
+"10Y376","8X606","10Y373","8EE38","8E085", "10Y374", "8EEP0", "10Y370", "8E984", "9WA32", "10Y372", "8EE37", "10Y371", "8NCA9", "8AY66", "9WC95", "10Y495"
+]
+
 def copy():
     time.sleep(1)
     pyautogui.hotkey("ctrl", "c")
@@ -45,13 +50,26 @@ def move_down(i):
 
 
 def strip_zeros(text):
-    result = text.lstrip("0")
-    text = pyperclip.paste()
-    print("on clipboard: ", text)
-    ln_numb = "L#" + result + " - "
-    print("General description: ", ln_numb + text)
-    data.write(ln_numb + text)
-    return int(result)
+
+    stripped = [str(int(num)) for num in text]
+    joined = ",".join(stripped)
+    string =  f"L#{joined} - "
+
+    desc = pyperclip.paste()
+    print("on clipboard: ", desc)
+    gen_desc = string + desc
+    print("General description: ", gen_desc)
+    data.write(gen_desc)
+    return joined
+
+def multiple_prod(products):
+    dup_order_data = data.load_file(data.find_rel_path("instructions\\dup_order.json"))
+
+    dups = {
+            "Coordinate": motion.move_rel,
+            "Window": window.title_contains,
+            "Product Ammount":data.write(str(len(products)))
+            }
 
 def custom(product, grainger_pdf):
 
@@ -190,15 +208,30 @@ def custom(product, grainger_pdf):
             else:
                 addr[key](value, process_name)
 
-    
+def stock(stock_list):
+    if not stock_list: return False
+
+    istock_two_data = data.load_file(data.find_rel_path("instructions\\istock_two.json"))
+
+    for product in stock_list:
+
+        for entry in istock_two_data:
+            for key, value in entry.items():
+                if isinstance(value, list):
+                    if key.endswith("maybe"):
+                        hwnd = win32gui.GetForegroundWindow()
+                        addr[key](hwnd, value[0], value[1])
+                    addr[key](lt_hwnd, value[0], value[1])
+                elif key == "Name":
+                    continue
+                elif not value:
+                    addr[key]()
+                else:
+                    addr[key](value, process_name)
 
 def dropship(product, grainger_pdf):
     print("Dealing with a dropship")
 
-    stock_product_numbers = [
-    "10Y376","8X606","10Y373","8EE38","8E085", "10Y374", "8EEP0", "10Y370", "8E984", "9WA32", "10Y372", "8EE37", "10Y371", "8NCA9", "8AY66", "9WC95", "10Y495"
-    ]
-    
     if product[3] in stock_product_numbers:
         print("It is a stock product")
         stock(product)
@@ -232,6 +265,8 @@ def execute_grainger(grainger_pdf):
     spec = importlib.util.spec_from_file_location("pdf_module", pdf_path)
     pdf_module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(pdf_module)
+
+    stock_list = []
     
     print("Converting PDF to CSV and processing...")
     # main.py.convert() returns the 2D array from csv_sort.process_file()
@@ -239,11 +274,19 @@ def execute_grainger(grainger_pdf):
     
     print(f"Processed {len(product_array)} product(s) from Grainger PDF")
     for product in product_array:
-        print(product)
         # determine if it is a grainger or dropship
         if not ("grainger" in product[-1].lower()): # it is a dropship
             print("grainger isn't in the address, tis a dropship")
+
+            if product[3] in stock_product_numbers:
+                print("It is a stock product")
+                stock(product)
+                if not product[8] == "iStock":
+                    print(product[8])
+                    product[8] = "iStock"
+                stock_list += product
             dropship(product, grainger_pdf)
+             
         else: # it is a grainger
             print("it was an grainger dammit")
     
