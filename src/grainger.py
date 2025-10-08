@@ -24,9 +24,20 @@ stock_product_numbers = [
 
 def copy():
     time.sleep(1)
-    pyautogui.hotkey("ctrl", "c")
+    pyperclip.copy("")
+    keyboard.press("ctrl")
+    keyboard.press_and_release("c")
+    keyboard.release("ctrl")
     clipboard = pyperclip.paste()
     print("copied: ", clipboard)
+    time.sleep(1)
+
+def ctrl_a():
+    print("run ctlra  ")
+    time.sleep(1)
+    keyboard.press("ctrl")
+    keyboard.press_and_release("a")
+    keyboard.release("ctrl")
     time.sleep(1)
 
 def write_zeros(x):
@@ -48,9 +59,110 @@ def move_down(i):
 # gap: 40px
 
 
+import pyperclip
 
+def strip_zeros_refined(text, handle_2d=False, index=2, desc_index=4):
+
+    # --- Handle 2D array case ---
+    if handle_2d:
+        if not (isinstance(text, list) and all(isinstance(row, list) for row in text)):
+            raise TypeError("For 2D handling, 'text' must be a list of lists.")
+
+        nums = []
+        descs = []
+        for row in text:
+            try:
+                val = row[index].strip()
+                desc = row[desc_index].strip()
+                nums.append(val)
+                descs.append(desc)
+            except IndexError:
+                print(f"Warning: row {row} missing required index, skipping.")
+                continue
+
+        # Strip zeros from numbers
+        stripped = [str(int(num)) for num in nums if num.isdigit()]
+        joined = ",".join(stripped)
+        string = f"L#{joined} - "
+
+        # Find common text among all descriptions
+        if len(descs) > 1:
+            common_prefix = _longest_common_substring(descs)
+        else:
+            common_prefix = descs[0] if descs else ""
+
+        # --- Remove commas from description only ---
+        common_prefix = common_prefix.replace(",", " ")
+
+    # --- Handle string or list of strings ---
+    else:
+        if isinstance(text, str):
+            nums = [t.strip() for t in text.split(",") if t.strip()]
+        elif isinstance(text, list):
+            nums = [t.strip() for t in text if isinstance(t, str) and t.strip()]
+        else:
+            raise TypeError("Input must be a string, list of strings, or 2D list (with handle_2d=True).")
+
+        stripped = [str(int(num)) for num in nums if num.isdigit()]
+        joined = ",".join(stripped)
+        string = f"L#{joined} - "
+        common_prefix = ""
+
+    # --- Get clipboard text ---
+    clip = pyperclip.paste()
+    print("Clipboard contents:", clip)
+
+    # Combine everything
+    gen_desc = string + common_prefix
+    print("General description:", gen_desc)
+
+    if 'data' in globals():
+        data.write(gen_desc)
+    else:
+        print("Warning: 'data' file handle not found. Skipping write.")
+
+    return gen_desc
+
+
+def _longest_common_substring(strings):
+    """
+    Returns the longest common substring (word-based) shared by all strings in the given list.
+    """
+    # Split all strings into word chunks for better natural matching
+    split_strings = [re.split(r'[\s,]+', s) for s in strings]
+    shortest = min(split_strings, key=len)
+
+    # Find overlap word-by-word
+    common = []
+    for i, word in enumerate(shortest):
+        if all(i < len(s) and s[i] == word for s in split_strings):
+            common.append(word)
+        else:
+            break
+
+    return " ".join(common)
+
+def _longest_common_substring(strings):
+    """
+    Returns the longest common substring (word-based, not character-based)
+    shared by all strings in the given list.
+    """
+    # Split all strings into word chunks for better natural matching
+    split_strings = [re.split(r'[\s,]+', s) for s in strings]
+    shortest = min(split_strings, key=len)
+
+    # Find overlap word-by-word
+    common = []
+    for i, word in enumerate(shortest):
+        if all(i < len(s) and s[i] == word for s in split_strings):
+            common.append(word)
+        else:
+            break
+
+    return " ".join(common)
+# we trying thi sother one^^^^^
 def strip_zeros(text):
-
+    print("Passed into strip zeros: ", text)
     if isinstance(text, str):
         # Split on commas and strip spaces
         text = [t.strip() for t in text.split(",") if t.strip()]
@@ -71,7 +183,7 @@ def strip_zeros(text):
         print("Warning: 'data' file handle not found. Skipping write.")
 
     return gen_desc
-
+ 
 
 def exec_json(json_data, ops):
     for entry in json_data:
@@ -159,15 +271,16 @@ def multiple_order(products):
             "Coordinate Maybe":motion.move_rel,
             "Window":window.title_contains,
             "Window Maybe":window.title_contains_option,
-            "Product Ammount": lambda: print("filler"),
+            "Product Ammount": lambda: data.write(str(len(products) - 1)),
             "Quantity": lambda: data.write(product[6]),
             "Tab": lambda: keyboard.press_and_release("tab"),
-            "Product No.": lambda: data.write(product[3])
+            "Product No.": lambda: data.write(product[3]),
+            "Price": lambda: data.write(product[7])
             }
             
     for product in products:
-        exec_json(istock_one_data, prod)
-        for _ in range(3):
+        exec_json(istock_two_data, prod)
+        for _ in range(2):
             time.sleep(1)
             keyboard.press_and_release("tab")
             time.sleep(1)
@@ -180,31 +293,41 @@ def stock(stock_list):
 
     istock_one_data = data.load_file(data.find_rel_path("instructions\\istock_one.json"))
     istock_two_data = data.load_file(data.find_rel_path("instructions\\istock_two.json"))
+    istock_three_data = data.load_file(data.find_rel_path("instructions\\istock_three.json"))
+    grainger_address_data = data.load_file(data.find_rel_path("instructions\\grainger_address.json"))
 
     # if len(stock_list) > 1: multiple_prod(stock_list)
     print("RUnning through it")
-    for stock_product in stock_list:
-        print("STOCK PRODUCT: ", stock_product)
+    stock_product = stock_list[0]
+    print("STOCK PRODUCT: ", stock_product)
 
-        addr = {
-                "Coordinate":motion.move_rel,
-                "Coordinate Maybe":motion.move_rel,
-                "Window":window.title_contains,
-                "Window Maybe":window.title_contains_option,
-                "File Name": lambda: data.write(data.swap_slash(grainger_pdf)),
-                "Address": lambda: type_address(address_array),
-                "Customer Name": lambda: data.write("W.W. Grainger"),
-                "PO Number": lambda: data.write(stock_product[1]),
-                "Select All":lambda: motion.select_all,
-                "Ship Date": lambda: data.write(stock_product[5]),
-                "Quantity": lambda: data.write(stock_product[6]),
-                "Product No.": lambda: data.write(stock_product[3]),
-                "Price": lambda: data.write(stock_product[7])
-                }
+    addr = {
+            "Coordinate":motion.move_rel,
+            "Coordinate Maybe":motion.move_rel,
+            "Window":window.title_contains,
+            "Window Maybe":window.title_contains_option,
+            "File Name": lambda: data.write(data.swap_slash(grainger_pdf)),
+            "Address": lambda: print("Address filler"),
+            "Customer Name": lambda: data.write("W.W. Grainger"),
+            "PO Number": lambda: data.write(stock_product[1]),
+            "Select All": motion.select_all,
+            "Ship Date": lambda: data.write(stock_product[5]),
+            "Quantity": lambda: data.write(stock_product[6]),
+            "Product No.": lambda: data.write(stock_product[3]),
+            "Price": lambda: data.write(stock_product[7]),
+            "Ctrl a": ctrl_a,
+            "Copy": copy,
+            "Paste": lambda: strip_zeros_refined(stock_list, True),
+            "Tab": lambda: keyboard.press_and_release("tab")
+            }
+
+    exec_json(istock_one_data, addr)
     
-        exec_json(istock_one_data, addr)
-    
-    # multiple_order(stock_list)
+    multiple_order(stock_list)
+    exec_json(istock_three_data, addr)
+    print("Search for: ", stock_list[0][9])
+    data.address_search(stock_list[0][9])
+    exec_json(grainger_address_data, addr)
 
 def dropship(product, grainger_pdf):
     print("Dealing with a dropship")

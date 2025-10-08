@@ -1,5 +1,5 @@
 [
-    {"Window": "Editing Ticket"},
+    {"Window": "Editing Stock Ticket"},
     {"Name": "Address Text Box", "Coordinate": [208, 306]},
     {"Address": ""},
     {"Name": "Doc Button", "Coordinate": [981, 602]},
@@ -10,6 +10,6 @@
     {"Name": "Open Maybe", "Coordinate": [800, 727]},
     {"Window": "Documents"},
     {"Name": "OK Button", "Coordinate": [843, 480]},
-    {"Window": "Editing Ticket"},
+    {"Window": "Editing Stock Ticket"},
     {"Name": "General Tab", "Coordinate": [31, 61]}
 ]

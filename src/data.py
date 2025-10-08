@@ -195,9 +195,18 @@ def address_search(text):
     process_name = "Label Traxx Client.exe"
     window.highlight_window(process_name)
     hwnd = window.get_hwnd(process_name)
-    if window.title_contains("Editing Ticket"):
+    print("Testing title")
+    
+    # Check title without blocking - use title_contains_option instead
+    current_title = window.get_title()
+    print(f"Current window title: {current_title}")
+    
+    if "Editing Ticket" in current_title or "Editing Stock Ticket" in current_title:
         motion.move_rel(hwnd, 157, 284)
-        time.sleep(0.4)
+        # time.sleep(0.4)
+        print("ran through the right title")
+    else: 
+        print(f"Wrong title: '{current_title}' - continuing anyway...")
     hwnd = window.get_hwnd(process_name)
     repeat = 0
     x = 176
@@ -205,6 +214,7 @@ def address_search(text):
     motion.move_rel(hwnd, x, y)
     rep = 10
     reach_end = 0
+    print("got to the for loop")
     for _ in range(35):
         past_address = pyperclip.paste()
         pyautogui.hotkey("ctrl", "c")
@@ -231,6 +241,7 @@ def address_search(text):
             y += 19
             motion.move_rel(hwnd, x, y)
             # pyautogui.click()
+    motion.move_rel(hwnd, 781, 343)
 
 def compare(expected: str):
 

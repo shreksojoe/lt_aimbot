@@ -1,0 +1,10 @@
+[
+    {"Window": "Editing Stock Ticket"},
+    {"Name": "Description Text Box", "Coordinate": [468, 420]},
+    {"Name": "Description Text Box", "Coordinate": [468, 420]},
+    {"Ctrl a":""},
+    {"Copy":""},
+    {"Name": "General Description Text Box", "Coordinate": [357, 140]},
+    {"Paste": ""},
+    {"Name": "Address, Terms Tab", "Coordinate": [191, 62]}
+]
