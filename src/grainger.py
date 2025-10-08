@@ -58,7 +58,6 @@ def move_down(i):
 
 # gap: 40px
 
-
 import pyperclip
 
 def strip_zeros_refined(text, handle_2d=False, index=2, desc_index=4):
@@ -142,24 +141,6 @@ def _longest_common_substring(strings):
 
     return " ".join(common)
 
-def _longest_common_substring(strings):
-    """
-    Returns the longest common substring (word-based, not character-based)
-    shared by all strings in the given list.
-    """
-    # Split all strings into word chunks for better natural matching
-    split_strings = [re.split(r'[\s,]+', s) for s in strings]
-    shortest = min(split_strings, key=len)
-
-    # Find overlap word-by-word
-    common = []
-    for i, word in enumerate(shortest):
-        if all(i < len(s) and s[i] == word for s in split_strings):
-            common.append(word)
-        else:
-            break
-
-    return " ".join(common)
 # we trying thi sother one^^^^^
 def strip_zeros(text):
     print("Passed into strip zeros: ", text)
@@ -210,6 +191,15 @@ def type_address(address):
         keyboard.press_and_release("tab")
         time.sleep(1)
 
+def date_determiner(product):
+    if product[10] is False:
+        data.write(data.move_to_wed(product[5]))
+        print("Typeing dropship date")
+    else:
+        data.write(product[5])
+        print("not a dropship")
+
+
 def custom(product, grainger_pdf):
 
     product[6] = str(int(product[6]) + 30)
@@ -223,7 +213,7 @@ def custom(product, grainger_pdf):
             "Customer Name": lambda: data.write("W.W. Grainger"),
             "PO Number": lambda: data.write(product[1]),
             "Select All": motion.select_all,
-            "Ship Date": lambda: data.write(product[5]),
+            "Ship Date": lambda: date_determiner(product),
             "Low Stock": lambda: data.write("test"),
             "Quantity": lambda: data.write(product[6]),
             "Product No.": lambda: data.write(product[3]),
@@ -286,7 +276,7 @@ def multiple_order(products):
             time.sleep(1)
 
 
-def stock(stock_list):
+def stock(stock_list, grainger_pdf):
     print("stock_list: ", stock_list)
     print("Stock being executed")
     if not stock_list: return False
@@ -311,7 +301,7 @@ def stock(stock_list):
             "Customer Name": lambda: data.write("W.W. Grainger"),
             "PO Number": lambda: data.write(stock_product[1]),
             "Select All": motion.select_all,
-            "Ship Date": lambda: data.write(stock_product[5]),
+            "Ship Date": lambda: date_determiner(stock_product),
             "Quantity": lambda: data.write(stock_product[6]),
             "Product No.": lambda: data.write(stock_product[3]),
             "Price": lambda: data.write(stock_product[7]),
@@ -367,6 +357,7 @@ def execute_grainger(grainger_pdf):
     spec.loader.exec_module(pdf_module)
 
     stock_list = []
+    custom_list = []
     
     print("Converting PDF to CSV and processing...")
     # main.py.convert() returns the 2D array from csv_sort.process_file()
@@ -376,7 +367,13 @@ def execute_grainger(grainger_pdf):
     print(f"Product Array: {product_array}")
     for product in product_array:
         # determine if it is a grainger or dropship
-        # if not ("grainger" in product[-1].lower()): # it is a dropship
+        if not ("grainger" in product[9].lower()): # it is a dropship
+            product.append(False)
+            print("nan't a  granger")
+        else:
+            product.append(True)
+            print("yerp grainger")
+            
         print("grainger isn't in the address, tis a dropship")
 
         if product[3] in stock_product_numbers:
@@ -386,11 +383,15 @@ def execute_grainger(grainger_pdf):
                 print(product[8])
                 product[8] = "iStock"
             stock_list.append(product)
-        print("stock_list: ", stock_list)
-        stock(stock_list)
-        dropship(product, grainger_pdf)
+        else:
+            custom_list.append(product)
+        
 
-         
+        print("stock_list: ", stock_list)
+        print("custom_list: ", custom_list)
+        stock(stock_list, grainger_pdf)
+
+        dropship(product, grainger_pdf)
         # else: # it is a grainger
         #     print("it was an grainger dammit")
     

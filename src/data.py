@@ -59,7 +59,12 @@ def standardize_date(date_str):
     # Fallback: return original input to avoid breaking pipelines
     return date_str
 
-# files:
+def move_to_wed(date_str):
+    date = datetime.strptime(date_str, "%m/%d/%Y")
+    # weekday(): Monday=0, Tuesday=1, ..., Sunday=6
+    days_ahead = (2 - date.weekday()) % 7  # Wednesday is 2
+    next_wed = date + timedelta(days=days_ahead)
+    return next_wed.strftime("%m/%d/%Y")
 
 def _search_same_drive(filename: str, base_path: Path) -> Path | None:
     """Search for filename anywhere on the same drive as base_path.
