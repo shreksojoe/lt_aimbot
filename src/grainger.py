@@ -58,8 +58,6 @@ def move_down(i):
 
 # gap: 40px
 
-import pyperclip
-
 def strip_zeros_refined(text, handle_2d=False, index=2, desc_index=4):
 
     # --- Handle 2D array case ---
@@ -199,12 +197,13 @@ def date_determiner(product):
         data.write(product[5])
         print("not a dropship")
 
+def product_points(product, grainger_pdf):
+    cust_drop_one_data = data.load_file(data.find_rel_path("instructions\\cust_drop_one.json"))
+    cust_drop_two_data = data.load_file(data.find_rel_path("instructions\\cust_drop_two.json"))
+    cust_drop_three_data = data.load_file(data.find_rel_path("instructions\\cust_drop_three.json"))
+    cust_drop_four_data = data.load_file(data.find_rel_path("instructions\\cust_drop_four.json"))
+    grainger_address_data = data.load_file(data.find_rel_path("instructions\\grainger_address.json"))
 
-def custom(product, grainger_pdf):
-
-    product[6] = str(int(product[6]) + 30)
-
-    print("tis custom: ", product)
     ops = {
             "Coordinate":motion.move_rel,
             "Coordinate Maybe":motion.move_rel,
@@ -225,6 +224,7 @@ def custom(product, grainger_pdf):
             "Click": lambda: pyautogui.click()
             }
 
+
     addr = {
             "Coordinate":motion.move_rel,
             "Coordinate Maybe":motion.move_rel,
@@ -234,14 +234,6 @@ def custom(product, grainger_pdf):
             "Address": lambda: type_address(address_array)
             }
 
-    # Declare variables (json data) 
-    cust_drop_one_data = data.load_file(data.find_rel_path("instructions\\cust_drop_one.json"))
-    cust_drop_two_data = data.load_file(data.find_rel_path("instructions\\cust_drop_two.json"))
-    cust_drop_three_data = data.load_file(data.find_rel_path("instructions\\cust_drop_three.json"))
-    cust_drop_four_data = data.load_file(data.find_rel_path("instructiotns\\cust_drop_four.json"))
-    grainger_address_data = data.load_file(data.find_rel_path("instructions\\grainger_address.json"))
-    
-    # Execute instructions
     exec_json(cust_drop_one_data, ops)
     if int(product[6]) < 30:
         exec_json(cust_drop_two_data, ops)
@@ -252,7 +244,42 @@ def custom(product, grainger_pdf):
     address_array = data.split_addr(product[9])
     exec_json(grainger_address_data, addr)
 
-def multiple_order(products):
+
+def custom(custom_list, grainger_pdf):
+
+    ops = {
+            "Coordinate":motion.move_rel,
+            "Coordinate Maybe":motion.move_rel,
+            "Window":window.title_contains,
+            "Window Maybe":window.title_contains_option,
+            "Customer Name": lambda: data.write("W.W. Grainger"),
+            "PO Number": lambda: data.write(product[1]),
+            "Select All": motion.select_all,
+            "Ship Date": lambda: date_determiner(product),
+            "Low Stock": lambda: data.write("test"),
+            "Quantity": lambda: data.write(product[6]),
+            "Product No.": lambda: data.write(product[3]),
+            "Price": lambda: data.compare(product[7]),
+            "Copy": copy,
+            "Line Number": lambda: strip_zeros(product[2]),
+            "Line Number Zero": lambda: data.write(product[2]),
+            "Move Down": lambda: move_down(2),
+            "Click": lambda: pyautogui.click()
+            }
+
+    print("tis custom: ", custom_list)
+
+    cust_drop_dup_data = data.load_file(data.find_rel_path("instructions\\cust_drop_dup.json"))
+
+    product_points(custom_list[0], grainger_pdf)
+    for product in custom_list[1:]:
+        time.sleep(0.4)
+        motion.move_rel(976, 132, lt_hwnd)
+        exec_json(cust_drop_dup_data, ops)
+    motion.move_rel(lt_hwnd, 925, 188)
+
+
+def multiple_stock(products):
     print("I sware")
     istock_two_data = data.load_file(data.find_rel_path("instructions\\istock_two.json"))
 
@@ -313,36 +340,36 @@ def stock(stock_list, grainger_pdf):
 
     exec_json(istock_one_data, addr)
     
-    multiple_order(stock_list)
+    multiple_stock(stock_list)
     exec_json(istock_three_data, addr)
     print("Search for: ", stock_list[0][9])
     data.address_search(stock_list[0][9])
     exec_json(grainger_address_data, addr)
 
-def dropship(product, grainger_pdf):
-    print("Dealing with a dropship")
-
-    if product[3] in stock_product_numbers:
-        print("It is a stock product")
-        # stock(product)
-        if not product[8] == "iStock":
-            print(product[8])
-            product[8] = "iStock"
-        print(product[8])
-    else:
-        print("this is a custom product")
-        print(product[8])
-
-        if not product[8] == "Custom":
-            print(product[8])
-            product[8] = "Custom"
-        if int(product[2]) > 1:
-            motion.move_rel(lt_hwnd, 494, 425)
-            time.sleep(0.1)
-        custom(product, grainger_pdf)
-        print(product[8])
-
-        # in grainger_instructions: line 47 custom products, 
+# def dropship(product, grainger_pdf):
+#     print("Dealing with a dropship")
+# 
+#     if product[3] in stock_product_numbers:
+#         print("It is a stock product")
+#         # stock(product)
+#         if not product[8] == "iStock":
+#             print(product[8])
+#             product[8] = "iStock"
+#         print(product[8])
+#     else:
+#         print("this is a custom product")
+#         print(product[8])
+# 
+#         if not product[8] == "Custom":
+#             print(product[8])
+#             product[8] = "Custom"
+#         if int(product[2]) > 1:
+#             motion.move_rel(lt_hwnd, 494, 425)
+#             time.sleep(0.1)
+#         custom(product, grainger_pdf)
+#         print(product[8])
+# 
+#         # in grainger_instructions: line 47 custom products, 
 
 def execute_grainger(grainger_pdf):
     pdf_path = data.find_rel_path(r"pdf_to_csv\\main.py")
@@ -389,9 +416,11 @@ def execute_grainger(grainger_pdf):
 
         print("stock_list: ", stock_list)
         print("custom_list: ", custom_list)
-        stock(stock_list, grainger_pdf)
+        if stock_list: 
+            stock(stock_list, grainger_pdf)
+        elif custom_list:
+            custom(custom_list, grainger_pdf)
 
-        dropship(product, grainger_pdf)
         # else: # it is a grainger
         #     print("it was an grainger dammit")
     

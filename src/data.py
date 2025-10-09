@@ -1,6 +1,6 @@
 import re
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 from pathlib import Path
 import sys
@@ -206,7 +206,7 @@ def address_search(text):
     current_title = window.get_title()
     print(f"Current window title: {current_title}")
     
-    if "Editing Ticket" in current_title or "Editing Stock Ticket" in current_title:
+    if ("Editing Ticket" in current_title) or ("Editing Stock Ticket" in current_title):
         motion.move_rel(hwnd, 157, 284)
         # time.sleep(0.4)
         print("ran through the right title")
