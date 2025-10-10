@@ -114,7 +114,9 @@ def strip_zeros_refined(text, handle_2d=False, index=2, desc_index=4):
     print("General description:", gen_desc)
 
     if 'data' in globals():
-        data.write(gen_desc)
+        data.write("TEST")
+        # change this when testing is done
+        # data.write(gen_desc)
     else:
         print("Warning: 'data' file handle not found. Skipping write.")
 
@@ -279,6 +281,7 @@ def custom(custom_list, grainger_pdf):
     motion.move_rel(lt_hwnd, 925, 188)
 
 
+
 def multiple_stock(products):
     print("I sware")
     istock_two_data = data.load_file(data.find_rel_path("instructions\\istock_two.json"))
@@ -345,6 +348,7 @@ def stock(stock_list, grainger_pdf):
     print("Search for: ", stock_list[0][9])
     data.address_search(stock_list[0][9])
     exec_json(grainger_address_data, addr)
+    motion.move_rel(lt_hwnd, 925, 188)
 
 # def dropship(product, grainger_pdf):
 #     print("Dealing with a dropship")
@@ -392,36 +396,34 @@ def execute_grainger(grainger_pdf):
     
     print(f"Processed {len(product_array)} product(s) from Grainger PDF")
     print(f"Product Array: {product_array}")
+    
+    # First pass: categorize all products
     for product in product_array:
         # determine if it is a grainger or dropship
         if not ("grainger" in product[9].lower()): # it is a dropship
             product.append(False)
-            print("nan't a  granger")
+            print(f"Product {product[2]} is a dropship")
         else:
             product.append(True)
-            print("yerp grainger")
-            
-        print("grainger isn't in the address, tis a dropship")
+            print(f"Product {product[2]} is grainger")
 
         if product[3] in stock_product_numbers:
-            print("It is a stock product")
-            # stock(product)
+            print(f"Product {product[2]} ({product[3]}) is a stock product")
+            # Ensure ticket type is iStock
             if not product[8] == "iStock":
-                print(product[8])
                 product[8] = "iStock"
             stock_list.append(product)
         else:
+            print(f"Product {product[2]} ({product[3]}) is a custom product")
             custom_list.append(product)
-        
-
-        print("stock_list: ", stock_list)
-        print("custom_list: ", custom_list)
-        if stock_list: 
-            stock(stock_list, grainger_pdf)
-        elif custom_list:
-            custom(custom_list, grainger_pdf)
-
-        # else: # it is a grainger
-        #     print("it was an grainger dammit")
+    
+    # Second pass: process each category once
+    print(f"\nFinal stock_list ({len(stock_list)} products): {stock_list}")
+    print(f"Final custom_list ({len(custom_list)} products): {custom_list}")
+    
+    if stock_list: 
+        stock(stock_list, grainger_pdf)
+    if custom_list:
+        custom(custom_list, grainger_pdf)
     
     return product_array

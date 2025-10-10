@@ -6,8 +6,8 @@
     {"Name": "Import Button", "Coordinate Maybe": [153, 474]},
     {"Window Maybe": "Select Document"},
     {"File Name": ""},
-    {"Name": "Open", "Coordinate Maybe": [800, 727]},
+    {"Name": "Open", "Coordinate Maybe": [775, 513]},
     {"Window Maybe": "Documents"},
-    {"Name": "OK Button", "Coordinate": [843, 480]},
+    {"Name": "OK Button", "Coordinate Maybe": [843, 480]},
     {"Name": "General Tab", "Coordinate": [31, 61]}
 ]

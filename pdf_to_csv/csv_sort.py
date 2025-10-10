@@ -128,6 +128,10 @@ def process_file(file_name):
         po_number = "" # got em
         ticket_type = "" # got em
         is_complicated = False
+        qty_list = []  # Collect all quantities
+        date_list = []  # Collect all dates
+        price_list = []  # Collect all prices
+        collecting_products = True  # Flag to know when we're done collecting product lines
 
         # Grainger, PO #, product details, Type, address
         # product details: line number, po #, Description, ship date, Qty, price
@@ -137,16 +141,16 @@ def process_file(file_name):
         for i, row in enumerate(row_list):
 
             # skip second page heading and what not
-            if ("Page" and "of" in row) or (0 < next_page < 7):
+            if ("Page" in row and "of" in row) or (0 < next_page < 7):
                 next_page += 1
                 continue
             next_page = 0
 
             #  Get address
-            if ("Vendor:" and "Ship" and "To:") in row: # mark where to start looking for the address
+            if "Vendor:" in row and "Ship" in row and "To:" in row: # mark where to start looking for the address
                 Found_Address = 1
                 continue
-            elif ("Ship-To" and "Qualifier:") in row: # mark end of address
+            elif "Ship-To" in row and "Qualifier:" in row: # mark end of address
                 Found_Address = 10
                 continue
             elif Found_Address == 1: # add each element to the full address
@@ -173,19 +177,29 @@ def process_file(file_name):
             elif Format_Repeat > 1: 
                 start_row = i - Format_Repeat
                 product_data = extract_po_data(file_name, start_row)
-                # for product in product_data:
-                #     print(product)
                 product_details = product_data
                 is_complicated = True
                 Format_Repeat = 0
-            elif not is_complicated:
-                for product in product_details:
+            elif not is_complicated and len(product_details) > 0:
+                # Once we hit qty/date rows, we're done collecting products
+                if collecting_products and ("Qty:" in row or ("Ship" in row and "Date:" in row)):
+                    collecting_products = False
+                
+                # Collect all quantities, dates, and prices into separate lists
+                if not collecting_products:
                     if "Qty:" in row:
-                        product.insert(-1, row[-1])
-                    elif ("Ship" and "Date:") in row: # get the ship date
-                        product.insert(-2, row[-1])
-                        Found_Product_Num = 0
-                        continue
+                        qty_match = re.search(r'Qty:.*?(\d+)', ' '.join(row))
+                        if qty_match:
+                            qty_list.append(qty_match.group(1))
+                    elif "Ship" in row and "Date:" in row: # get the ship date
+                        date_match = re.search(r'(\d{1,2}/\d{1,2}/\d{4})', ' '.join(row))
+                        if date_match:
+                            date_list.append(date_match.group(1))
+                    elif "Each" not in row and len(qty_list) > 0 and len(date_list) > 0:
+                        # After collecting qty/date, look for prices
+                        price_match = re.search(r'\d+\.\d{2}', ' '.join(row))
+                        if price_match:
+                            price_list.append(price_match.group(0))
             
                 # cycle through cells
             for j, cell in enumerate(row):
@@ -200,21 +214,45 @@ def process_file(file_name):
                     ticket_type = cell # detect ticket type
                     Found_Ticket_Type += 1
                     
-    for product in product_details:
-        product.insert(0, po_number)
-        product.append(ticket_type)
-        # product.append(addr.replace("ROLL PRODUCTS INC.", ""))
-        product.append(addr)
-        product.insert(0, "Grainger")
-        # Keep line number at index 2 (don't pop it like the original code did)
-        for item in product:
-            item = item.replace('[', '')
-    # else:
-    #     product_details.insert(0, po_number)
-    #     product_details.append(ticket_type)
-    #     product_details.append(addr.replace("/ROLL PRODUCTS INC.", ""))
-        # product_details.append(addr.replace("/ROLL PRODUCTS INC.", ""))
-    return product_details
+    # Format each product as a complete array with shared PO info
+    formatted_products = []
+    for idx, product in enumerate(product_details):
+        # Clean OCR artifacts from all fields
+        cleaned_product = [re.sub(r'[\[\]\|]', '', str(field)) for field in product]
+        
+        # Expected format after initial parsing: [line_num, product_num, description]
+        # Target format: ['Grainger', po_number, line_num, product_num, description, ship_date, qty, price, ticket_type, address]
+        formatted_product = ['Grainger', po_number]
+        
+        # Add product-specific details
+        if len(cleaned_product) >= 3:
+            formatted_product.append(cleaned_product[0])  # line number
+            formatted_product.append(cleaned_product[1])  # product number
+            formatted_product.append(cleaned_product[2])  # description
+            
+            # Add qty, date, price from collected lists
+            if idx < len(date_list):
+                formatted_product.append(date_list[idx])  # ship date
+            else:
+                formatted_product.append('')
+                
+            if idx < len(qty_list):
+                formatted_product.append(qty_list[idx])  # qty
+            else:
+                formatted_product.append('')
+                
+            if idx < len(price_list):
+                formatted_product.append(price_list[idx])  # price
+            else:
+                formatted_product.append('')  # Empty price if not found
+        
+        # Add shared details
+        formatted_product.append(ticket_type)
+        formatted_product.append(addr)
+        
+        formatted_products.append(formatted_product)
+    
+    return formatted_products
 # code to check and move the date if necessary
 def is_date(string):
     try:
