@@ -279,6 +279,7 @@ def custom(custom_list, grainger_pdf):
         motion.move_rel(976, 132, lt_hwnd)
         exec_json(cust_drop_dup_data, ops)
     motion.move_rel(lt_hwnd, 925, 188)
+    motion.move_rel(lt_hwnd, 905, 641)
 
 
 
@@ -349,6 +350,7 @@ def stock(stock_list, grainger_pdf):
     data.address_search(stock_list[0][9])
     exec_json(grainger_address_data, addr)
     motion.move_rel(lt_hwnd, 925, 188)
+    motion.move_rel(lt_hwnd, 905, 641)
 
 # def dropship(product, grainger_pdf):
 #     print("Dealing with a dropship")
