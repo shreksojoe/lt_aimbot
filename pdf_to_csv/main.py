@@ -10,7 +10,8 @@ import csv_sort
 def convert(filename):
 
     # INPUT_FOLDER = r"C:\\Users\\joseph.stadum\\Downloads\\Grainger" # stores pdfs
-    OUTPUT_FOLDER = r"C:\\Users\\joseph.stadum\\pdf_to_csv\\output" #stores converted csvs
+    # Write OCR CSVs to the shared csv_example directory
+    OUTPUT_FOLDER = r"C:\\Users\\joseph.stadum\\lt_aimbot\\csv_example"  # stores converted csvs
     POPPLER_PATH = r"C:\\Users\\joseph.stadum\\poppler\\poppler-25.07.0\\Library\\bin"  #path to poppler 
     TESSERACT_PATH = r"C:\\Program Files\\Tesseract-OCR\\tesseract.exe"  #path to tesseract 
 
@@ -29,7 +30,8 @@ def convert(filename):
     images = convert_from_path(filename, poppler_path=POPPLER_PATH)
 
     # Prepare CSV file path
-    csv_filename = os.path.splitext(filename)[0] + ".csv"
+    # Use only the base filename for output
+    csv_filename = os.path.splitext(os.path.basename(filename))[0] + ".csv"
     csv_path = os.path.join(OUTPUT_FOLDER, csv_filename)
 
     with open(csv_path, mode='w', newline='', encoding='utf-8') as csv_file:

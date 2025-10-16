@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
-import pandas as pd
 import csv
 import sys
 import re
+import os
 
 # handles data gathering for po's with more than 2 orders (for some reason 3+ changes the process)
 def extract_po_data(file_path, start_row):
@@ -102,16 +102,15 @@ def extract_po_data(file_path, start_row):
 
     return initial_products
 
-# product details: line number, po #, Description, Qty, ship date, price
+# product details: Grainger, po #, line number, product #, Description, ship date, Qty, price, address
 # def extract_po_base(file_name, start_row):
     
 
 # main execution, also what gathers the data for the default po (2 or less products in po
 def process_file(file_name):
-    with open(file_name, newline="") as infile, open("output.csv", "w", newline="") as outfile:
+    with open(file_name, newline="", encoding="utf-8", errors="replace") as infile:
 
         reader = csv.reader(infile)
-        writer = csv.writer(outfile)
         product_details = []
         row_list = list(reader)
         Found_Po = 0 
@@ -251,6 +250,17 @@ def process_file(file_name):
         formatted_product.append(addr)
         
         formatted_products.append(formatted_product)
+    
+    # Write formatted CSV to csv_example directory, overwriting if exists
+    out_dir = r"C:\\Users\\joseph.stadum\\lt_aimbot\\csv_example"
+    os.makedirs(out_dir, exist_ok=True)
+    out_name = os.path.splitext(os.path.basename(file_name))[0] + ".csv"
+    out_path = os.path.join(out_dir, out_name)
+    with open(out_path, "w", newline="", encoding="utf-8") as out_csv:
+        w = csv.writer(out_csv)
+        # Rows (no header)
+        for product in formatted_products:
+            w.writerow(product)
     
     return formatted_products
 # code to check and move the date if necessary
