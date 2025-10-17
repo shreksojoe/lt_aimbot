@@ -13,7 +13,7 @@ BRAND = "iStock"
 
 LINE_ITEM_RE = re.compile(r"^\s*(?P<line>\d{5})\s+(?P<part>\S+)\s+(?P<rest>.+?)\s*$")
 QTY_RE = re.compile(r"(?P<qty>\d+)\s*Each")
-DECIMAL_RE = re.compile(r"(\d+\.\d{2})")
+DECIMAL_RE = re.compile(r"(\d+\.\d{1,2})")
 SHIP_DATE_RE = re.compile(r"Promised\s+Ship\s+Date:\s*(?P<date>\d{1,2}/\d{1,2}/\d{4})")
 TEN_DIGIT_RE = re.compile(r"\b(\d{10})\b")
 
@@ -125,7 +125,7 @@ def parse_line_item(lines: List[str], i: int) -> Tuple[Optional[Tuple[str, str, 
     j = i + 1
     next_item_idx = find_next_line_item_idx(lines, i + 1)
     ship_date = None
-    for k in range(i, min(next_item_idx, i + 10)):
+    for k in range(i, min(next_item_idx, i + 30)):
         mdate = SHIP_DATE_RE.search(lines[k])
         if mdate:
             ship_date = mdate.group("date")
