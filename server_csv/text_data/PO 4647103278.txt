@@ -1,0 +1,63 @@
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647103278
+7/1/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. NESTLE QUALITY ASSURANCE CENTER
+DOCK #4 - PAIGE S. 4578905569
+6625 Eiterman Rd
+Dublin , OH 43016
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: TPSO
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: TPSO
+Release # Ship Date Carrier Code Routing
+1554081864 See Routing Guide
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630 4578905569
+Account # Job Number Dept. # Customer Release # Currency
+MICROBIOLOGY 4332 4578905569
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT PLEASE PRINT CUSTOMER PURCHASE ORDER NUMBER ON PACKING LIST.
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Drop Ship 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+00001 10Y498 Label,9/10"H,4-1/4"W,PK1000 2Each 5.4 10.8
+PO Line #: 000001
+Manufacturer's Part #: 119-0003B
+Vendor Item #: 119-0003B
+Sch'd Qty: 2
+Subline UOM: EachPromised Ship Date: 7/23/2025
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647103278
+7/1/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+PLEASE PRINT CUSTOMER PURCHASE ORDER
+NUMBER ON PACKING LIST.
+Total 10.8
+Page 2 of 2 10-Oct-2025

@@ -1,12 +1,11 @@
-Please provide me with the PDF text!  I need the content of the PDF to extract structured data and create a clean CSV. 😊 
+Please provide me with the PDF text you'd like to extract structured data from! 
 
-Once you give me the text, I'll be happy to help you extract the information in a structured format like this:
+I need the actual PDF content to do the extraction and conversion to CSV for you.  
 
-```csv
-Field1,Field2,Field3
-Value1,Value2,Value3
-Value4,Value5,Value6
-...
-``` 
+Once you give me the text, I can process it using:
 
-I look forward to working with you! 👍 
+* **Optical Character Recognition (OCR):** If the text is in a format I can read.
+* **Natural Language Processing (NLP) techniques:** To identify patterns and extract specific types of information from the text itself. 
+
+
+Let's get started! 😊 

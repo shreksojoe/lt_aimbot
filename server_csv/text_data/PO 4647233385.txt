@@ -1,0 +1,75 @@
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647233385
+7/15/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. TOTAL NETWORK MANUFACTURING LL
+CRAIG ROGERS 4101325829
+8005 Volkswagen Dr Ste 125 Total Network Manufacturing Ll
+Chattanooga , TN 37416
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: TPSO
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: TPSO
+Release # Ship Date Carrier Code Routing
+1555285075 See Routing Guide
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630 4101325829
+Account # Job Number Dept. # Customer Release # Currency
+2231 US41_2231_INV
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT PLEASE PRINT CUSTOMER PURCHASE ORDER NUMBER ON PACKING LIST.
+payloadID#1752592588731.285130150.000115671@e
++AWxLNLxkZIHXvA#payloadIDpayloadID#P9mXZWrW4HM=#payloadID
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Drop Ship 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647233385
+7/15/2025
+00001 10Y498 Label,9/10"H,4-1/4"W,PK1000 3Each 5.4 16.2
+PO Line #: 000002
+Material #: WWG10Y498
+Manufacturer's Part #: 119-0003B
+Additional Notes: Customer UOM EA Grainger Part
+Nbr 10Y498# 10Y498 TK126454692T LabelAdhesive
+Adhesive Adhesive Material Rubber Adhesive Type
+Permanent Adhesive IndoorOutdoor Usage Indoor
+Label Color Orange Label Diameter 34in Label Height
+Not Applicable Label Material Coated Litho
+Vendor Item #: 119-0003B
+Sch'd Qty: 3
+Subline UOM: EachPromised Ship Date: 8/5/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+PLEASE PRINT CUSTOMER PURCHASE ORDER
+NUMBER ON PACKING LIST.
+payloadID#1752592588731.285130150.000115671@e
++AWxLNLxkZIHXvA#payloadIDpayloadID#P9
+mXZWrW4HM=#payloadID
+Total 16.2
+Page 2 of 2 10-Oct-2025

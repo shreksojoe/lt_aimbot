@@ -1,0 +1,74 @@
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647199657
+7/11/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. 526TH EMXG - KAYLA CZUPICH - 25-04-
+FD20205191P0SLXXX FD2020
+5832 H Ave Bay L Bldg 843
+Hill AFB , UT 84056
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: TPSO
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: TPSO
+Release # Ship Date Carrier Code Routing
+1554882814 See Routing Guide
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630 FD2020
+Account # Job Number Dept. # Customer Release # Currency
+FD2020 47QSCC23A0001 GMNKPU4585G
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT PLEASE PRINT CUSTOMER PURCHASE ORDER NUMBER ON PACKING LIST.
+Document Num Multiple. REFERRAL ORDER
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Drop Ship 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647199657
+7/11/2025
+00001 10Y499 Label,Circle,Paper,3/4" H,Red,1000 1Each 5.4 5.4
+PO Line #: 000002
+Material #: FD20205191P0SK
+Manufacturer's Part #: 119-0003U
+Additional Notes: WWGSKU 10Y499 GSAPARTNBR
+AFAA1190003U WWGSKU 10Y499 DOCUMENT
+FD20205191T022 MANUF ROLL PRODUCTS.
+LabelCircle Paper 34 H Red 1000
+AFAA1190003UNATIONAL STOCK NUMBER
+NSNREQUISITION NUMBERAPPROPRIATION
+NUMBERQUOTE NUMBERINTERNAL ORDER
+NUMBER FD20205191P0SKEDI PO PRI
+Vendor Item #: 119-0003U
+Sch'd Qty: 1
+Subline UOM: EachPromised Ship Date: 7/24/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+PLEASE PRINT CUSTOMER PURCHASE ORDER
+NUMBER ON PACKING LIST.
+Document Num Multiple. REFERRAL ORDER
+Total 5.4
+Page 2 of 2 10-Oct-2025

@@ -1,0 +1,78 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647640667
+8/20/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER NORTHEAST NEW JERSEY DC
+400 BORDENTOWN-HEDDING RD
+BORDENTOWN , NJ 08505
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 010
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 010
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647640667
+8/20/2025
+00001 10Y505 Label,1-1/4"H,4-1/2"W,PK1000 34Each 7.83 266.22
+Manufacturer's Part #: 119-0004C
+Vendor Item #: 119-0004C
+Sch'd Qty: 34
+Subline UOM: EachPromised Ship Date: 9/11/2025
+00002 3VAY7 Label,1 in x 1 3/4 in,Paper,PK1000 29Each 24.36 706.44
+Manufacturer's Part #: 140509
+Additional Notes: 10 PCT FORMALIN LBL R 1X1.75
+S1000
+Vendor Item #: 140509
+Sch'd Qty: 29
+Subline UOM: EachPromised Ship Date: 9/11/2025
+00003 3VCG6 QC Act Label,PK250 24Each 13.47 323.28
+Manufacturer's Part #: 27906
+Additional Notes: QC ACT LBL TO BE TESTED 1X1 1
+250RL
+Vendor Item #: 27906
+Sch'd Qty: 24
+Subline UOM: EachPromised Ship Date: 9/11/2025
+00004 3VCL2 Shipping Dot Label,1/4 In. W,PK1000 15Each 2.68 40.2
+Manufacturer's Part #: 3VCL2
+Additional Notes: BLANK LBL DOT PINK 14 IN. SEL
+1MRL
+Vendor Item #: 52219P
+Sch'd Qty: 15
+Subline UOM: EachPromised Ship Date: 9/11/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 1336.14
+Page 2 of 2 10-Oct-2025

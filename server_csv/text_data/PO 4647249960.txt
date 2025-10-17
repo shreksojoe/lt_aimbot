@@ -1,0 +1,71 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647249960
+7/16/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER DFDC
+201 FREEDOM DRIVE
+ROANOKE , TX 76262
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 936
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 936
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647249960
+7/16/2025
+00001 3VCL4 Shipping Dot Label,1/4 In. W,PK1000 3Each 2.68 8.04
+Manufacturer's Part #: 3VCL4
+Additional Notes: BLANK LBL DOT Y 14 IN. SELF A
+1MRL
+Vendor Item #: 52219Y
+Sch'd Qty: 3
+Subline UOM: EachPromised Ship Date: 8/6/2025
+00002 3VCL7 Shipping Dot Label,1/2 In. W,PK1000 36Each 3.82 137.52
+Manufacturer's Part #: 3VCL7
+Additional Notes: BLANK LBL DOT 12 IN. SELF ADH
+1MRL
+Vendor Item #: 52220P
+Sch'd Qty: 36
+Subline UOM: EachPromised Ship Date: 8/6/2025
+00003 3VCN7 Shipping Dot Label,1 In. W,PK1000 15Each 7.83 117.45
+Manufacturer's Part #: 3VCN7
+Vendor Item #: 52222OR
+Sch'd Qty: 15
+Subline UOM: EachPromised Ship Date: 8/6/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 263.01
+Page 2 of 2 10-Oct-2025

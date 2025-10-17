@@ -1,0 +1,59 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647109623
+7/2/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER JACKSONVILLE DC
+8001 FORSHEE DRIVE
+JACKSONVILLE , FL 32219
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 945
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 945
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+00001 3VCL1 Shipping Dot Label,1/4 In. W,PK1000 12Each 2.68 32.16
+Manufacturer's Part #: 3VCL1
+Additional Notes: BLANK LBL DOT OR 14 IN. SELF
+1MRL
+Vendor Item #: 52219OR
+Sch'd Qty: 12
+Subline UOM: EachPromised Ship Date: 7/24/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647109623
+7/2/2025
+Total 32.16
+Page 2 of 2 10-Oct-2025

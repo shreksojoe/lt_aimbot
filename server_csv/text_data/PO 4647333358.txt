@@ -1,0 +1,89 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647333358
+7/23/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER ILLINOIS DC
+701 GRAINGER WAY
+MINOOKA , IL 60447
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 005
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 005
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647333358
+7/23/2025
+00001 10Y371 Label,2 1/2 inx1 1/2 in,Paper,PK250 8Each 30.57 244.56
+Manufacturer's Part #: 163-0015
+Vendor Item #: 163-0015
+Sch'd Qty: 8
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00002 10Y505 Label,1-1/4"H,4-1/2"W,PK1000 6Each 7.83 46.98
+Manufacturer's Part #: 119-0004C
+Vendor Item #: 119-0004C
+Sch'd Qty: 6
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00003 3VCL7 Shipping Dot Label,1/2 In. W,PK1000 32Each 3.82 122.24
+Manufacturer's Part #: 3VCL7
+Additional Notes: BLANK LBL DOT 12 IN. SELF ADH
+1MRL
+Vendor Item #: 52220P
+Sch'd Qty: 32
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00004 3VCN6 Shipping Dot Label,1 In. W,PK1000 59Each 7.23 426.57
+Manufacturer's Part #: 3VCN6
+Additional Notes: BLANK LBL DOT G 1 IN. SELF ADH
+1MRL
+Vendor Item #: 52222G
+Sch'd Qty: 59
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00005 3VCP2 Shipping Squares Label,1/2 In. W,PK1000 1Each 4.26 4.26
+Manufacturer's Part #: 3VCP2
+Additional Notes: BLANK LBL G 12X34 SELF A 1MRL
+Vendor Item #: 52223G
+Sch'd Qty: 1
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00006 3VCT6 Shipping Squares Label,2 In. W,PK200 9Each 7.13 64.17
+Manufacturer's Part #: 3VCT6
+Additional Notes: BLANK LBL SQUARE PINK 2X3
+SELF 200RL
+Vendor Item #: 52227P
+Sch'd Qty: 9
+Subline UOM: EachPromised Ship Date: 8/13/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 908.78
+Page 2 of 2 10-Oct-2025

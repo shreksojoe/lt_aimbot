@@ -1,0 +1,83 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647401732
+7/30/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER ZONE DISTRIBUTION CENTR
+8211 BAVARIA ROAD
+MACEDONIA , OH 44056
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 935
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 935
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647401732
+7/30/2025
+00001 10Y372 HMIG Label,2-1/2" x 1-1/2",Reagent,PK250 6Each 30.57 183.42
+Manufacturer's Part #: 163-0014
+Vendor Item #: 163-0014
+Sch'd Qty: 6
+Subline UOM: EachPromised Ship Date: 8/20/2025
+00002 3VCC5 Laboratory Label,1-3/4 In. W,PK1000 33Each 27.82 918.06
+Manufacturer's Part #: 141457
+Additional Notes: LOT READY FOR USE GRN 1X1.75
+S1000
+Vendor Item #: 141457
+Sch'd Qty: 33
+Subline UOM: EachPromised Ship Date: 8/20/2025
+00003 3VCL5 Shipping Dot Label,1/2 In. W,PK1000 17Each 3.63 61.71
+Manufacturer's Part #: 3VCL5
+Additional Notes: BLANK LBL DOT G 12 IN. SELF A
+1MRL
+Vendor Item #: 52220G
+Sch'd Qty: 17
+Subline UOM: EachPromised Ship Date: 8/20/2025
+00004 3VCL6 Shipping Dot Label,1/2 In. W,PK1000 13Each 3.82 49.66
+Manufacturer's Part #: 3VCL6
+Additional Notes: BLANK LBL DOT OR 12 IN. SELF
+1MRL
+Vendor Item #: 52220OR
+Sch'd Qty: 13
+Subline UOM: EachPromised Ship Date: 8/20/2025
+00005 3VCN5 Shipping Dot Label,3/4 In. W,PK1000 5Each 3.77 18.85
+Manufacturer's Part #: 3VCN5
+Vendor Item #: 52221Y
+Sch'd Qty: 5
+Subline UOM: EachPromised Ship Date: 8/20/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 1231.7
+Page 2 of 2 10-Oct-2025

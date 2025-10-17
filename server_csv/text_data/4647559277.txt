@@ -1,0 +1,94 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647559277
+8/13/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER LOUISVILLE DC
+LOUISVILLE DC
+8701 MINOR LANE
+LOUISVILLE , KY 40219
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 009
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 009
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647559277
+8/13/2025
+00001 10Y371 Label,2 1/2 inx1 1/2 in,Paper,PK250 10Each 30.57 305.7
+Manufacturer's Part #: 163-0015
+Vendor Item #: 163-0015
+Sch'd Qty: 10
+Subline UOM: EachPromised Ship Date: 9/4/2025
+00002 10Y372 HMIG Label,2-1/2" x 1-1/2",Reagent,PK250 8Each 30.57 244.56
+Manufacturer's Part #: 163-0014
+Vendor Item #: 163-0014
+Sch'd Qty: 8
+Subline UOM: EachPromised Ship Date: 9/4/2025
+00003 10Y495 Label,9/10"H,4-1/4"W,PK1000 13Each 5.4 70.2
+Manufacturer's Part #: 119-0003A
+Vendor Item #: 119-0003A
+Sch'd Qty: 13
+Subline UOM: EachPromised Ship Date: 9/4/2025
+00004 10Y496 Label,3/4"H,4-1/4"W,PK1000 27Each 5.4 145.8
+Manufacturer's Part #: 119-0003E
+Vendor Item #: 119-0003E
+Sch'd Qty: 27
+Subline UOM: EachPromised Ship Date: 9/4/2025
+00005 3VCL5 Shipping Dot Label,1/2 In. W,PK1000 59Each 3.63 214.17
+Manufacturer's Part #: 3VCL5
+Additional Notes: BLANK LBL DOT G 12 IN. SELF A
+1MRL
+Vendor Item #: 52220G
+Sch'd Qty: 59
+Subline UOM: EachPromised Ship Date: 9/4/2025
+00006 3VCL6 Shipping Dot Label,1/2 In. W,PK1000 15Each 3.82 57.3
+Manufacturer's Part #: 3VCL6
+Additional Notes: BLANK LBL DOT OR 12 IN. SELF
+1MRL
+Vendor Item #: 52220OR
+Sch'd Qty: 15
+Subline UOM: EachPromised Ship Date: 9/4/2025
+00007 3VCR9 Shipping Squares Label,3 In. W,PK250 10Each 6.22 62.2
+Manufacturer's Part #: 3VCR9
+Additional Notes: BLANK LBL SQUARE OR 1X3 SELF
+A 250RL
+Vendor Item #: 52226OR
+Sch'd Qty: 10
+Subline UOM: EachPromised Ship Date: 9/4/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 1099.93
+Page 2 of 2 10-Oct-2025

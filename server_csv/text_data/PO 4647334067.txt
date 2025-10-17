@@ -1,0 +1,78 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647334067
+7/23/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER LOUISVILLE DC
+LOUISVILLE DC
+8701 MINOR LANE
+LOUISVILLE , KY 40219
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 009
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 009
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647334067
+7/23/2025
+00001 10Y513 Label,1-1/4"H,4-1/2"W,PK1000 13Each 7.83 101.79
+Manufacturer's Part #: 119-0004X
+Vendor Item #: 119-0004X
+Sch'd Qty: 13
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00002 3VCC2 Label,1 1/2 in x 2 1/2 in,Paper,PK1000 3Each 32.01 96.03
+Manufacturer's Part #: 141454
+Additional Notes: DO NOT USE LOT R 1.5X2.5 S1000
+Vendor Item #: 141454
+Sch'd Qty: 3
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00003 3VCP1 Shipping Dot Label,1 In. W,PK1000 21Each 7.83 164.43
+Manufacturer's Part #: 3VCP1
+Additional Notes: BLANK LBL DOT Y 1 IN. SELF ADH
+1MRL
+Vendor Item #: 52222Y
+Sch'd Qty: 21
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00004 3VCT8 Shipping Squares Label,2 In. W,PK200 20Each 7.13 142.6
+Manufacturer's Part #: 3VCT8
+Additional Notes: BLANK LBL SQUARE Y 2X3 SELF
+AD 200RL
+Vendor Item #: 52227Y
+Sch'd Qty: 20
+Subline UOM: EachPromised Ship Date: 8/13/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 504.85
+Page 2 of 2 10-Oct-2025

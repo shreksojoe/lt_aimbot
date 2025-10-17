@@ -1,0 +1,75 @@
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647564518
+8/13/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. YUMA BOX
+GUILLERMO LAZOS 0018657392
+2641 E 24th St Yuma Box
+Yuma , AZ 85365
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: TPSO
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: TPSO
+Release # Ship Date Carrier Code Routing
+1558274496 See Routing Guide
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630 0018657392
+Account # Job Number Dept. # Customer Release # Currency
+7167 P2P1
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT PLEASE PRINT CUSTOMER PURCHASE ORDER NUMBER ON PACKING LIST.
+payloadID#1755107772158.140663917.000045522@OOBdIGHUEEiwAyiU#payloadIDpayloadID#TozRr3
+mVizQ=#payloadID
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Drop Ship 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647564518
+8/13/2025
+00001 10Y509 Label,1-1/4"H,4-1/2"W,PK1000 1Each 7.83 7.83
+PO Line #: 000002
+Material #: NONE
+Manufacturer's Part #: 119-0004B
+Additional Notes: Customer UOM EA Grainger Part
+Nbr 10Y509# 10Y509 TK128287041T LabelAdhesive
+Adhesive Adhesive Material Rubber Adhesive Type
+Permanent Adhesive IndoorOutdoor Usage Indoor
+Label Color Orange Label Diameter 1inLabel Height
+Not Applicable Label Material Coated Litho L
+Vendor Item #: 119-0004B
+Sch'd Qty: 1
+Subline UOM: EachPromised Ship Date: 8/25/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+PLEASE PRINT CUSTOMER PURCHASE ORDER
+NUMBER ON PACKING LIST.
+payloadID#1755107772158.140663917.000045522
+@OOBdIGHUEEiwAyiU#payloadIDpayloadID#TozRr3
+mVizQ=#payloadID
+Total 7.83
+Page 2 of 2 10-Oct-2025
