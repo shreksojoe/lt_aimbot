@@ -245,7 +245,7 @@ def product_points(product, grainger_pdf):
     exec_json(cust_drop_four_data, ops)
 
     data.address_search("Grainger Dropship Acct")
-    address_array = data.split_addr(product[9])
+    address_array = product[9].splitlines()
     exec_json(grainger_address_data, addr)
 
 
@@ -276,13 +276,10 @@ def custom(custom_list, grainger_pdf):
     cust_drop_dup_data = data.load_file(data.find_rel_path("instructions\\cust_drop_dup.json"))
 
     product_points(custom_list[0], grainger_pdf)
-    prod_x = 976
-    prod_y = 132
     for product in custom_list[1:]:
         time.sleep(0.4)
-        motion.move_rel(prod_x, prod_y, lt_hwnd)
+        motion.move_rel(967, 132, lt_hwnd)
         exec_json(cust_drop_dup_data, ops)
-        prod_y += 42
     motion.move_rel(lt_hwnd, 925, 188)
     motion.move_rel(lt_hwnd, 905, 641)
 

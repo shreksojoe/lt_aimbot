@@ -20,6 +20,21 @@ SHIP_DATE_RE = re.compile(r"Promised\s+Ship\s+Date:\s*(?P<date>\d{1,2}/\d{1,2}/\
 TEN_DIGIT_RE = re.compile(r"\b(\d{10})\b")
 CITY_STATE_ZIP_RE = re.compile(r"\b[A-Z]{2}\s+\d{5}(?:-\d{4})?\b")
 
+# Explicit '<ST> <ZIP> <COUNTRY>' detector (country can be US/USA/UNITED STATES)
+STATE_ZIP_COUNTRY_RE = re.compile(
+    r"\b([A-Z]{2})\s+(\d{5}(?:-\d{4})?)\s+(US|USA|UNITED STATES)\b",
+    re.IGNORECASE,
+)
+
+# Two-letter US state codes (exclude 'US'). Used to optionally insert a newline before state.
+STATE_CODES = {
+    "AL","AK","AZ","AR","CA","CO","CT","DE","FL","GA",
+    "HI","ID","IL","IN","IA","KS","KY","LA","ME","MD",
+    "MA","MI","MN","MS","MO","MT","NE","NV","NH","NJ",
+    "NM","NY","NC","ND","OH","OK","OR","PA","RI","SC",
+    "SD","TN","TX","UT","VT","VA","WA","WV","WI","WY","DC"
+}
+
 # Some texts have vendor and ship-to on one line, e.g. "ROLL PRODUCTS INC. WW GRAINGER FOUNTAIN INN"
 # Strip the vendor prefix to leave the Ship-To party name.
 VENDOR_PREFIXES = [
@@ -93,6 +108,13 @@ def extract_ship_to_address(lines: List[str]) -> Optional[str]:
             continue
         up = raw.strip().upper()
         if "SHIP-TO QUALIFIER" in up or up.startswith("CODE:"):
+            break
+        # If the same line contains '<ST> <ZIP> <COUNTRY>', trim at match start and stop
+        m_szc = STATE_ZIP_COUNTRY_RE.search(raw)
+        if m_szc:
+            country_idx = j
+            country_embedded = True
+            country_trim = raw[:m_szc.start()].rstrip(', ')
             break
         # Exact country line
         if up in ("US", "USA", "UNITED STATES"):
@@ -173,8 +195,30 @@ def extract_ship_to_address(lines: List[str]) -> Optional[str]:
                 parts.append("US")
                 break
 
-    # Normalize each line, then join using newlines so the CSV cell includes line breaks
+    # Normalize each line
     norm_parts = [normalize_spaces(p) for p in parts if p]
+
+    # Within each line, if we find '<City>, <ST> <ZIP>', insert a newline before the state
+    # Only apply when ST is a real state code (exclude 'US')
+    def split_state_line(s: str) -> str:
+        # Detect '<City>,' then '<ST> <ZIP>' optionally followed by country and tail
+        m = re.search(r"(.*?,)\s+([A-Z]{2})\s+(\d{5}(?:-\d{4})?)(?:\s+(US|USA|UNITED STATES))?($|\b.*)", s, re.IGNORECASE)
+        if m:
+            city_part, st, zip_code, country, tail = m.groups()
+            if st in STATE_CODES:
+                # Remove any comma directly before the state (end of city segment)
+                city_clean = re.sub(r"[\s,]+$", "", city_part)
+                parts = [city_clean, st, zip_code]
+                # Normalize country token to 'US' and put on its own line if present inline
+                if country:
+                    parts.append("US")
+                # Preserve optional trailing tail content (rare); keep it on the last line
+                tail = tail or ""
+                # Join with newlines so each element is on its own line
+                return "\n".join(parts) + tail
+        return s
+
+    norm_parts = [split_state_line(p) for p in norm_parts]
     address = "\n".join(norm_parts)
     return address or None
 
