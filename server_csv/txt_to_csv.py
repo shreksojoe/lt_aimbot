@@ -9,13 +9,16 @@ from typing import List, Tuple, Optional
 # COMPANY is always "Grainger"; BRAND appears as constant "iStock" in examples.
 
 COMPANY = "Grainger"
-BRAND = "iStock"
+# BRAND will be determined per row based on ship-to address content
 
 LINE_ITEM_RE = re.compile(r"^\s*(?P<line>\d{5})\s+(?P<part>\S+)\s+(?P<rest>.+?)\s*$")
 QTY_RE = re.compile(r"(?P<qty>\d+)\s*Each")
 DECIMAL_RE = re.compile(r"(\d+\.\d{1,2})")
+# Pack-size tokens appear in descriptions like PK1000, PK250, etc.
+PACK_RE = re.compile(r"\bPK\s*\d+\b", re.IGNORECASE)
 SHIP_DATE_RE = re.compile(r"Promised\s+Ship\s+Date:\s*(?P<date>\d{1,2}/\d{1,2}/\d{4})")
 TEN_DIGIT_RE = re.compile(r"\b(\d{10})\b")
+CITY_STATE_ZIP_RE = re.compile(r"\b[A-Z]{2}\s+\d{5}(?:-\d{4})?\b")
 
 # Some texts have vendor and ship-to on one line, e.g. "ROLL PRODUCTS INC. WW GRAINGER FOUNTAIN INN"
 # Strip the vendor prefix to leave the Ship-To party name.
@@ -52,22 +55,127 @@ def extract_ship_to_address(lines: List[str]) -> Optional[str]:
     if idx is None:
         return None
     parts: List[str] = []
+    # Line +1: name (strip vendor prefixes)
     if idx + 1 < len(lines):
         name_line = lines[idx + 1].strip()
-        # Remove vendor prefixes
         for vp in VENDOR_PREFIXES:
             if vp in name_line:
                 name_line = name_line.split(vp, 1)[1].strip()
                 break
         if name_line:
             parts.append(name_line)
-    if idx + 2 < len(lines):
-        parts.append(lines[idx + 2].strip())
-    if idx + 3 < len(lines):
-        parts.append(lines[idx + 3].strip())
-    if idx + 4 < len(lines):
-        parts.append(lines[idx + 4].strip())
-    address = normalize_spaces(" ".join(p for p in parts if p))
+
+    # Lookahead window and targets
+    start = idx + 2
+    end = min(len(lines), idx + 15)
+    city_idx = None
+
+    # Pass 1: locate FIRST city/state/zip line
+    for j in range(start, end):
+        raw = lines[j]
+        if not raw:
+            continue
+        up = raw.strip().upper()
+        if "SHIP-TO QUALIFIER" in up or up.startswith("CODE:"):
+            continue
+        if CITY_STATE_ZIP_RE.search(raw):
+            city_idx = j
+            break
+
+    # Pass 2: starting from the city line, locate the FIRST country token (exact or embedded)
+    country_idx = None
+    country_embedded = False
+    country_trim = None
+    search_start = city_idx if city_idx is not None else start
+    for j in range(search_start, end):
+        raw = lines[j]
+        if not raw:
+            continue
+        up = raw.strip().upper()
+        if "SHIP-TO QUALIFIER" in up or up.startswith("CODE:"):
+            break
+        # Exact country line
+        if up in ("US", "USA", "UNITED STATES"):
+            country_idx = j
+            country_embedded = False
+            country_trim = None
+            break
+        # Embedded country token (ensure it occurs AFTER city_idx or when city not yet found)
+        for token in (" UNITED STATES", " USA", " US"):
+            pos = up.find(token)
+            if pos != -1:
+                country_idx = j
+                country_embedded = True
+                country_trim = raw[:pos].rstrip(', ')
+                break
+        if country_idx is not None:
+            break
+
+    # Decide stop point: prefer city line; then include first country AFTER city if present
+    stop_at = None
+    include_country = False
+    if city_idx is not None:
+        stop_at = city_idx
+    else:
+        # no city found, fallback logic uses a few lines
+        stop_at = None
+
+    if country_idx is not None and (city_idx is None or country_idx >= city_idx):
+        stop_at = country_idx
+        include_country = True
+    else:
+        # Fallback: take up to 3 non-empty, non-qualifier lines
+        taken = 0
+        for j in range(start, end):
+            ln = lines[j].strip()
+            if not ln:
+                continue
+            up = ln.upper()
+            if "SHIP-TO QUALIFIER" in up or up.startswith("CODE:"):
+                break
+            parts.append(ln)
+            taken += 1
+            if taken >= 3:
+                break
+        address = normalize_spaces(" ".join(p for p in parts if p))
+        return address or None
+
+    # Second pass: collect lines from start up to stop_at
+    for j in range(start, (stop_at + 1) if stop_at is not None else end):
+        ln = lines[j].strip()
+        if not ln:
+            continue
+        up = ln.upper()
+        if "SHIP-TO QUALIFIER" in up or up.startswith("CODE:"):
+            break
+        if stop_at is not None and j == country_idx and country_embedded:
+            if country_trim:
+                parts.append(country_trim)
+            continue  # country will be appended below uniformly
+        # If exact country line, skip its content (we add canonical 'US' below)
+        if stop_at is not None and j == country_idx and not country_embedded:
+            continue
+        parts.append(ln)
+
+    if include_country:
+        parts.append("US")
+    elif city_idx is not None:
+        # If we stopped at city/state/zip and the very next few lines contain a country token, include it
+        lookahead_limit = min(len(lines), city_idx + 4)
+        for k in range(city_idx + 1, lookahead_limit):
+            nxt = lines[k].strip()
+            if not nxt:
+                continue
+            upn = nxt.upper()
+            if "SHIP-TO QUALIFIER" in upn or upn.startswith("CODE:"):
+                break
+            if upn in ("US", "USA", "UNITED STATES"):
+                parts.append("US")
+                break
+
+    # Normalize each line, then join using newlines so the CSV cell includes line breaks
+    norm_parts = [normalize_spaces(p) for p in parts if p]
+    address = "\n".join(norm_parts)
     return address or None
 
 
@@ -121,6 +229,24 @@ def parse_line_item(lines: List[str], i: int) -> Tuple[Optional[Tuple[str, str, 
     desc_region = re.sub(r"\s*(\d+\.?\d*)\s*$", "", desc_region)
     description = normalize_spaces(desc_region)
 
+    # Try to capture pack-size token (PK####) from current or adjacent text
+    pack_token = None
+    # Search in 'rest' around description
+    mpack = PACK_RE.search(rest)
+    if not mpack and i + 1 < len(lines):
+        mpack = PACK_RE.search(lines[i + 1])
+    if mpack:
+        pack_token = mpack.group(0).upper().replace(" ", "")  # Normalize e.g., PK 1000 -> PK1000
+    if pack_token and pack_token not in description.replace(" ", ""):
+        # If description ends with a bare ',PK', replace it with ',PK####'
+        if description.rstrip().upper().endswith(',PK'):
+            description = re.sub(r",\s*PK\s*$", f",{pack_token}", description, flags=re.IGNORECASE)
+        else:
+            # Otherwise append with comma
+            if not description.endswith(','):
+                description = f"{description},"
+            description = f"{description}{pack_token}"
+
     # Ship date: search in subsequent lines until next line item or a cap
     j = i + 1
     next_item_idx = find_next_line_item_idx(lines, i + 1)
@@ -163,6 +289,9 @@ def parse_txt_to_rows(text: str) -> List[List[str]]:
         itm, nxt = parse_line_item(lines, i)
         if itm:
             line_no, part, desc, ship_date, qty, price = itm
+            # Determine brand from address: if Ship-To contains GRAINGER, treat as iStock; otherwise Drop Ship
+            brand = "iStock" if "GRAINGER" in address.upper() else "Drop Ship"
+
             row = [
                 COMPANY,
                 po,
@@ -172,7 +301,7 @@ def parse_txt_to_rows(text: str) -> List[List[str]]:
                 ship_date,
                 qty,
                 price,
-                BRAND,
+                brand,
                 address,
             ]
             rows.append(row)
