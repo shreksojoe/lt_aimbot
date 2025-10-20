@@ -58,7 +58,8 @@ for csv_file in csv_files:
             new_csv_file = xlsx_to_csv.main(csv_file)
         print(f'new csv file: {new_csv_file}')
         csv_no_plus.launch_instructions(new_csv_file, ticket_array, checkbox_array, order_array, dup_order_array, finish_him_array, duplicate_array, relapse_array)
-    elif csv_file.lower().endswith(".pdf") and 'grainger' in csv_file.lower():
+    elif csv_file.lower().endswith(".pdf"):
+        # Route all PDFs through the Grainger PDF pipeline (PDF -> TXT -> CSV -> automation)
         grainger.execute_grainger(csv_file)
     else:
         print('is a csv')

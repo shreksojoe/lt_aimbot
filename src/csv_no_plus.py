@@ -18,15 +18,31 @@ import data
 # Opens the csv, and stores rows in array 
 def csv_rows_to_array(input_csv):
     row_array = []
-    with open(input_csv, newline='') as opened_csv:
-        reader = csv.reader(opened_csv)
-        for row in reader:
-            try:
+    encodings_to_try = ["utf-8-sig", "utf-8", "cp1252", "latin-1"]
+    last_error = None
+    for enc in encodings_to_try:
+        try:
+            with open(input_csv, newline='', encoding=enc) as opened_csv:
+                reader = csv.reader(opened_csv)
+                for row in reader:
+                    row_array.append(row)
+            return row_array
+        except UnicodeDecodeError as e:
+            last_error = e
+            continue
+
+    # Final fallback: replace undecodable bytes to avoid crashing
+    try:
+        with open(input_csv, newline='', encoding='utf-8', errors='replace') as opened_csv:
+            reader = csv.reader(opened_csv)
+            for row in reader:
                 row_array.append(row)
-            except UnicodeDecodeError:
-                print("Skipping a row due to UnicodeDecodeError")
-                continue
-    return row_array
+        return row_array
+    except Exception:
+        # If everything fails, re-raise the last decoding error for visibility
+        if last_error:
+            raise last_error
+        raise
 
 def move_mouse(coords):
     pyautogui.moveTo(coords[0], coords[1], duration=0.3)

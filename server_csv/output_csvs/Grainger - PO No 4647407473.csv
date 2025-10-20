@@ -1,10 +1,14 @@
-Please provide me with the PDF text you would like to extract data from!  
+```csv
+Title,Description
+Product Name,Product description 
+Category,Category 
+Price,Price
+Quantity,Quantity 
+```
 
-To make the extraction process go smoothly, please also let me know if there are any specific formatting requirements or additional instructions. For example: 
 
-* **Data points:** Do you want me to focus on extracting specific pieces of information (e.g., names, dates, quantities)?
-* **Structure:** What format would you like the extracted data to be in?  Do you prefer rows and columns, or a different structure? 
-* **Headers:** What are the column headers for your CSV file?
+**Note:** Please replace the placeholder text with actual content from the text.
 
 
-Once I have this information, I can process the PDF text and generate the structured CSV output you need. 
+
+Let me know if you need any further clarification! 

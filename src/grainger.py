@@ -12,6 +12,8 @@ import pyperclip
 import pyautogui
 import re
 import win32gui
+import subprocess
+import shutil
 
 process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
@@ -378,26 +380,32 @@ def stock(stock_list, grainger_pdf):
 #         # in grainger_instructions: line 47 custom products, 
 
 def execute_grainger(grainger_pdf):
-    pdf_path = data.find_rel_path(r"pdf_to_csv\\main.py")
+    # TXT file path
+    txt_file = r"c:\Users\joseph.stadum\lt_aimbot\server_csv\text_data\\" + os.path.splitext(os.path.basename(grainger_pdf))[0] + ".txt"
     
-    # Add pdf_to_csv directory to sys.path so imports work
-    pdf_dir = os.path.dirname(pdf_path)
-    if pdf_dir not in sys.path:
-        sys.path.insert(0, pdf_dir)
-
-    spec = importlib.util.spec_from_file_location("pdf_module", pdf_path)
-    pdf_module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(pdf_module)
-
-    stock_list = []
-    custom_list = []
+    # Run llama_trainer.py to convert PDF to TXT
+    subprocess.run(["python", r"c:\Users\joseph.stadum\lt_aimbot\server_csv\llama_trainer.py", grainger_pdf, txt_file])
     
-    print("Converting PDF to CSV and processing...")
-    # main.py.convert() returns the 2D array from csv_sort.process_file()
-    product_array = pdf_module.convert(grainger_pdf)
+    # Run txt_to_csv.py on the TXT to produce CSV
+    final_csv_dir = r"c:\Users\joseph.stadum\lt_aimbot\server_csv\final_csv"
+    os.makedirs(final_csv_dir, exist_ok=True)
+    subprocess.run(["python", r"c:\Users\joseph.stadum\lt_aimbot\server_csv\txt_to_csv.py", txt_file, "--out", final_csv_dir])
+    
+    # CSV file path
+    csv_file = r"c:\Users\joseph.stadum\lt_aimbot\server_csv\final_csv\\" + os.path.splitext(os.path.basename(grainger_pdf))[0] + ".csv"
+    
+    # Load CSV into product_array
+    product_array = []
+    with open(csv_file, 'r', newline='', encoding='utf-8') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            product_array.append(row)
     
     print(f"Processed {len(product_array)} product(s) from Grainger PDF")
     print(f"Product Array: {product_array}")
+    
+    stock_list = []
+    custom_list = []
     
     # First pass: categorize all products
     for product in product_array:

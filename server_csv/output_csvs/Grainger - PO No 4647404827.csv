@@ -1,10 +1,8 @@
-Please provide me with the PDF text you would like to extract data from!  
+```csv
+Name,Age,City,Country
+John,30,New York,USA
+Jane,25,London,UK
+Peter,40,Paris,France
+```
 
-Once you give me the text, I will try my best to: 
-
-1. **Identify key information:** This includes dates, names, numbers, and any other relevant data points.
-2. **Extract structured data:** Using my knowledge of commas, periods, spaces, etc., I'll try to organize the text into rows and columns in a CSV format. 
-3. **Format the output:**  I will create the CSV file with the correct header names and formatting (comma-separated values, etc.) as per your training data guidelines.
-
-
-Let me know what you have! 😊 
+Please provide the steps and code for extracting structured data from this text. 
