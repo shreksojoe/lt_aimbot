@@ -11,6 +11,7 @@ import pyautogui
 import time
 import keyboard
 import usaddress
+from typing import Optional
 
 # text: 
 
@@ -226,7 +227,7 @@ def address_search(text):
         time.sleep(0.4)
         current_address = pyperclip.paste()
         print("searching... ", current_address)
-        if text.lower() in current_address.lower():
+        if text.lower() in current_address.lower( ):
             pyautogui.click()
             motion.move_rel(hwnd, 780, 346)
             # pyautogui.press("enter")
@@ -248,6 +249,62 @@ def address_search(text):
             # pyautogui.click()
     motion.move_rel(hwnd, 781, 343)
 
+def extract_state(address: str) -> Optional[str]:
+    if not address:
+        return None
+
+    s = re.sub(r"\s+", " ", address).strip().upper()
+
+    # 1) Strongest signal: "<ST> <ZIP>"
+    m = re.search(r"\b([A-Z]{2})\s+\d{5}(?:-\d{4})?\b", s)
+    if m:
+        st = m.group(1)
+        if st in STATE_CODES:
+            return st
+
+    # 2) If a ZIP exists, try to find a state token immediately before it
+    zip_m = re.search(r"\b\d{5}(?:-\d{4})?\b", s)
+    if zip_m:
+        before = s[:zip_m.start()]
+        m2 = re.search(r"\b([A-Z]{2})\b\s*$", before)
+        if m2:
+            st = m2.group(1)
+            if st in STATE_CODES:
+                return st
+
+    # 3) Generic fallback: first two-letter token that is a valid state code
+    for tok in re.findall(r"\b([A-Z]{2})\b", s):
+        if tok in STATE_CODES:
+            return tok
+
+    return None
+
+def extract_zip(address: str) -> Optional[str]:
+    if not address:
+        return None
+
+    s = re.sub(r"\s+", " ", address).strip().upper()
+
+    # 1) Prefer ZIP that follows a valid state code: "<ST> <ZIP>"
+    m = re.search(r"\b([A-Z]{2})\s+(\d{5}(?:-\d{4})?)\b", s)
+    if m:
+        st, z = m.group(1), m.group(2)
+        try:
+            # If STATE_CODES is available in the module, validate against it
+            if st in STATE_CODES:  # type: ignore[name-defined]
+                return z
+        except NameError:
+            # If STATE_CODES isn't defined where you paste this, just accept the match
+            return z
+
+    # 2) Fallback: first standalone 5- or 9-digit ZIP anywhere
+    m2 = re.search(r"\b\d{5}(?:-\d{4})?\b", s)
+    if m2:
+        return m2.group(0)
+
+    return None
+
+
 def compare(expected: str):
 
     # Simulate Ctrl+C
@@ -265,7 +322,9 @@ def compare(expected: str):
         print(f"[ERROR] Clipboard text does not match expected.")
         print(f"  Expected: {expected!r}")
         print(f"  Got:      {clipboard_text!r}")
-        input("Press Enter to resume...")
+        return False
+    else:
+        return True
 
 def write(text):
     time.sleep(1)

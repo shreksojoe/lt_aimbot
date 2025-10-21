@@ -2,9 +2,10 @@ import motion
 import window
 import data
 import win32gui
+import time
 
 process_name = "Label Traxx Client.exe"
-process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
+process_path = "C:\\Program Files\\LT Client\\Label Traxx Client.exe"
 hwnd = window.get_hwnd(process_name)
 
 # -- WINDOW -- 
@@ -25,15 +26,29 @@ hwnd = window.get_hwnd(process_name)
 # print(window.mark_hwnd()) -- works
 
 # -- MOTION --
-# motion.maneuver(process_name) -- works
-#hwnd = win32gui.GetForegroundWindow()
-motion.capture_mouse_relative(hwnd)
+#motion.maneuver(process_name)
+
+window.highlight_by_title("Editing Ticket")
+# print(window.get_hwnd(process_name))
+
+# motion.capture_mouse_relative(hwnd)
+
+hwnd = win32gui.GetForegroundWindow()
+time.sleep(4)
+motion.move_rel(hwnd, 911, 273)
+hwnd = win32gui.GetForegroundWindow()
+time.sleep(0.2)
+motion.move_rel(hwnd, 339, 251)
+hwnd = win32gui.GetForegroundWindow()
+time.sleep(0.2)
+motion.move_rel(hwnd, 638, 510)
+
+
 # print(data.split_addr())
-#window.highlight_by_title("Documents")
-#motion.move_rel(hwnd, 208, 306)
+#motion.move_rel(hwnd, 967, 132)
 # motion.move_rel(hwnd, 912, 654) -- works
 # motion.move_abs(1571, 842) -- works
-# motion.capture_mouse_absolute(hwnd) -- works
+# motion.capture_mouse_absolute(hwnd) 
 
 # -- DATA --
 # print(data.find_rel_path("run_lt_aimbot.bat")) -- works

@@ -19,6 +19,7 @@ process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
 lt_hwnd = window.get_hwnd(process_name)
 
+total_quantity = 0
 
 stock_product_numbers = [
 "10Y376","8X606","10Y373","8EE38","8E085", "10Y374", "8EEP0", "10Y370", "8E984", "9WA32", "10Y372", "8EE37", "10Y371", "8NCA9", "8AY66", "9WC95", "10Y495"
@@ -145,6 +146,12 @@ def _longest_common_substring(strings):
 
 # we trying thi sother one^^^^^
 def strip_zeros(text):
+    print("desciption, no?")
+    pyautogui.press('end')
+    time.sleep(0.5)
+    print("typing ctrl + a")
+    ctrl_a()
+    
     print("Passed into strip zeros: ", text)
     if isinstance(text, str):
         # Split on commas and strip spaces
@@ -167,6 +174,10 @@ def strip_zeros(text):
 
     return gen_desc
  
+def type_line_number(line_num):
+    print(f"running type line number: {line_num}")
+    ctrl_a()
+    data.write(line_num)
 
 def exec_json(json_data, ops):
     for entry in json_data:
@@ -186,16 +197,21 @@ def exec_json(json_data, ops):
             else:
                 ops[key](value, process_name)
 
-def type_address(address):
-    for segment in address:
-        data.write(segment)
-        time.sleep(1)
-        keyboard.press_and_release("tab")
-        time.sleep(1)
+def type_address(address, product):
+    if product[10] == False:
+        print("Dropship")
+        for segment in address:
+            data.write(segment)
+            time.sleep(1)
+            keyboard.press_and_release("tab")
+            time.sleep(1)
+    else:
+        print("Not a dropship, searching for default address")
+        data.address_search(data.extract_zip(product[9]))
 
 def date_determiner(product):
     if product[10] is False:
-        data.write(data.move_to_wed(product[5]))
+        data.write(data.move_to_wed(standardize_date(product[5])))
         print("Typeing dropship date")
     else:
         data.write(product[5])
@@ -223,7 +239,7 @@ def product_points(product, grainger_pdf):
             "Price": lambda: data.compare(product[7]),
             "Copy": copy,
             "Line Number": lambda: strip_zeros(product[2]),
-            "Line Number Zero": lambda: data.write(product[2]),
+            "Line Number Zero": lambda: type_line_number(product[2]),
             "Move Down": lambda: move_down(2),
             "Click": lambda: pyautogui.click()
             }
@@ -235,13 +251,14 @@ def product_points(product, grainger_pdf):
             "Window":window.title_contains,
             "Window Maybe":window.title_contains_option,
             "File Name": lambda: data.write(data.swap_slash(grainger_pdf)),
-            "Address": lambda: type_address(address_array)
+            "Address": lambda: type_address(address_array, product)
             }
 
     exec_json(cust_drop_one_data, ops)
-    if int(product[6]) < 30:
+    if total_quantity < 30:
         exec_json(cust_drop_two_data, ops)
     else: exec_json(cust_drop_three_data, ops)
+
     exec_json(cust_drop_four_data, ops)
 
     data.address_search("Grainger Dropship Acct")
@@ -250,6 +267,9 @@ def product_points(product, grainger_pdf):
 
 
 def custom(custom_list, grainger_pdf):
+
+    total_quantity = (int(row[6]) for row in custom_list)
+    
 
     ops = {
             "Coordinate":motion.move_rel,
@@ -266,7 +286,8 @@ def custom(custom_list, grainger_pdf):
             "Price": lambda: data.compare(product[7]),
             "Copy": copy,
             "Line Number": lambda: strip_zeros(product[2]),
-            "Line Number Zero": lambda: data.write(product[2]),
+            #fucking help me
+            "Line Number Zero": lambda: type_line_number(product[2]),
             "Move Down": lambda: move_down(2),
             "Click": lambda: pyautogui.click()
             }
@@ -276,9 +297,16 @@ def custom(custom_list, grainger_pdf):
     cust_drop_dup_data = data.load_file(data.find_rel_path("instructions\\cust_drop_dup.json"))
 
     product_points(custom_list[0], grainger_pdf)
+
     for product in custom_list[1:]:
+        
         time.sleep(0.4)
-        motion.move_rel(967, 132, lt_hwnd)
+        motion.move_rel(lt_hwnd, 911, 273)
+        time.sleep(0.4)
+        motion.move_rel(lt_hwnd, 339, 251)
+        time.sleep(0.2)
+        motion.move_rel(lt_hwnd, 638, 510)
+        time.sleep(0.2)
         exec_json(cust_drop_dup_data, ops)
     motion.move_rel(lt_hwnd, 925, 188)
     motion.move_rel(lt_hwnd, 905, 641)
@@ -412,6 +440,7 @@ def execute_grainger(grainger_pdf):
         # determine if it is a grainger or dropship
         if not ("grainger" in product[9].lower()): # it is a dropship
             product.append(False)
+            # move date to next wednesday
             print(f"Product {product[2]} is a dropship")
         else:
             product.append(True)
