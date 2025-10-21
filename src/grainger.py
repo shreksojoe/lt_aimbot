@@ -19,8 +19,6 @@ process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
 lt_hwnd = window.get_hwnd(process_name)
 
-total_quantity = 0
-
 stock_product_numbers = [
 "10Y376","8X606","10Y373","8EE38","8E085", "10Y374", "8EEP0", "10Y370", "8E984", "9WA32", "10Y372", "8EE37", "10Y371", "8NCA9", "8AY66", "9WC95", "10Y495"
 ]
@@ -197,8 +195,10 @@ def exec_json(json_data, ops):
             else:
                 ops[key](value, process_name)
 
-def type_address(address, product):
+def type_address(product, address=None):
     if product[10] == False:
+        if not address: 
+            address = product[9]
         print("Dropship")
         for segment in address:
             data.write(segment)
@@ -217,7 +217,7 @@ def date_determiner(product):
         data.write(product[5])
         print("not a dropship")
 
-def product_points(product, grainger_pdf):
+def product_points(product, grainger_pdf, total_quantity):
     cust_drop_one_data = data.load_file(data.find_rel_path("instructions\\cust_drop_one.json"))
     cust_drop_two_data = data.load_file(data.find_rel_path("instructions\\cust_drop_two.json"))
     cust_drop_three_data = data.load_file(data.find_rel_path("instructions\\cust_drop_three.json"))
@@ -251,26 +251,27 @@ def product_points(product, grainger_pdf):
             "Window":window.title_contains,
             "Window Maybe":window.title_contains_option,
             "File Name": lambda: data.write(data.swap_slash(grainger_pdf)),
-            "Address": lambda: type_address(address_array, product)
+            "Address": lambda: type_address(product, address_array)
             }
 
     exec_json(cust_drop_one_data, ops)
-    if total_quantity < 30:
+    print(f"total quantity: {total_quantity}")
+    if total_quantity > 30:
         exec_json(cust_drop_two_data, ops)
     else: exec_json(cust_drop_three_data, ops)
 
     exec_json(cust_drop_four_data, ops)
 
-    data.address_search("Grainger Dropship Acct")
-    address_array = product[9].splitlines()
-    exec_json(grainger_address_data, addr)
+    if not "grainger" in product[9].lower():
+        data.address_search("Grainger Dropship Acct")
+        address_array = product[9].splitlines()
+        exec_json(grainger_address_data, addr)
 
 
 def custom(custom_list, grainger_pdf):
 
-    total_quantity = (int(row[6]) for row in custom_list)
+    total_quantity = sum((int(row[6]) for row in custom_list))
     
-
     ops = {
             "Coordinate":motion.move_rel,
             "Coordinate Maybe":motion.move_rel,
@@ -296,7 +297,7 @@ def custom(custom_list, grainger_pdf):
 
     cust_drop_dup_data = data.load_file(data.find_rel_path("instructions\\cust_drop_dup.json"))
 
-    product_points(custom_list[0], grainger_pdf)
+    product_points(custom_list[0], grainger_pdf, total_quantity)
 
     for product in custom_list[1:]:
         
@@ -377,7 +378,7 @@ def stock(stock_list, grainger_pdf):
     multiple_stock(stock_list)
     exec_json(istock_three_data, addr)
     print("Search for: ", stock_list[0][9])
-    data.address_search(stock_list[0][9])
+    type_address(stock_list[0])
     exec_json(grainger_address_data, addr)
     motion.move_rel(lt_hwnd, 925, 188)
     motion.move_rel(lt_hwnd, 905, 641)
