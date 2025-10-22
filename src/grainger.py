@@ -116,6 +116,7 @@ def strip_zeros_refined(text, handle_2d=False, index=2, desc_index=4):
 
     if 'data' in globals():
         data.write("TEST")
+        print(f"lord farqwad {gen_desc}")
         # change this when testing is done
         # data.write(gen_desc)
     else:
@@ -211,7 +212,7 @@ def type_address(product, address=None):
 
 def date_determiner(product):
     if product[10] is False:
-        data.write(data.move_to_wed(standardize_date(product[5])))
+        data.write(data.move_to_wed(data.standardize_date(product[5])))
         print("Typeing dropship date")
     else:
         data.write(product[5])
@@ -265,12 +266,16 @@ def product_points(product, grainger_pdf, total_quantity):
     if not "grainger" in product[9].lower():
         data.address_search("Grainger Dropship Acct")
         address_array = product[9].splitlines()
+        address_array[0] = ' '.join([address_array[0], address_array[1]])
+        del address_array[1]
+        print(f"address array: {address_array}")
         exec_json(grainger_address_data, addr)
+    else:
 
 
-def custom(custom_list, grainger_pdf):
 
-    total_quantity = sum((int(row[6]) for row in custom_list))
+def custom(custom_list, grainger_pdf, total_quantity):
+
     
     ops = {
             "Coordinate":motion.move_rel,
@@ -300,7 +305,6 @@ def custom(custom_list, grainger_pdf):
     product_points(custom_list[0], grainger_pdf, total_quantity)
 
     for product in custom_list[1:]:
-        
         time.sleep(0.4)
         motion.move_rel(lt_hwnd, 911, 273)
         time.sleep(0.4)
@@ -317,6 +321,7 @@ def custom(custom_list, grainger_pdf):
 def multiple_stock(products):
     print("I sware")
     istock_two_data = data.load_file(data.find_rel_path("instructions\\istock_two.json"))
+    istock_setup_data = data.load_file(data.find_rel_path("instructions\\istock_setup.json"))
 
     prod = {
             "Coordinate":motion.move_rel,
@@ -330,6 +335,7 @@ def multiple_stock(products):
             "Price": lambda: data.write(product[7])
             }
             
+    exec_json(istock_setup_data, prod)
     for product in products:
         exec_json(istock_two_data, prod)
         for _ in range(2):
@@ -382,31 +388,7 @@ def stock(stock_list, grainger_pdf):
     exec_json(grainger_address_data, addr)
     motion.move_rel(lt_hwnd, 925, 188)
     motion.move_rel(lt_hwnd, 905, 641)
-
-# def dropship(product, grainger_pdf):
-#     print("Dealing with a dropship")
-# 
-#     if product[3] in stock_product_numbers:
-#         print("It is a stock product")
-#         # stock(product)
-#         if not product[8] == "iStock":
-#             print(product[8])
-#             product[8] = "iStock"
-#         print(product[8])
-#     else:
-#         print("this is a custom product")
-#         print(product[8])
-# 
-#         if not product[8] == "Custom":
-#             print(product[8])
-#             product[8] = "Custom"
-#         if int(product[2]) > 1:
-#             motion.move_rel(lt_hwnd, 494, 425)
-#             time.sleep(0.1)
-#         custom(product, grainger_pdf)
-#         print(product[8])
-# 
-#         # in grainger_instructions: line 47 custom products, 
+    pyautogui.click()
 
 def execute_grainger(grainger_pdf):
     # TXT file path
@@ -461,9 +443,14 @@ def execute_grainger(grainger_pdf):
     print(f"\nFinal stock_list ({len(stock_list)} products): {stock_list}")
     print(f"Final custom_list ({len(custom_list)} products): {custom_list}")
     
+    total_quantity = sum((int(row[6]) for row in product_array))
+    print(f"lalala total quantity: {total_quantity}")
+
     if stock_list: 
+        print(f"Executing stocklist: {stock_list}")
         stock(stock_list, grainger_pdf)
     if custom_list:
-        custom(custom_list, grainger_pdf)
+        print(f"Executing custom list: {custom_list}")
+        custom(custom_list, grainger_pdf, total_quantity)
     
     return product_array

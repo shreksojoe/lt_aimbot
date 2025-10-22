@@ -1,11 +1,4 @@
 [
-    {"Window": "Editing Stock Ticket"},
-    {"Name": "Plus Button", "Coordinate": [824, 396]},
-    {"Window Maybe": "Request For Information"},
-    {"Product Ammount": ""},
-    {"Name": "OK Button", "Coordinate": [702, 248]},
-    {"Name": "Quantity Text Box", "Coordinate": [75, 422]},
-    {"Name": "Quantity Text Box", "Coordinate": [75, 422]},
     {"Quantity": ""},
     {"Tab": ""},
     {"Product No.": ""},
