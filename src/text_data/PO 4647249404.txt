@@ -1,0 +1,50 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647249404
+7/16/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER SAN FRANCISCO DC
+2710 KEYSTONE PACIFIC PARKWAY
+PATTERSON , CA 95363
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 004
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 004
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+00001 10Y371 Label,2 1/2 inx1 1/2 in,Paper,PK250 10Each 30.57 305.7
+Manufacturer's Part #: 163-0015
+Vendor Item #: 163-0015
+Sch'd Qty: 10
+Subline UOM: EachPromised Ship Date: 8/6/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 305.7
+Page 1 of 1 10-Oct-2025

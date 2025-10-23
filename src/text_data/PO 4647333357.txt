@@ -1,0 +1,51 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647333357
+7/23/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER ILLINOIS DC
+701 GRAINGER WAY
+MINOOKA , IL 60447
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 005
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 005
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+00001 8NCA9 Replacement Blade,1 in L,10 in W 9Each 7.99 71.91
+Manufacturer's Part #: 8NCA9
+Additional Notes: TAPE DISPENSER BLADE 10 IN W
+Vendor Item #: 68079
+Sch'd Qty: 9
+Subline UOM: EachPromised Ship Date: 8/6/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 71.91
+Page 1 of 1 10-Oct-2025

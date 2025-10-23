@@ -1,0 +1,76 @@
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647103279
+7/1/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. APPLIED MATERIALS - BUILDING 37 AUS
+LLOYD VIDEAU 4410059267
+9700 US 290E Bldg 37 Central Rcvg. Applied Materials - Building
+37 Aus
+Austin , TX 78724
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: TPSO
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: TPSO
+Release # Ship Date Carrier Code Routing
+1554093384 See Routing Guide
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630 4410059267
+Account # Job Number Dept. # Customer Release # Currency
+UTXAU019 US001
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT PLEASE PRINT CUSTOMER PURCHASE ORDER NUMBER ON PACKING LIST.
+payloadID#1751401224435.498596663.000021022@fGCPriOzCWkFkK
++P#payloadIDpayloadID#OKDTWbB0H9s=#payloadID
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Drop Ship 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647103279
+7/1/2025
+00001 10Y512 Label,1-1/4"H,4-1/2"W,PK1000 1Each 7.83 7.83
+PO Line #: 000003
+Material #: WWG10Y512
+Manufacturer's Part #: 119-0004V
+Additional Notes: Customer UOM EA Grainger Part
+Nbr 10Y512# TK125883498T Label Adhesive
+Adhesive Adhesive Material Acrylic Adhesive Type
+Permanent AdhesiveIndoorOutdoor Usage Indoor
+Label Color Orange Label Diameter 1 in Label Height
+Not Applicable Label Material Paper Label Shape
+Vendor Item #: 119-0004V
+Sch'd Qty: 1
+Subline UOM: EachPromised Ship Date: 7/23/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+PLEASE PRINT CUSTOMER PURCHASE ORDER
+NUMBER ON PACKING LIST.
+payloadID#1751401224435.498596663.000021022
+@fGCPriOzCWkFkK
++P#payloadIDpayloadID#OKDTWbB0H9s=#payloadID
+Total 7.83
+Page 2 of 2 10-Oct-2025

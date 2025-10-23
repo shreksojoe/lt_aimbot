@@ -1,0 +1,64 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647636793
+8/20/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER DCOF KANSAS CITY
+11200 E. 210 HWY
+KANSAS CITY , MO 64161
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 002
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 002
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647636793
+8/20/2025
+00001 10Y373 HMIG Label,3/4" H x 2-1/2" W,PK250 16Each 15.8 252.8
+Manufacturer's Part #: 163-0004
+Vendor Item #: 163-0004
+Sch'd Qty: 16
+Subline UOM: EachPromised Ship Date: 9/11/2025
+00002 3VCT8 Shipping Squares Label,2 In. W,PK200 2Each 7.13 14.26
+Manufacturer's Part #: 3VCT8
+Additional Notes: BLANK LBL SQUARE Y 2X3 SELF
+AD 200RL
+Vendor Item #: 52227Y
+Sch'd Qty: 2
+Subline UOM: EachPromised Ship Date: 9/11/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 267.06
+Page 2 of 2 10-Oct-2025

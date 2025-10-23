@@ -1,0 +1,70 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647328559
+7/23/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER DFDC
+201 FREEDOM DRIVE
+ROANOKE , TX 76262
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 936
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 936
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647328559
+7/23/2025
+00001 10Y370 NFPA Label,1.5"x2.5",Chemical Name,PK250 14Each 30.57 427.98
+Manufacturer's Part #: 163-0013
+Vendor Item #: 163-0013
+Sch'd Qty: 14
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00002 3KHL1 Adhesive Backed Tape Measure,1 x 500 In 42Each 7.47 313.74
+Manufacturer's Part #: 3KHL1
+Additional Notes: TAPE RULER 1 IN W Y
+Vendor Item #: 68081
+Sch'd Qty: 42
+Subline UOM: EachPromised Ship Date: 8/13/2025
+00003 3VCR9 Shipping Squares Label,3 In. W,PK250 24Each 6.22 149.28
+Manufacturer's Part #: 3VCR9
+Additional Notes: BLANK LBL SQUARE OR 1X3 SELF
+A 250RL
+Vendor Item #: 52226OR
+Sch'd Qty: 24
+Subline UOM: EachPromised Ship Date: 8/13/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 891
+Page 2 of 2 10-Oct-2025

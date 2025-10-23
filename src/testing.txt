@@ -1,0 +1,66 @@
+Grainger
+
+Purchase Order
+
+New Order
+Original
+4647404827
+7/30/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER FOUNTAIN INN
+101 SOUTHCHASE BLVD
+FOUNTAIN INN, SC 29644
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 003
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 003
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+
+Special
+Instructions
+
+Note 1
+
+REFER TO |THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+
+MSG ISUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+[SEGMENT
+FOB
+Payment Method Location Transportation Terms
+(Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+iStock PG 847-535-4000 IGrainger.Purchasing@grainger.c
+lom
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+(00001 10Y503 Label,Circle,Paper,3/4" H,Green,1000 14/Each 5.4 75.6
+
+Manufacturer's Part #: 119-0003X
+
+\Vendor Item #: 119-0003X
+
+ISch'd Qty: 14
+
+[Subline UOM: EachPromised Ship Date: 8/11/2025
+
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+
+Total 75.6]
+
+Page 1 of 1 30-Jul-2025
+
+

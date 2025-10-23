@@ -396,18 +396,22 @@ def stock(stock_list, grainger_pdf):
 
 def execute_grainger(grainger_pdf):
     # TXT file path
-    txt_file = r"c:\Users\joseph.stadum\lt_aimbot\server_csv\text_data\\" + os.path.splitext(os.path.basename(grainger_pdf))[0] + ".txt"
+    txt_file = r"c:\Users\joseph.stadum\lt_aimbot\src\text_data\\" + os.path.splitext(os.path.basename(grainger_pdf))[0] + ".txt"
+    with open(txt_file, 'a', encoding='utf-8') as f:
+        pass
     
     # Run llama_trainer.py to convert PDF to TXT
-    subprocess.run(["python", r"c:\Users\joseph.stadum\lt_aimbot\server_csv\llama_trainer.py", grainger_pdf, txt_file])
+    subprocess.run(["C:\\Users\\joseph.stadum\\lt_aimbot\\.venv\\Scripts\\python.exe", r"c:\Users\joseph.stadum\lt_aimbot\src\grainger_pdf_to_txt.py", grainger_pdf, txt_file])
     
     # Run txt_to_csv.py on the TXT to produce CSV
-    final_csv_dir = r"c:\Users\joseph.stadum\lt_aimbot\server_csv\final_csv"
+    final_csv_dir = r"c:\Users\joseph.stadum\lt_aimbot\src\final_csv"
     os.makedirs(final_csv_dir, exist_ok=True)
-    subprocess.run(["python", r"c:\Users\joseph.stadum\lt_aimbot\server_csv\txt_to_csv.py", txt_file, "--out", final_csv_dir])
+    subprocess.run(["C:\\Users\\joseph.stadum\\lt_aimbot\\.venv\\Scripts\\python.exe", r"c:\Users\joseph.stadum\lt_aimbot\src\txt_to_csv.py", txt_file, "--out", final_csv_dir])
     
     # CSV file path
-    csv_file = r"c:\Users\joseph.stadum\lt_aimbot\server_csv\final_csv\\" + os.path.splitext(os.path.basename(grainger_pdf))[0] + ".csv"
+    csv_file = r"c:\Users\joseph.stadum\lt_aimbot\src\final_csv\\" + os.path.splitext(os.path.basename(grainger_pdf))[0] + ".csv"
+    with open(csv_file, 'a', encoding='utf-8') as f:
+        pass
     
     # Load CSV into product_array
     product_array = []

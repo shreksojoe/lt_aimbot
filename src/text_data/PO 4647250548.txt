@@ -1,0 +1,76 @@
+Grainger
+Purchase Order
+New Order
+Original
+4647250548
+7/16/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER FOUNTAIN INN
+101 SOUTHCHASE BLVD
+FOUNTAIN INN , SC 29644
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 003
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 003
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+New Order
+Original
+4647250548
+7/16/2025
+00001 10Y508 Label,1"H,4-1/2"W,PK1000 1Each 7.83 7.83
+Manufacturer's Part #: 119-0004D
+Vendor Item #: 119-0004D
+Sch'd Qty: 1
+Subline UOM: EachPromised Ship Date: 8/6/2025
+00002 10Y513 Label,1-1/4"H,4-1/2"W,PK1000 3Each 7.83 23.49
+Manufacturer's Part #: 119-0004X
+Vendor Item #: 119-0004X
+Sch'd Qty: 3
+Subline UOM: EachPromised Ship Date: 8/6/2025
+00003 3VCL4 Shipping Dot Label,1/4 In. W,PK1000 15Each 2.68 40.2
+Manufacturer's Part #: 3VCL4
+Additional Notes: BLANK LBL DOT Y 14 IN. SELF A
+1MRL
+Vendor Item #: 52219Y
+Sch'd Qty: 15
+Subline UOM: EachPromised Ship Date: 8/6/2025
+00004 3VCT6 Shipping Squares Label,2 In. W,PK200 31Each 7.13 221.03
+Manufacturer's Part #: 3VCT6
+Additional Notes: BLANK LBL SQUARE PINK 2X3
+SELF 200RL
+Vendor Item #: 52227P
+Sch'd Qty: 31
+Subline UOM: EachPromised Ship Date: 8/6/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+Total 292.55
+Page 2 of 2 10-Oct-2025

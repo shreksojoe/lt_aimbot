@@ -1,0 +1,63 @@
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647271036
+7/17/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WALMART DC #3001
+SHARON ANDERSON 70037153
+386 Murdock Rd
+Troutman , NC 28166
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: TPSO
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: TPSO
+Release # Ship Date Carrier Code Routing
+1555613135 29811 UPS GROUND
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630 70037153
+Account # Job Number Dept. # Customer Release # Currency
+MAINTENANCE
+Special Note 1
+Instructions
+REFER TO THIS PURCHASE ORDER INCORPORATES BY REFERENCE, PURCHASE ORDER TERMS FOUND IN APPLICABLE
+MSG SUPPLIER ACCEPTANCE LETTERS AND AGREEMENTS.
+SEGMENT PLEASE PRINT CUSTOMER PURCHASE ORDER NUMBER ON PACKING LIST.
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Drop Ship 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+00001 10Y511 Label,1"H,4-1/2"W,PK1000 1Each 7.83 7.83
+PO Line #: 000001
+Manufacturer's Part #: 119-0004Z
+Vendor Item #: 119-0004Z
+Sch'd Qty: 1
+Subline UOM: EachPromised Ship Date: 8/7/2025
+Page 1 of 2 10-Oct-2025
+Grainger
+Purchase Order
+Direct Ship
+Original
+4647271036
+7/17/2025
+Note: THIS PURCHASE ORDER INCORPORATES
+BY REFERENCE, PURCHASE ORDER TERMS
+FOUND IN APPLICABLE SUPPLIER ACCEPTANCE
+LETTERS AND AGREEMENTS.
+PLEASE PRINT CUSTOMER PURCHASE ORDER
+NUMBER ON PACKING LIST.
+Total 7.83
+Page 2 of 2 10-Oct-2025
