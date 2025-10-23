@@ -42,6 +42,20 @@ VENDOR_PREFIXES = [
 ]
 
 
+def clean_ocr_noise(text: str) -> str:
+    text = re.sub(r"[\[\]\(\)]", "", text)
+    fixed_lines: List[str] = []
+    for ln in text.splitlines():
+        s = ln
+        s = re.sub(r"^\s*I(?=[A-Z])", "", s)
+        s = re.sub(r"(\d)\|\s*Each", r"\1 Each", s)
+        s = re.sub(r"(\d)\\\s*Each", r"\1 Each", s)
+        s = s.replace("|", "")
+        s = s.replace("\\", "")
+        fixed_lines.append(s)
+    return "\n".join(fixed_lines)
+
+
 def normalize_spaces(s: str) -> str:
     s = re.sub(r"\s+", " ", s).strip()
     # Fix spaced commas like "FOUNTAIN INN , SC" -> "FOUNTAIN INN, SC"
@@ -358,6 +372,7 @@ def parse_txt_to_rows(text: str) -> List[List[str]]:
 def convert_file(in_path: str, out_path: str) -> int:
     with open(in_path, "r", encoding="utf-8") as f:
         text = f.read()
+    text = clean_ocr_noise(text)
     rows = parse_txt_to_rows(text)
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     with open(out_path, "w", newline="", encoding="utf-8") as f:
