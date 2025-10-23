@@ -8,6 +8,15 @@ process_name = "Label Traxx Client.exe"
 process_path = "C:\\Program Files\\LT Client\\Label Traxx Client.exe"
 hwnd = window.get_hwnd(process_name)
 
+# TEST Functionality POS:
+#   Dropship
+#   Standard: 46474049830
+#   Total quantity > 30
+#   Total quantity < 30 allocate
+#   Stock (multiple)
+#   Custom (multiple)
+#   Both Stock and Custom: 46474049830, 
+
 # -- WINDOW -- 
 # window.launch_program(process_path) -- works
 # print(window.get_pid(process_name)) -- works

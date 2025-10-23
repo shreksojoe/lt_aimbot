@@ -259,7 +259,8 @@ def product_points(product, grainger_pdf, total_quantity):
     print(f"total quantity: {total_quantity}")
     if total_quantity > 30:
         exec_json(cust_drop_two_data, ops)
-    else: exec_json(cust_drop_three_data, ops)
+    else: 
+        exec_json(cust_drop_three_data, ops)
 
     exec_json(cust_drop_four_data, ops)
 
@@ -271,6 +272,9 @@ def product_points(product, grainger_pdf, total_quantity):
         print(f"address array: {address_array}")
         exec_json(grainger_address_data, addr)
     else:
+        print(f"Standard Grainger order. Address: {product[9]}")
+        address_zip = data.extract_zip(product[9])
+        data.address_search(address_zip)
 
 
 
