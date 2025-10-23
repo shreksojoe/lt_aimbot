@@ -318,6 +318,7 @@ def custom(custom_list, grainger_pdf, total_quantity):
         time.sleep(0.2)
         exec_json(cust_drop_dup_data, ops)
     motion.move_rel(lt_hwnd, 925, 188)
+    time.sleep(1)
     motion.move_rel(lt_hwnd, 905, 641)
 
 
@@ -391,8 +392,9 @@ def stock(stock_list, grainger_pdf):
     type_address(stock_list[0])
     exec_json(grainger_address_data, addr)
     motion.move_rel(lt_hwnd, 925, 188)
+    time.sleep(1)
     motion.move_rel(lt_hwnd, 905, 641)
-    pyautogui.click()
+    # pyautogui.click()
 
 def execute_grainger(grainger_pdf):
     # TXT file path

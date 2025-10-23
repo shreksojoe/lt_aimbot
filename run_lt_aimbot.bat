@@ -1,29 +1,40 @@
 @echo off
-REM Use bundled Python from dist\python
+REM LT Aimbot Launcher - Runs main.py with proper Python environment
 setlocal
+
+cd /d "%~dp0"
+
+REM Try bundled Python first
 set PYTHON_EXE=%~dp0python\python.exe
 
+REM If bundled Python doesn't exist, try .venv
 if not exist "%PYTHON_EXE%" (
-    echo Bundled Python not found! Please reinstall the app.
-    pause
-    exit /b 1
+    set PYTHON_EXE=%~dp0.venv\Scripts\python.exe
 )
 
-echo Using bundled Python: %PYTHON_EXE%
+REM If .venv doesn't exist, try system Python
+if not exist "%PYTHON_EXE%" (
+    where python >nul 2>&1
+    if errorlevel 1 (
+        echo Error: Python not found!
+        echo Please install Python or set up the virtual environment.
+        pause
+        exit /b 1
+    )
+    set PYTHON_EXE=python
+)
 
-if exist requirements.txt goto install
+echo Using Python: %PYTHON_EXE%
 
-echo requirements.txt not found.
-goto runmain
+REM Install requirements if needed
+if exist requirements.txt (
+    echo Checking requirements...
+    "%PYTHON_EXE%" -m pip install -q -r requirements.txt
+)
 
-:install
-echo requirements.txt found.
-call "%PYTHON_EXE%" -m pip install --upgrade pip
-call "%PYTHON_EXE%" -m pip install -r requirements.txt
-
-:runmain
 REM Run the main script
-call "%PYTHON_EXE%" src\main.py
+echo Starting LT Aimbot...
+"%PYTHON_EXE%" src\main.py
 
 endlocal
 pause

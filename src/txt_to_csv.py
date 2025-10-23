@@ -12,8 +12,8 @@ COMPANY = "Grainger"
 # BRAND will be determined per row based on ship-to address content
 
 LINE_ITEM_RE = re.compile(r"^\s*(?P<line>\d{5})\s+(?P<part>\S+)\s+(?P<rest>.+?)\s*$")
-# Match quantity with optional slash: "14 Each" or "14/Each"
-QTY_RE = re.compile(r"(?P<qty>\d+)\s*/\s*Each|(?P<qty2>\d+)\s+Each")
+# Match quantity with optional slash or no space: "14 Each" or "14/Each" or "14Each"
+QTY_RE = re.compile(r"(?P<qty>\d+)\s*/?\s*Each", re.IGNORECASE)
 DECIMAL_RE = re.compile(r"(\d+\.\d{1,2})")
 # Pack-size tokens appear in descriptions like PK1000, PK250, etc.
 PACK_RE = re.compile(r"\bPK\s*\d+\b", re.IGNORECASE)
@@ -268,8 +268,8 @@ def parse_line_item(lines: List[str], i: int) -> Tuple[Optional[Tuple[str, str, 
                 rest = ext
     if not qty_m:
         return None, i + 1
-    # Handle both qty groups (slash or space)
-    qty = qty_m.group("qty") or qty_m.group("qty2")
+    # Extract quantity from the single capture group
+    qty = qty_m.group("qty")
 
     # Find decimals in the same region; expect unit price and amount
     decimals = DECIMAL_RE.findall(rest)

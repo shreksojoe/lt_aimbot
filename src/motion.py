@@ -217,6 +217,7 @@ def move_rel(hwnd, x, y):
     print("move possition")
     time.sleep(1)
     pyautogui.click()
+    time.sleep(1)
 
 def select_all():
     for _ in range(12):
