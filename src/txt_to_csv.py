@@ -210,9 +210,31 @@ def extract_ship_to_address(lines: List[str]) -> Optional[str]:
                 parts.append("US")
                 break
 
-    # Normalize each line and join with spaces (single-line format per csv_data baseline)
+    # Normalize each line and split state/zip/country onto separate lines
     norm_parts = [normalize_spaces(p) for p in parts if p]
-    address = " ".join(norm_parts)
+    
+    # Merge first two lines (name + street) into one line
+    if len(norm_parts) >= 2:
+        merged_first = f"{norm_parts[0]} {norm_parts[1]}"
+        norm_parts = [merged_first] + norm_parts[2:]
+    
+    # Split any line containing "<City>, <ST> <ZIP>" into separate lines
+    final_parts = []
+    for part in norm_parts:
+        # Check if this line has state/zip pattern
+        m = re.search(r"^(.+),\s+([A-Z]{2})\s+(\d{5}(?:-\d{4})?)$", part)
+        if m and m.group(2) in STATE_CODES:
+            # Split into: city (without comma), state, zip
+            city = m.group(1)
+            state = m.group(2)
+            zip_code = m.group(3)
+            final_parts.append(city)
+            final_parts.append(state)
+            final_parts.append(zip_code)
+        else:
+            final_parts.append(part)
+    
+    address = "\n".join(final_parts)
     return address or None
 
 
