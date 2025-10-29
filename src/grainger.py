@@ -14,10 +14,18 @@ import re
 import win32gui
 import subprocess
 import shutil
+from pathlib import Path
+from pathlib import Path
 
 process_name = "Label Traxx Client.exe"
 process_path = "C:\Program Files\LT Client\Label Traxx Client.exe"
 lt_hwnd = window.get_hwnd(process_name)
+
+# Portable resolution for Label Traxx executable (keeps original variable unchanged)
+try:
+    portable_process_path = data.find_abs_path("Label Traxx Client.exe")
+except Exception:
+    portable_process_path = None
 
 stock_product_numbers = [
 "10Y376","8X606","10Y373","8EE38","8E085", "10Y374", "8EEP0", "10Y370", "8E984", "9WA32", "10Y372", "8EE37", "10Y371", "8NCA9", "8AY66", "9WC95", "10Y495"
@@ -397,43 +405,166 @@ def stock(stock_list, grainger_pdf):
     # pyautogui.click()
 
 def execute_grainger(grainger_pdf):
-    # TXT file path
-    txt_file = r"c:\Users\joseph.stadum\lt_aimbot\src\text_data\\" + os.path.splitext(os.path.basename(grainger_pdf))[0] + ".txt"
-    with open(txt_file, 'a', encoding='utf-8') as f:
+    # Portable flow (additive): use project-relative paths and active interpreter
+    try:
+        pdf_path = Path(grainger_pdf)
+
+        # Locate/create text_data directory
+        text_dir_rel = data.find_rel_path("src/text_data") or data.find_rel_path("server_csv/text_data")
+        if text_dir_rel:
+            text_dir = (Path.cwd() / text_dir_rel).resolve()
+        else:
+            text_dir = (Path(__file__).parent / "text_data").resolve()
+        text_dir.mkdir(parents=True, exist_ok=True)
+
+        txt_file_path = text_dir / (pdf_path.stem + ".txt")
+        txt_file_path.touch(exist_ok=True)
+
+        # Interpreter and script paths
+        python_exe = sys.executable
+
+        pdf_to_txt_rel = data.find_rel_path("src/grainger_pdf_to_txt.py") or data.find_rel_path("grainger_pdf_to_txt.py")
+        if pdf_to_txt_rel:
+            pdf_to_txt = str((Path.cwd() / pdf_to_txt_rel).resolve())
+        else:
+            pdf_to_txt = str((Path(__file__).parent / "grainger_pdf_to_txt.py").resolve())
+
+        txt_to_csv_rel = data.find_rel_path("src/txt_to_csv.py") or data.find_rel_path("txt_to_csv.py")
+        if txt_to_csv_rel:
+            txt_to_csv = str((Path.cwd() / txt_to_csv_rel).resolve())
+        else:
+            txt_to_csv = str((Path(__file__).parent / "txt_to_csv.py").resolve())
+
+        # Convert PDF -> TXT
+        subprocess.run([python_exe, pdf_to_txt, str(pdf_path), str(txt_file_path)], check=True)
+
+        # Locate/create final_csv directory
+        final_csv_rel = data.find_rel_path("src/final_csv") or data.find_rel_path("server_csv/final_csv")
+        if final_csv_rel:
+            final_csv_dir = (Path.cwd() / final_csv_rel).resolve()
+        else:
+            final_csv_dir = (Path(__file__).parent / "final_csv").resolve()
+        final_csv_dir.mkdir(parents=True, exist_ok=True)
+
+        # TXT -> CSV
+        subprocess.run([python_exe, txt_to_csv, str(txt_file_path), "--out", str(final_csv_dir)], check=True)
+
+        # Load CSV into product_array
+        csv_file_path = final_csv_dir / (pdf_path.stem + ".csv")
+        csv_file_path.touch(exist_ok=True)
+
+        product_array = []
+        with open(csv_file_path, 'r', newline='', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                product_array.append(row)
+
+        print(f"Processed {len(product_array)} product(s) from Grainger PDF")
+        print(f"Product Array: {product_array}")
+
+        stock_list = []
+        custom_list = []
+
+        for product in product_array:
+            if not ("grainger" in product[9].lower()):
+                product.append(False)
+                print(f"Product {product[2]} is a dropship")
+            else:
+                product.append(True)
+                print(f"Product {product[2]} is grainger")
+
+            if product[3] in stock_product_numbers:
+                print(f"Product {product[2]} ({product[3]}) is a stock product")
+                if not product[8] == "iStock":
+                    product[8] = "iStock"
+                stock_list.append(product)
+            else:
+                print(f"Product {product[2]} ({product[3]}) is a custom product")
+                custom_list.append(product)
+
+        print(f"\nFinal stock_list ({len(stock_list)} products): {stock_list}")
+        print(f"Final custom_list ({len(custom_list)} products): {custom_list}")
+
+        total_quantity = sum((int(row[6]) for row in product_array))
+        print(f"lalala total quantity: {total_quantity}")
+
+        if stock_list:
+            print(f"Executing stocklist: {stock_list}")
+            stock(stock_list, grainger_pdf)
+        if custom_list:
+            print(f"Executing custom list: {custom_list}")
+            custom(custom_list, grainger_pdf, total_quantity)
+
+        return product_array
+    except Exception as _portable_e:
+        # Fall through to original implementation below
         pass
-    
-    # Run llama_trainer.py to convert PDF to TXT
-    subprocess.run(["C:\\Users\\joseph.stadum\\lt_aimbot\\.venv\\Scripts\\python.exe", r"c:\Users\joseph.stadum\lt_aimbot\src\grainger_pdf_to_txt.py", grainger_pdf, txt_file])
-    
-    # Run txt_to_csv.py on the TXT to produce CSV
-    final_csv_dir = r"c:\Users\joseph.stadum\lt_aimbot\src\final_csv"
-    os.makedirs(final_csv_dir, exist_ok=True)
-    subprocess.run(["C:\\Users\\joseph.stadum\\lt_aimbot\\.venv\\Scripts\\python.exe", r"c:\Users\joseph.stadum\lt_aimbot\src\txt_to_csv.py", txt_file, "--out", final_csv_dir])
-    
+    # Resolve project-relative directories and scripts so it works on any machine
+    pdf_path = Path(grainger_pdf)
+
+    # Locate or create text_data dir
+    text_dir_rel = data.find_rel_path("src\\text_data") or data.find_rel_path("server_csv\\text_data")
+    if text_dir_rel:
+        text_dir = (Path.cwd() / text_dir_rel).resolve()
+    else:
+        text_dir = (Path(__file__).parent / "text_data").resolve()
+    text_dir.mkdir(parents=True, exist_ok=True)
+
+    txt_file = text_dir / (pdf_path.stem + ".txt")
+    txt_file.touch(exist_ok=True)
+
+    # Python interpreter to use
+    python_exe = sys.executable
+
+    # Locate scripts
+    pdf_to_txt_rel = data.find_rel_path("src\\grainger_pdf_to_txt.py") or data.find_rel_path("grainger_pdf_to_txt.py")
+    if pdf_to_txt_rel:
+        pdf_to_txt = str((Path.cwd() / pdf_to_txt_rel).resolve())
+    else:
+        pdf_to_txt = str((Path(__file__).parent / "grainger_pdf_to_txt.py").resolve())
+
+    txt_to_csv_rel = data.find_rel_path("src\\txt_to_csv.py") or data.find_rel_path("txt_to_csv.py")
+    if txt_to_csv_rel:
+        txt_to_csv = str((Path.cwd() / txt_to_csv_rel).resolve())
+    else:
+        txt_to_csv = str((Path(__file__).parent / "txt_to_csv.py").resolve())
+
+    # Convert PDF->TXT
+    subprocess.run([python_exe, pdf_to_txt, str(pdf_path), str(txt_file)], check=True)
+
+    # Locate or create final_csv dir
+    final_csv_rel = data.find_rel_path("src\\final_csv") or data.find_rel_path("server_csv\\final_csv")
+    if final_csv_rel:
+        final_csv_dir = (Path.cwd() / final_csv_rel).resolve()
+    else:
+        final_csv_dir = (Path(__file__).parent / "final_csv").resolve()
+    final_csv_dir.mkdir(parents=True, exist_ok=True)
+
+    # TXT->CSV
+    subprocess.run([python_exe, txt_to_csv, str(txt_file), "--out", str(final_csv_dir)], check=True)
+
     # CSV file path
-    csv_file = r"c:\Users\joseph.stadum\lt_aimbot\src\final_csv\\" + os.path.splitext(os.path.basename(grainger_pdf))[0] + ".csv"
-    with open(csv_file, 'a', encoding='utf-8') as f:
-        pass
-    
+    csv_file = final_csv_dir / (pdf_path.stem + ".csv")
+    csv_file.touch(exist_ok=True)
+
     # Load CSV into product_array
     product_array = []
     with open(csv_file, 'r', newline='', encoding='utf-8') as f:
         reader = csv.reader(f)
         for row in reader:
             product_array.append(row)
-    
+
     print(f"Processed {len(product_array)} product(s) from Grainger PDF")
     print(f"Product Array: {product_array}")
-    
+
     stock_list = []
     custom_list = []
-    
+
     # First pass: categorize all products
     for product in product_array:
         # determine if it is a grainger or dropship
-        if not ("grainger" in product[9].lower()): # it is a dropship
+        if not ("grainger" in product[9].lower()):  # it is a dropship
             product.append(False)
-            # move date to next wednesday
             print(f"Product {product[2]} is a dropship")
         else:
             product.append(True)
@@ -448,19 +579,19 @@ def execute_grainger(grainger_pdf):
         else:
             print(f"Product {product[2]} ({product[3]}) is a custom product")
             custom_list.append(product)
-    
+
     # Second pass: process each category once
     print(f"\nFinal stock_list ({len(stock_list)} products): {stock_list}")
     print(f"Final custom_list ({len(custom_list)} products): {custom_list}")
-    
+
     total_quantity = sum((int(row[6]) for row in product_array))
     print(f"lalala total quantity: {total_quantity}")
 
-    if stock_list: 
+    if stock_list:
         print(f"Executing stocklist: {stock_list}")
         stock(stock_list, grainger_pdf)
     if custom_list:
         print(f"Executing custom list: {custom_list}")
         custom(custom_list, grainger_pdf, total_quantity)
-    
+
     return product_array

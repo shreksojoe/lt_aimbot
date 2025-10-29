@@ -9,6 +9,9 @@ import csv_no_plus
 import xlsx_to_csv
 import auto_update
 import grainger
+import importlib
+import subprocess
+import sys
 
 # list of new breed (muthafuckin) files
 # 1. god.py
@@ -18,6 +21,18 @@ import grainger
 # 5. ui.py
 
 from utils import resource_path
+
+# Ensure required runtime packages are installed
+def ensure_package(pkg_name: str):
+    try:
+        importlib.import_module(pkg_name)
+    except ImportError:
+        print(f"[SETUP] Installing missing package: {pkg_name}")
+        subprocess.run([sys.executable, "-m", "pip", "install", pkg_name], check=True)
+
+# Install core runtime deps if absent
+ensure_package("pdfplumber")
+ensure_package("pywin32")
 
 # auto update
 # auto_update.auto_update()

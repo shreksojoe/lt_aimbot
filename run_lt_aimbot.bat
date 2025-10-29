@@ -24,6 +24,17 @@ if not exist "%PYTHON_EXE%" (
     set PYTHON_EXE=python
 )
 
+REM Optional bootstrap: if we're using system python and no .venv exists, create one and switch to it
+if /I "%PYTHON_EXE%"=="python" (
+    if not exist ".venv\Scripts\python.exe" (
+        echo Creating virtual environment at .venv ...
+        python -m venv .venv
+    )
+    if exist ".venv\Scripts\python.exe" (
+        set PYTHON_EXE=.venv\Scripts\python.exe
+    )
+)
+
 echo Using Python: %PYTHON_EXE%
 
 REM Install requirements if needed

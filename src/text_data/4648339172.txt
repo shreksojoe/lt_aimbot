@@ -1,0 +1,52 @@
+Grainger
+Purchase Order
+New Order
+Original
+4648339172
+10/22/2025
+Vendor: Ship To:
+ROLL PRODUCTS INC. WW GRAINGER LOUISVILLE DC
+LOUISVILLE DC
+8701 MINOR LANE
+LOUISVILLE , KY 40219
+US
+Ship-To Qualifier: Assigned by Buyer or Buyer's Agent
+Code: 009
+Buying Party:
+WW GRAINGER INC
+Store:
+Store #: 009
+Release # Ship Date Carrier Code Routing
+Description Vendor # Vendor ID # Brand Organization Customer Order #
+Code
+Net 20 Days 20002630
+Account # Job Number Dept. # Customer Release # Currency
+Special Note 1
+Instructions
+REFER TO This Order is subject to Grainger's Purchase Order Terms and Conditions. The Purchase Order Terms and Conditions
+MSG can be accessed through a link in the footer on https://supplierconnect.com.
+SEGMENT
+FOB
+Payment Method Location Transportation Terms
+Collect Origin (After Loading on Equipment) FOB
+Buyer
+Name Phone # Fax # Email
+Stock PG 847-535-4000 Grainger.Purchasing@grainger.c
+om
+Customer Contact
+Name Phone # Fax # Email
+Delivery Contact
+Name Phone # Fax # E-mail
+Line# Buyer's Part # Description Qty UOM Price Amount
+00001 10Y486 1/2" Color Code Circles B PK1000 24Each 3.93 94.32
+Manufacturer's Part #: 119-0002E
+Vendor Item #: 119-0002E
+Sch'd Qty: 24
+Subline UOM: EachPromised Ship Date: 11/3/2025
+Note: This Order is subject to Grainger's Purchase
+Order Terms and Conditions. The Purchase Order
+Terms and Conditions can be accessed through a link
+in the footer on https://supplierconnect.com.
+Total 94.32
+Page 1 of 1 28-Oct-2025
+
